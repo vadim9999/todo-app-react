@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { addTask } from "../actions/index";
 
-function mapDispatchToProps(dispatch){
-    console.log("Call mapDispatchToProps");
+// function mapDispatchToProps(dispatch){
+//     console.log("Call mapDispatchToProps");
     
-    return {
-        addTask: task => dispatch(addTask(task))
-    }
-}
+//     return {
+//         addTask: task => dispatch(addTask(task))
+//     }
+// }
 
 class ConnectedInputItem extends Component {
     constructor(props) {
@@ -68,5 +68,5 @@ class ConnectedInputItem extends Component {
     }
 }
 
-const InputItem = connect(null, mapDispatchToProps)(ConnectedInputItem)
+const InputItem = connect(null, {addTask})(ConnectedInputItem)
 export default InputItem

@@ -10,9 +10,11 @@ export function forbiddenWordsMiddleware({ dispatch }){
         console.log(next);
         
         return function(action){
-
+            console.log("Middleware___action");
+            console.log(action);
+            
             if (action.type === ADD_TASK){
-                console.log("Action Middleware");
+                console.log("Middleware__action_ADD_TASK");
                 console.log(action);
                 
                 const foundWord = forbiddenWords.filter( word => 

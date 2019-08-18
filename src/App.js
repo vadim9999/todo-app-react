@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TodoList from './components/TodoList'
+import Post from "./components/Posts";
 
 class App extends Component {
   constructor(props){
@@ -15,6 +16,7 @@ class App extends Component {
     return(
       <div className="App">
         <TodoList />
+        {/* <Post /> */}
       </div>
     )
     
