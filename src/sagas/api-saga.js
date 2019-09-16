@@ -17,6 +17,7 @@ function* allWorkers(action){
         console.log(action);
         
         yield workerSagaAddTask(action)
+        
     }
 }
 
@@ -32,10 +33,17 @@ function* workerSagaGetData(){
 }
 
 function* workerSagaAddTask(action){
-    console.log("Call workerAddTask");
+    console.error("Call workerAddTask");
     console.log(action);
-    
-    yield call(createTask, action.payload)
+    try{
+        yield call(createTask, action.payload)
+        
+        yield put({type:"ADD_TASK_SUCCESS", payload: action.payload} )
+    }catch(e){
+        console.log("error");
+        yield put({type:"ADD_TASK_FAILED", e})
+        
+    }    
     // var bodyFormData = new FormData();
     // bodyFormData.set("name", name)
     // bodyFormData.set("price", price)
@@ -61,19 +69,20 @@ function* workerSagaAddTask(action){
 
 function createTask(payload){
     console.log("Saga__createTask_payload");
-    
+    const {login, name, completed, date} = payload;
     console.log(payload);
+    console.log(typeof date);
+    console.log(date);
     
-    axios.post('http://localhost:1234/tasks/create', {
-        name: payload.taskName,
-        price: 12
+    console.log(new Date(date).toISOString() );
+    
+   return axios.post('http://localhost:1234/tasks/create', {
+        login,
+        completed,
+        name: name,
+        date: new Date(date).toISOString() 
       })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+
 }
 function getData(){
     console.log("call getData");

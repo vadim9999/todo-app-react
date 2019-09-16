@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import InputItem from './InputItem'
 import List from "./List"
+import ConnectedLogin from './Login';
 // import { connect } from "react-redux";
 
 // function mapStateToProps(state){
@@ -20,6 +21,7 @@ class TodoList extends Component {
             <div className="todoListMain">
                 <List />
                 <InputItem />
+                <ConnectedLogin />
             </div>
         )
     }

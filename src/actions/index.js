@@ -20,6 +20,8 @@ export function addFoundWord(payload) {
     return { type: FOUND_WORD, payload }
 }
 
+
+
 // export function getData() {
 //     return function(dispatch) {
 //       return fetch("https://jsonplaceholder.typicode.com/posts")

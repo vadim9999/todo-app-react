@@ -14,7 +14,7 @@ class ConnectedInputItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            taskName: "",
+            name: "",
         }
 
     this.onHandleInput = this.onHandleInput.bind(this)
@@ -23,34 +23,24 @@ class ConnectedInputItem extends Component {
 
     onHandleInput(e) {
 
-        const taskName = e.target.value
+        const name = e.target.value
         this.setState({
-            taskName
+            name
         })
     }
 
-    addZero(i) {
-        if (i < 10) {
-          i = "0" + i;
-        }
-        return i;
-      }
+    
 
     onAddTask(e){
-        const { taskName } = this.state
+        const { name } = this.state
         e.preventDefault()
         console.log("clicked");
-        var dateObj = new Date();
-        var h = this.addZero(dateObj.getHours());
-        var m = this.addZero(dateObj.getMinutes());
-        var s = this.addZero(dateObj.getSeconds());
-
-        var month = dateObj.getUTCMonth() + 1; //months from 1-12
-        var day = dateObj.getUTCDate();
-        var year = dateObj.getUTCFullYear();
-        var date = h + ":" + m + ":" + s + " " + year + "/" + month + "/" + day;
+        var date = new Date();
+        const login = "miron2311";
+        const completed = true
         
-        this.props.addTask({taskName, date})
+        
+        this.props.addTask({login: "miron2311", completed:true, name, date})
     }
 
     render() {

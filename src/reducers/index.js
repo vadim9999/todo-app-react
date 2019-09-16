@@ -1,4 +1,4 @@
-import { ADD_TASK } from "../constants/action-types";
+import * as types from "../constants/action-types";
 
 const initialState = {
     tasks: [],
@@ -6,15 +6,23 @@ const initialState = {
 }
 
 function rootReducer(state = initialState, action){
-    console.log("Reducer");
+    console.error("Reducer");
     console.log(action);
+    console.log("State");
+    console.log(state);
+    
     
     switch (action.type) {
-        case ADD_TASK:
-            return Object.assign({}, state, {
+        // case types.ADD_TASK:
+        //     return Object.assign({}, state, {
+        //         tasks: state.tasks.concat(action.payload)
+        //     })
+        //     break;
+        case "ADD_TASK_SUCCESS":
+            return Object.assign({}, state,{
                 tasks: state.tasks.concat(action.payload)
             })
-            break;
+            
         case "DATA_LOADED":
             console.log("actionPayload");
             
@@ -24,7 +32,9 @@ function rootReducer(state = initialState, action){
                 remoteArticles: state.remoteArticles.concat(action.payload)
             })
             break;
-        
+        case "DATA_REQUESTED":
+            console.log("Reducers data requested");
+            return state;
         default:
             return state;
     }
