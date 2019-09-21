@@ -1,52 +1,59 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
+import moment from "moment"
+import {getTasks, deleteTaskById} from "../actions"
+import Task from './Task'
 
-function mapStateToProps(state){
-    return { tasks: state.tasks,
-            date: state.date
-         }
+function mapStateToProps(state) {
+    return {
+        tasks: state.tasks,
+        date: state.date
+    }
 }
 
-class ConnectedList extends Component{
-    constructor(){
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        deleteTaskById: (task_id) => dispatch(deleteTaskById(task_id)),
+        getTasks: (login_id) => dispatch(getTasks(login_id)) 
+    }
+}
+
+class ConnectedList extends Component {
+    constructor() {
         super()
-    }
-
-    getDate(dateObj){
         
-        var h = this.addZero(dateObj.getHours());
-        var m = this.addZero(dateObj.getMinutes());
-        var s = this.addZero(dateObj.getSeconds());
-
-        var month = dateObj.getUTCMonth() + 1; //months from 1-12
-        var day = dateObj.getUTCDate();
-        var year = dateObj.getUTCFullYear();
-        var date = h + ":" + m + ":" + s + " " + year + "/" + month + "/" + day;
-        return date;
+        
     }
-    addZero(i) {
-        if (i < 10) {
-          i = "0" + i;
-        }
-        return i;
-      }
-    render(){
+
+    componentDidMount(){
+        
+    }
+
+   
+    render() {
         // console.log(this.props.tasks);
-        
 
+    
         return (
             <ul>
                 {this.props.tasks.map(
-                    task => (
-                        <li >
-                            {task.name + '  ' + task.date} 
-                        </li>
-                    )
+                    task => {
+                        console.log("_Component list");
+                        
+                        console.log(moment(task.date).format("HH:mm:ss, dddd DD MMMM YYYY"));
+                        
+                        return (
+                            
+                            <li key={task["_id"]} >
+                               <Task task={task}/>
+                            </li>
+                        )
+                    }
                 )}
             </ul>
         )
     }
 }
 
-const List = connect(mapStateToProps)(ConnectedList)
+const List = connect(mapStateToProps,mapDispatchToProps)(ConnectedList)
 export default List

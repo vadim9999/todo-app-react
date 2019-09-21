@@ -28,6 +28,7 @@ export function forbiddenWordsMiddleware({ dispatch }){
 
                     }
             }
+           
         
             return next(action);
         }

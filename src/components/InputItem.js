@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { addTask } from "../actions/index";
-
+import moment from "moment"
 // function mapDispatchToProps(dispatch){
 //     console.log("Call mapDispatchToProps");
     
@@ -15,6 +15,7 @@ class ConnectedInputItem extends Component {
         super(props);
         this.state = {
             name: "",
+            // toggle:
         }
 
     this.onHandleInput = this.onHandleInput.bind(this)
@@ -35,12 +36,12 @@ class ConnectedInputItem extends Component {
         const { name } = this.state
         e.preventDefault()
         console.log("clicked");
-        var date = new Date();
+        var date = moment().toISOString();
         const login = "miron2311";
         const completed = true
         
         
-        this.props.addTask({login: "miron2311", completed:true, name, date})
+        this.props.addTask({login_id: "5d7fc031ffc1684b52083d09", completed:false, name, date})
     }
 
     render() {
@@ -49,6 +50,7 @@ class ConnectedInputItem extends Component {
                 <div className="header">
                     <form onSubmit={this.onAddTask}>
                         <input placeholder="Task" onChange={this.onHandleInput} />
+                        
                         <button type="submit"> Add Task </button>
                         
                     </form>

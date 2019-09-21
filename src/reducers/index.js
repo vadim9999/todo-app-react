@@ -1,6 +1,7 @@
 import * as types from "../constants/action-types";
 
 const initialState = {
+    user:{},
     tasks: [],
     remoteArticles:[]
 }
@@ -35,6 +36,12 @@ function rootReducer(state = initialState, action){
         case "DATA_REQUESTED":
             console.log("Reducers data requested");
             return state;
+
+        case "GET_TASKS_SUCCESS":
+            return Object.assign({}, state, {
+                tasks: action.payload
+            })
+
         default:
             return state;
     }
