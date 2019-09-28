@@ -6,3 +6,4 @@ export const addUser = (payload) => {
         payload
     }
 }
+

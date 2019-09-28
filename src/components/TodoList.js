@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import InputItem from './InputItem'
 import List from "./List"
-import ConnectedLogin from './Login';
+// import ConnectedLogin from './Login/Login';
 import {getTasks} from "../actions/index"
 import {connect} from "react-redux"
 // import { connect } from "react-redux";
@@ -15,6 +15,11 @@ const mapDispatchToProps = (dispatch) =>{
     }
 }
 
+const mapStateToProps = (state) => {
+    return{
+        user_id: state.user._id
+    }
+}
 
 class ConnectedTodoList extends Component {
     constructor(props) {
@@ -24,7 +29,7 @@ class ConnectedTodoList extends Component {
     }
 
     componentDidMount(){
-        this.props.getTasks("5d7fc031ffc1684b52083d09")
+        this.props.getTasks(this.props.user_id)
     }
 
     render() {
@@ -32,10 +37,10 @@ class ConnectedTodoList extends Component {
             <div className="todoListMain">
                 <List />
                 <InputItem />
-                <ConnectedLogin />
+                {/* <ConnectedLogin /> */}
             </div>
         )
     }
 }
-const TodoList = connect(null, mapDispatchToProps)(ConnectedTodoList)
+const TodoList = connect(mapStateToProps, mapDispatchToProps)(ConnectedTodoList)
 export default TodoList

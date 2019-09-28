@@ -11,6 +11,22 @@ export default function* watcherSaga(){
     yield takeEvery("GET_TASKS", workerSagaGetTasks)
     yield takeEvery("DELETE_TASK", workerSagaDeleteTask)
     yield takeEvery("UPDATE_TASK", workerSagaUpdateTask)
+    yield takeEvery("ADD_USER",workerSagaAddUser)
+}
+
+function* workerSagaAddUser({payload}){
+    try{
+       const result = yield call(addUser, payload)
+       console.log(result);
+       
+       yield put({type: "ADD_USER_SUCCESS", payload:result.data, token:result.headers["x-auth-token"] })
+    }catch (e){
+        yield put({type:"ADD_USER_FAILED",e})
+    }
+}
+
+const addUser = (data) =>{
+    return axios.post("http://localhost:1234/user/create_user",data)
 }
 
 function* workerSagaUpdateTask({payload}){
@@ -94,6 +110,7 @@ function* workerSagaAddTask(action){
         const payload = yield call(createTask, action.payload)
         
         yield put({type:"ADD_TASK_SUCCESS", payload: payload.data } )
+        
     }catch(e){
         console.log("error");
         yield put({type:"ADD_TASK_FAILED", e})

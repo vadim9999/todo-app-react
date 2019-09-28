@@ -4,6 +4,8 @@ import './App.css';
 import TodoList from './components/TodoList'
 import Post from "./components/Posts";
 
+import Router from "./Router"
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -14,10 +16,7 @@ class App extends Component {
 
   render() {
     return(
-      <div className="App">
-        <TodoList />
-        {/* <Post /> */}
-      </div>
+      <Router />
     )
     
   }

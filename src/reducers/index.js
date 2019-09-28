@@ -41,7 +41,13 @@ function rootReducer(state = initialState, action){
             return Object.assign({}, state, {
                 tasks: action.payload
             })
-
+        
+        case "ADD_USER_SUCCESS":
+            
+            return {
+                ...state,
+                user: action.payload
+            }
         default:
             return state;
     }

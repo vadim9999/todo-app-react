@@ -1,5 +1,6 @@
 import { ADD_TASK } from "../constants/action-types";
 import { FOUND_WORD, addFoundWord} from "../actions/index"
+import Cookies from 'universal-cookie'
 const forbiddenWords = ["spam", "money"];
 
 export function forbiddenWordsMiddleware({ dispatch }){
@@ -27,6 +28,10 @@ export function forbiddenWordsMiddleware({ dispatch }){
                         return dispatch({type:"FOUND_BAD_WORD"})
 
                     }
+            }
+            if (action.type === "ADD_USER_SUCCESS"){
+                const cookies = new Cookies();
+                cookies.set('user', action.token, {path: '/'})
             }
            
         
