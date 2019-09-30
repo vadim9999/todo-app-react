@@ -2,40 +2,97 @@ import { takeLatest, takeEvery, call, put } from "redux-saga/effects";
 import { ADD_TASK, FOUND_WORD } from "../constants/action-types";
 import axios from "axios";
 import moment from "moment"
-
+import {createTask, getTasks, updateTask, deleteTask} from "./task-requests"
+import {addUser} from "./user-requests"
 export default function* watcherSaga(){
     console.log("Call watcherSaga");
 
-    // yield takeLatest(["DATA_REQUESTED", ADD_TASK], allWorkers)
-    yield takeEvery(ADD_TASK, allWorkers)
-    yield takeEvery("GET_TASKS", allWorkers)
-    yield takeEvery("DELETE_TASK", workerSagaDeleteTask)
-    yield takeEvery("UPDATE_TASK", workerSagaUpdateTask)
-    yield takeEvery("ADD_USER",workerSagaAddUser)
+    yield takeLatest(["ADD_TASK", "GET_TASKS", "UPDATE_TASK", "DELETE_TASK"], allTaskWorkers)
+    // yield takeEvery(ADD_TASK, allWorkers)
+    // yield takeEvery("GET_TASKS", allWorkers)
+    // yield takeEvery("DELETE_TASK", workerSagaDeleteTask)
+    // yield takeEvery("UPDATE_TASK", workerSagaUpdateTask)
+    yield takeEvery("ADD_USER",allUserWorkers)
 
     // yield takeEvery("AUTHENTICATE", workerSagaAuthenticate)
 }
 
 
 
-function* allWorkers(action){
+function* allTaskWorkers(action){
     
     switch(action.type){
         case "ADD_TASK":
-            yield tasksWorker(createTask, action)
+            yield taskWorker({
+                requestFunction:createTask, 
+                action})
             break;
+
         case "GET_TASKS":
-            yield tasksWorker(getTasks, action)
+            yield taskWorker({
+                requestFunction: getTasks, 
+                action})
             break;
+        case "UPDATE_TASK":
+
+            yield taskWorker({action, 
+                callback: taskWorkerUpdateTask})
+            break;
+
+
+        // case "DELETE_TASK": 
+        //     yield taskWorker(deleteTask, action, function* (){
+        //         yield call(deleteTask, action.payload.task_id)
+        //         yield put({type:"DELETE_TASK_SUCCESS"})
+        //         yield put({type:"GET_TASKS", payload: action.payload.login_id})
+        //     })
+        
     }
 }
 
+function* taskWorkerUpdateTask({payload}){
+        yield console.log("callback");
+        yield call(updateTask, payload)
+        yield put({type:"UPDATE_TASK_SUCCESS"})
+        yield put({type:"GET_TASKS", payload: payload.login_id})
+}
 
-function* tasksWorker(requestFunction,{type, payload}){
+function* allUserWorkers(action){
+
+     switch(action.type){
+        case "ADD_USER":
+            yield userWorker(addUser, action)
+            break;
+
+     }
+}
+
+function* userWorker(requestFunction, {type, payload}){
     try{
-        const result = yield call(requestFunction, payload)
         
-        yield put({type: `${type}_SUCCESS`, payload: result.data } )
+        const result = yield call(requestFunction, payload)
+        console.log(result);
+        // @TODO create new obj and place there token and data from response 
+        yield put({type: `${type}_SUCCESS`, payload:result.data, token:result.headers["x-auth-token"] })
+     }catch (e){
+         yield put({type:`${type}_SUCCESS`,e})
+     }
+}
+
+function* taskWorker({requestFunction, action, callback}){
+    yield console.log("********TAsk worker");
+    const {type, payload} = action;
+    try{
+        if(callback !== undefined){
+            
+            yield callback(action)
+            yield console.log("this is workder and calling callback");
+        }else{
+            const result = yield call(requestFunction, payload)
+        
+            yield put({type: `${type}_SUCCESS`, payload: result.data } )
+        }
+        
         
     }catch(e){
         console.log("error");
@@ -74,134 +131,3 @@ function* workerSagaAddUser({payload}){
     }
 }
 
-const addUser = (data) =>{
-    return axios.post("http://localhost:1234/user/create_user",data)
-}
-
-function* workerSagaUpdateTask({payload}){
-    try{
-        yield call(updateTask, payload)
-        yield put({type:"UPDATE_TASK_SUCCESS"})
-        yield put({type:"GET_TASKS", payload: payload.login_id})
-    }catch(e){
-        yield put({type:"GET_TASKS_FAILED"})
-    }
-}
-
-const updateTask = ({_id, name,date, completed}) => {
-    return axios.put(`http://localhost:1234/tasks/${_id}/update`,{
-        name, date, completed
-    })
-}
-
-function* workerSagaDeleteTask({payload}){
-    console.log("delete task saga");
-    
-    try{
-        yield call(deleteTask, payload.task_id)
-        yield put({type:"DELETE_TASK_SUCCESS"})
-        yield put({type:"GET_TASKS", payload: payload.login_id})
-
-    } catch(e){
-        yield put({type:"DELETE_TASK_FAILED"}, e)
-    }
-}
-
-function deleteTask(task_id){
-
-    return axios.delete(`http://localhost:1234/tasks/${task_id}/delete`)
-}
-
-function* workerSagaGetTasks({payload}){
-    console.log("worker saga");
-    console.log("payload worker saga get tasks");
-    console.log(payload);
-    
-    try{
-        const tasks = yield call(getTasks, payload)
-        yield put({type:"GET_TASKS_SUCCESS", payload: tasks.data})
-    }catch (e){
-        yield put({type:"GET_TASKS_FAILED",e})
-    }
-    
-}
-
-function getTasks(login_id){
-
-    return axios.get(`http://localhost:1234/tasks/all_tasks_by_id/${login_id}`)
-}
-
-
-
-function* workerSagaGetData(){
-    console.log("call workerSaga");
-    
-    try {
-        const payload = yield call(getData);
-        yield put({ type: "DATA_LOADED", payload }); 
-    } catch (e) {
-        yield put({ type: "API_ERRORED", payload:e });
-    }
-}
-
-function* workerSagaAddTask(action){
-    console.error("Call workerAddTask");
-    console.log(action);
-    try{
-        const payload = yield call(createTask, action.payload)
-        
-        yield put({type:"ADD_TASK_SUCCESS", payload: payload.data } )
-        
-    }catch(e){
-        console.log("error");
-        yield put({type:"ADD_TASK_FAILED", e})
-        
-    }    
-    // var bodyFormData = new FormData();
-    // bodyFormData.set("name", name)
-    // bodyFormData.set("price", price)
-
-    // axios({
-    //     method: 'post',
-    //     url: 'http://localhost:1234/tasks/create',
-    //     data: bodyFormData,
-    //     config: { headers: {'Content-Type': 'application/x-www-form-urlencoded' }}
-    //     })
-    //     .then(function (response) {
-    //         //handle success
-    //         console.log(response);
-    //     })
-    //     .catch(function (response) {
-    //         //handle error
-    //         console.log(response);
-    //     });
-    
-    
-    
-}
-
-function createTask(payload){
-    console.log("Saga__createTask_payload");
-    const {login_id, name, completed, date} = payload;
-    console.log(payload);
-    console.log(typeof date);
-    console.log(date);
-    
-    // console.log(date.toISOString() );
-    // console.log("back to normal");
-    
-    // console.log(moment(date.toISOString()).format("dddd, MMMM Do YYYY, h:mm:ss a"));
-    
-   return axios.post('http://localhost:1234/tasks/create', {
-        login_id,
-        completed,
-        name: name,
-        date: date
-      })
-
-}
-function getData(){
-    console.log("call getData");
-    
-    return fetch("https://jsonplaceholder.typicode.com/posts").then(response => response.json())
-}
