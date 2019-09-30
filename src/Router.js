@@ -24,7 +24,7 @@ class Router extends React.Component {
                 <Switch>
                     <Route path="/" exact component={Login} />
                     <Route path="/signup" exact component={Signup} />
-                    <PrivateRoute path="/todolist" component={TodoList} />
+                    <Route path="/todolist" component={TodoList} />
                     {/* <Route path="sign" */}
                 </Switch>
             </BrowserRouter>
@@ -44,8 +44,11 @@ const fakeAuth = {
         setTimeout(cb,100)
     }
 }
-const AuthButton = withRouter(({history}) => 
-    fakeAuth.isAuthenticated ? (
+const AuthButton = withRouter(({history}) => {
+    console.log("this is auth button");
+    console.log(history);
+    
+    return fakeAuth.isAuthenticated ? (
         <p>
             Welcome!{" "}
             <button onClick={() =>{
@@ -58,6 +61,8 @@ const AuthButton = withRouter(({history}) =>
             YOu are not logged in.
         </p>
     )
+}
+    
     
     )
 

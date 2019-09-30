@@ -29,7 +29,7 @@ class ConnectedTodoList extends Component {
     }
 
     componentDidMount(){
-        this.props.getTasks(this.props.user_id)
+        this.props.getTasks("5d7fc031ffc1684b52083d09")
     }
 
     render() {

@@ -7,13 +7,62 @@ export default function* watcherSaga(){
     console.log("Call watcherSaga");
 
     // yield takeLatest(["DATA_REQUESTED", ADD_TASK], allWorkers)
-    yield takeEvery(ADD_TASK, workerSagaAddTask)
-    yield takeEvery("GET_TASKS", workerSagaGetTasks)
+    yield takeEvery(ADD_TASK, allWorkers)
+    yield takeEvery("GET_TASKS", allWorkers)
     yield takeEvery("DELETE_TASK", workerSagaDeleteTask)
     yield takeEvery("UPDATE_TASK", workerSagaUpdateTask)
     yield takeEvery("ADD_USER",workerSagaAddUser)
+
+    // yield takeEvery("AUTHENTICATE", workerSagaAuthenticate)
 }
 
+
+
+function* allWorkers(action){
+    
+    switch(action.type){
+        case "ADD_TASK":
+            yield tasksWorker(createTask, action)
+            break;
+        case "GET_TASKS":
+            yield tasksWorker(getTasks, action)
+            break;
+    }
+}
+
+
+function* tasksWorker(requestFunction,{type, payload}){
+    try{
+        const result = yield call(requestFunction, payload)
+        
+        yield put({type: `${type}_SUCCESS`, payload: result.data } )
+        
+    }catch(e){
+        console.log("error");
+        yield put({type:`${type}_FAILED`, e})
+        
+    }  
+}
+    // function* workerSagaAuthenticate
+
+// function* allWorkers(action){
+//     if (action.type === ADD_TASK) {
+//         console.log("Saga_worker_ADD_TASK_action");
+//         console.log(action);
+        
+//         yield workerSagaAddTask(action)
+        
+//     }
+// }
+
+// function worker(work,additionalOperations){
+//     try{
+//         work()
+//         additionalOperation()
+//     }catch (e){
+
+//     }
+// }
 function* workerSagaAddUser({payload}){
     try{
        const result = yield call(addUser, payload)
@@ -82,15 +131,7 @@ function getTasks(login_id){
     return axios.get(`http://localhost:1234/tasks/all_tasks_by_id/${login_id}`)
 }
 
-function* allWorkers(action){
-    if (action.type === ADD_TASK) {
-        console.log("Saga_worker_ADD_TASK_action");
-        console.log(action);
-        
-        yield workerSagaAddTask(action)
-        
-    }
-}
+
 
 function* workerSagaGetData(){
     console.log("call workerSaga");
