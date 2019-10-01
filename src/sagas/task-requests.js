@@ -31,7 +31,7 @@ const updateTask = ({_id, name,date, completed}) => {
     })
 }
 
-function deleteTask(task_id){
+function deleteTask({task_id}){
 
     return axios.delete(`http://localhost:1234/tasks/${task_id}/delete`)
 }
