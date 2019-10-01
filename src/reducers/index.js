@@ -3,7 +3,6 @@ import * as types from "../constants/action-types";
 const initialState = {
     user:{},
     tasks: [],
-    remoteArticles:[]
 }
 
 function rootReducer(state = initialState, action){
@@ -24,15 +23,7 @@ function rootReducer(state = initialState, action){
                 tasks: state.tasks.concat(action.payload)
             })
             
-        case "DATA_LOADED":
-            console.log("actionPayload");
-            
-            console.log(action.payload);
-            
-            return Object.assign({}, state, {
-                remoteArticles: state.remoteArticles.concat(action.payload)
-            })
-            break;
+        
         case "DATA_REQUESTED":
             console.log("Reducers data requested");
             return state;
@@ -48,6 +39,8 @@ function rootReducer(state = initialState, action){
                 ...state,
                 user: action.payload
             }
+
+        
         default:
             return state;
     }

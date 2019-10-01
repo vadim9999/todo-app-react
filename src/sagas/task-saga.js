@@ -58,9 +58,9 @@ function* taskWorker({ requestFunction, action, callback }) {
             yield callback(action)
             yield console.log("this is workder and calling callback");
         } else {
-            const result = yield call(requestFunction, payload)
+            const {data} = yield call(requestFunction, payload)
 
-            yield put({ type: `${type}_SUCCESS`, payload: result.data })
+            yield put({ type: `${type}_SUCCESS`, payload: data })
         }
 
 
