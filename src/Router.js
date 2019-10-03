@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { BrowserRouter, Route, Switch, Link, withRouter, Redirect } from "react-router-dom"
-import {connect} from "react-redux"
-import {authenticate} from "./actions/user"
+import { connect } from "react-redux"
+import { authenticate } from "./actions/user"
 import Login from "./components/Login/Login"
 import Signup from "./components/Signup/Signup"
 import TodoList from "./components/TodoList"
@@ -14,44 +14,55 @@ import Cookies from 'universal-cookie'
 //         a
 //     }
 // }
-const mapStateToProps = (state) =>{
-    return{
-        id: state.user._id
+const mapStateToProps = (state) => {
+    return {
+        user_id: state.user._id
     }
 }
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch) => {
     return {
         authenticate: (cookie) => dispatch(authenticate(cookie))
     }
 }
 class ConnectedRouter extends React.Component {
-    
-    componentDidMount(){
+
+    componentDidMount() {
         const cookies = new Cookies();
         const cookie = cookies.get("user")
         console.log(cookies.get("user"));
-        if(cookie != undefined && cookie != "undefined"){
+        if (cookie != undefined && cookie != "undefined") {
             this.props.authenticate(cookie)
         }
-        
-        
+
+
     }
     render() {
         return (
             <BrowserRouter>
                 <div>
                     {/* <AuthButton /> */}
-                    <ul>
-                        <li>
-                            <Link to="/todolist">Todolist</Link>
-                        </li>
-                        <li>
-                            <Link to="/signup">Signup</Link>
-                        </li>
-                        <li>
-                            <Link to="/"> Login</Link>
-                        </li>
-                    </ul>
+
+                    {
+                        this.props.user_id != undefined ? (
+                            <ul>
+                                <li >
+                                    <Link to="/todolist">Todolist</Link>
+                                </li>
+                            </ul>
+                        ) : (
+                                <ul>
+                                    <li>
+                                        <Link to="/"> Login</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/signup" >Signup</Link>
+                                    </li>
+                                </ul>
+                            )
+
+
+                    }
+
                 </div>
 
                 <Switch>
@@ -81,7 +92,7 @@ class ConnectedRouter extends React.Component {
 // const AuthButton = withRouter(({history}) => {
 //     console.log("this is auth button");
 //     console.log(history);
-    
+
 //     return fakeAuth.isAuthenticated ? (
 //         <p>
 //             Welcome!{" "}
@@ -96,13 +107,13 @@ class ConnectedRouter extends React.Component {
 //         </p>
 //     )
 // }
-    
-    
+
+
 //     )
 
 // function PrivateRoute({component: Component, ...rest }){
 //     console.log("this is private router");
-    
+
 //     return (
 //         <Route 
 //         {...rest}

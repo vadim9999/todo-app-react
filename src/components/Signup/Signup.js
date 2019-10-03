@@ -76,7 +76,7 @@ class ConnectedLogin extends Component {
         
         console.log(this.state.email);
         const {name, email, password, redirect} = this.state;
-        if(redirect) return (<Redirect to={"/todolist"}/>)
+        if(redirect || this.props.user_id != undefined) return (<Redirect to={"/todolist"}/>)
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
