@@ -1,4 +1,4 @@
-import { addUser, authenticate } from "./user-requests"
+import { addUser, authenticate } from "../user-requests/user-requests"
 import { takeLatest, takeEvery, call, put } from "redux-saga/effects";
 
 export default function* allUserWorkers(action) {
@@ -27,7 +27,8 @@ function* userWorker(requestFunction, { type, payload }) {
     try {
 
         const result = yield call(requestFunction, payload)
-        console.log(result);
+        yield console.log("_________________Result of add user")
+        yield console.log(result);
         // @TODO create new obj and place there token and data from response 
         yield put({ type: `${type}_SUCCESS`, payload: result.data, token: result.headers["x-auth-token"] })
     } catch (e) {

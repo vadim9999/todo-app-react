@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { addUser } from "../../actions/user"
 import { getTasks } from "../../actions/index"
 
+import {Redirect} from "react-router-dom"
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -11,6 +12,11 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
+const mapStateToProps= (state)=>{
+    return {
+        user_id: state.user._id
+    }
+}
 class ConnectedLogin extends Component {
     constructor() {
         super()
@@ -18,6 +24,7 @@ class ConnectedLogin extends Component {
             name:"",
             email: "",
             password: "", 
+            redirect:false
         }
         // this.onHandleChangePassword = this.onHandleChangePassword.bind(this)
         // this.onHandleChangeName = this.onHandleChangeName.bind(this)
@@ -27,12 +34,18 @@ class ConnectedLogin extends Component {
 
     onSubmit(e) {
         e.preventDefault()
-        
+        const { name,email,password} = this.state;
         console.log("ddd");
         // this.props.getTasks("5d7e4f0d4048013bee00a823")
         this.props.addUser({
-           ...this.state
+           name,email,password
         })
+
+        if(this.props.user_id != undefined){
+            this.setState({
+                redirect:true
+            })
+        }
         // console.log(cookies.get('myCat'));
 
     }
@@ -42,7 +55,7 @@ class ConnectedLogin extends Component {
 
     }
 
-
+    
     onHandleChange(e){
         console.log(e.target.name);
         
@@ -59,9 +72,11 @@ class ConnectedLogin extends Component {
     // }
 
     render() {
+        console.log("This is SignUp");
+        
         console.log(this.state.email);
-        const {name, email, password} = this.state;
-
+        const {name, email, password, redirect} = this.state;
+        if(redirect) return (<Redirect to={"/todolist"}/>)
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
@@ -76,5 +91,5 @@ class ConnectedLogin extends Component {
     }
 }
 
-const Login = connect(null, mapDispatchToProps)(ConnectedLogin)
+const Login = connect(mapStateToProps, mapDispatchToProps)(ConnectedLogin)
 export default Login;

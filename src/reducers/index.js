@@ -40,7 +40,11 @@ function rootReducer(state = initialState, action){
                 user: action.payload
             }
 
-        
+        case "AUTHENTICATE_SUCCESS":
+            return {
+                ...state, 
+                user: action.payload
+            }
         default:
             return state;
     }

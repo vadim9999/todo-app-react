@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import {Redirect} from "react-router-dom"
-class Login extends Component{
+import {connect} from "react-redux"
+
+const mapStateToProps = (state) =>{
+    return{
+        user_id:state.user_id
+    }
+}
+class ConnectedLogin extends Component{
     constructor(){
         super()
         this.state={
@@ -23,7 +30,7 @@ class Login extends Component{
         let { from } = this.props.location.state || {from:{pathname:"/"}}
         let { redirectToReferrer}  = this.state;
 
-        if (redirectToReferrer) return <Redirect to={from}/>
+        if (redirectToReferrer) return <Redirect to={"/todolist"}/>
 
         return( 
             <div>
@@ -35,4 +42,5 @@ class Login extends Component{
     }
 }
 
+const Login = connect(mapStateToProps)(ConnectedLogin)
 export default Login

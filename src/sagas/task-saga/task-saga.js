@@ -1,4 +1,4 @@
-import { createTask, getTasks, updateTask, deleteTask } from "./task-requests"
+import { createTask, getTasks, updateTask, deleteTask } from "../task-requests/task-requests"
 
 import { takeLatest, takeEvery, call, put } from "redux-saga/effects";
 

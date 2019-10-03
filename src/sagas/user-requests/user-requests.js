@@ -8,9 +8,9 @@ const addUser = (data) =>{
 
 const authenticate = (cookie) =>{
     
-    return axios.get(USER_URL + "current", {}, {
+    return axios.get(USER_URL + "/current", {headers: {
         "x-access-token": cookie
-    })
+    }})
 }
 export {
     addUser, 

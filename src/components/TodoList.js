@@ -5,10 +5,11 @@ import List from "./List"
 import {getTasks} from "../actions/index"
 import {connect} from "react-redux"
 // import { connect } from "react-redux";
-
+import {Redirect} from "react-router-dom"
 // function mapStateToProps(state){
 //     return { tasks: state.tasks }
 // }
+
 const mapDispatchToProps = (dispatch) =>{
     return {
         getTasks: (login_id) => dispatch(getTasks(login_id)) 
@@ -29,10 +30,13 @@ class ConnectedTodoList extends Component {
     }
 
     componentDidMount(){
-        this.props.getTasks("5d7fc031ffc1684b52083d09")
+        const {getTasks, user_id} = this.props;
+        if(user_id != undefined) getTasks(user_id)
     }
 
     render() {
+        if(this.props.user_id === undefined) return (<Redirect to={"/"} />)
+        
         return (
             <div className="todoListMain">
                 <List />
@@ -40,6 +44,7 @@ class ConnectedTodoList extends Component {
                 {/* <ConnectedLogin /> */}
             </div>
         )
+    
     }
 }
 const TodoList = connect(mapStateToProps, mapDispatchToProps)(ConnectedTodoList)

@@ -32,6 +32,10 @@ export function forbiddenWordsMiddleware({ dispatch }){
             if (action.type === "ADD_USER_SUCCESS"){
                 const cookies = new Cookies();
                 cookies.set('user', action.token, {path: '/'})
+                console.log("***********This is midlleware Add USER Success");
+                console.log(action.token);
+                
+                
             }
            
         

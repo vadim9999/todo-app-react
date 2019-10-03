@@ -1,8 +1,8 @@
 import { takeLatest, takeEvery} from "redux-saga/effects";
 import { ADD_TASK, FOUND_WORD } from "../constants/action-types";
 
-import allUserWorkers from "./user-saga"
-import allTaskWorkers from "./task-saga"
+import allUserWorkers from "./user-saga/user-saga"
+import allTaskWorkers from "./task-saga/task-saga"
 
 export default function* watcherSaga() {
     console.log("Call watcherSaga");

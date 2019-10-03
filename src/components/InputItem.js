@@ -9,6 +9,11 @@ import moment from "moment"
 //         addTask: task => dispatch(addTask(task))
 //     }
 // }
+const mapStateToProps = (state) =>{
+    return {
+        user_id: state.user._id
+    }
+}
 
 class ConnectedInputItem extends Component {
     constructor(props) {
@@ -41,7 +46,7 @@ class ConnectedInputItem extends Component {
         const completed = true
         
         
-        this.props.addTask({login_id: "5d7fc031ffc1684b52083d09", completed:false, name, date})
+        this.props.addTask({login_id: this.props.user_id, completed:false, name, date})
     }
 
     render() {
@@ -60,5 +65,5 @@ class ConnectedInputItem extends Component {
     }
 }
 
-const InputItem = connect(null, {addTask})(ConnectedInputItem)
+const InputItem = connect(mapStateToProps, {addTask})(ConnectedInputItem)
 export default InputItem
