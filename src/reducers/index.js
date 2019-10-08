@@ -51,6 +51,12 @@ function rootReducer(state = initialState, action){
                 ...state,
                 user:action.payload
             }
+        case "FILTER_TASKS_ON_COMPLETE":
+            return {
+                ...state,
+                tasks: action.payload
+            }
+            
         default:
             return state;
     }

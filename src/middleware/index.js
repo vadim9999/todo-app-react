@@ -4,16 +4,10 @@ import Cookies from 'universal-cookie'
 const forbiddenWords = ["spam", "money"];
 
 export function forbiddenWordsMiddleware({ dispatch }){
-    console.log("Middleware");
-    console.log(dispatch);
-    
+
     return function(next){
-        console.log("Next");
-        console.log(next);
         
         return function(action){
-            console.log("Middleware___action");
-            console.log(action);
             
             if (action.type === ADD_TASK){
                 console.log("Middleware__action_ADD_TASK");
@@ -29,6 +23,15 @@ export function forbiddenWordsMiddleware({ dispatch }){
 
                     }
             }
+            switch(action.type){
+                case "FILTER_TASKS_ON_COMPLETE":
+                    const result = action.payload.filter(task => !task.completed)
+                    action.payload = result;
+
+                    break;
+
+            }
+
             if (action.type === "ADD_USER_SUCCESS" || action.type === "AUTHORIZATE_SUCCESS"){
                 const cookies = new Cookies();
                 cookies.set('user', action.token, {path: '/'})

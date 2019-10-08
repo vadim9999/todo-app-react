@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment"
-import {getTasks, deleteTaskById} from "../actions"
+import {getTasks, deleteTaskById, filterTasksOnComplete} from "../actions"
 import Task from './Task'
 
 function mapStateToProps(state) {
@@ -13,8 +13,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) =>{
     return {
-        deleteTaskById: (task_id) => dispatch(deleteTaskById(task_id)),
-        getTasks: (login_id) => dispatch(getTasks(login_id)) 
+        filterTasksOnComplete: tasks => dispatch(filterTasksOnComplete(tasks))
     }
 }
 
@@ -22,22 +21,35 @@ class ConnectedList extends Component {
     constructor() {
         super()
         
-        
+        this.state ={
+            isFiltered: false,
+            isSorted:false
+        }
+        this.onClickFilter = this.onClickFilter.bind(this)
     }
 
     componentDidMount(){
         
     }
 
+    onClickFilter(){
+        this.props.filterTasksOnComplete(this.props.tasks)
+    }
    
     render() {
         // console.log(this.props.tasks);
 
     
         return (
+            <div>
+            
+            <button onClick = {this.onClickFilter}>In progress</button>
+            
             <ul>
                 {this.props.tasks.map(
                     task => {
+                    
+                        
                         return (
                             
                             <li key={task["_id"]} >
@@ -47,6 +59,7 @@ class ConnectedList extends Component {
                     }
                 )}
             </ul>
+            </div>
         )
     }
 }

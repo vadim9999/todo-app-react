@@ -44,6 +44,12 @@ export const updateTaskById = payload => {
 //     };
 //   }
 
+export const filterTasksOnComplete = payload =>{
+  return {
+    type: "FILTER_TASKS_ON_COMPLETE", payload
+  }
+}
+
 export function getData() {
   console.log("getData in action");
 
