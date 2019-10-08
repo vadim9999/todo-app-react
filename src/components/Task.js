@@ -11,6 +11,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        user_id: state.user._id
+    }
+}
 class ConnectedTask extends Component {
     constructor(props) {
         super(props)
@@ -29,8 +34,10 @@ class ConnectedTask extends Component {
 
     }
         onDelete(e){
-            console.log(e.target.id);
-            this.props.deleteTaskById({ task_id: this.props.task.task_id, login_id: "5d7fc031ffc1684b52083d09" })
+            // console.log(e.target.id);
+            console.log("__onDelete ", this.props.task._id);
+            
+            this.props.deleteTaskById({ task_id: this.props.task._id, login_id: this.props.user_id })
             // this.props.getTasks("5d7fc031ffc1684b52083d09")
         }
 
@@ -55,7 +62,7 @@ class ConnectedTask extends Component {
                 ...this.props.task,
                 name: this.state.name,
                 completed: this.state.isCompleted,
-                login_id: "5d7fc031ffc1684b52083d09",
+                login_id: this.props.user_id,
                 date: moment().toISOString()
             })
         }
@@ -91,5 +98,5 @@ class ConnectedTask extends Component {
     }
 }
 
-const Task = connect(null, mapDispatchToProps)(ConnectedTask)
+const Task = connect(mapStateToProps, mapDispatchToProps)(ConnectedTask)
 export default Task

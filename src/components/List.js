@@ -38,10 +38,6 @@ class ConnectedList extends Component {
             <ul>
                 {this.props.tasks.map(
                     task => {
-                        console.log("_Component list");
-                        
-                        console.log(moment(task.date).format("HH:mm:ss, dddd DD MMMM YYYY"));
-                        
                         return (
                             
                             <li key={task["_id"]} >

@@ -45,6 +45,12 @@ function rootReducer(state = initialState, action){
                 ...state, 
                 user: action.payload
             }
+
+        case "AUTHORIZATE_SUCCESS":
+            return {
+                ...state,
+                user:action.payload
+            }
         default:
             return state;
     }

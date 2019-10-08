@@ -12,3 +12,9 @@ export const authenticate = (payload) =>{
         type: "AUTHENTICATE", payload
     }
 }
+
+export const authorizate = (payload) =>{
+    return {
+      type: "AUTHORIZATE",payload
+    }
+  }

@@ -1,4 +1,4 @@
-import { addUser, authenticate } from "../user-requests/user-requests"
+import { addUser, authenticate, authorizate } from "../user-requests/user-requests"
 import { takeLatest, takeEvery, call, put } from "redux-saga/effects";
 
 export default function* allUserWorkers(action) {
@@ -10,6 +10,10 @@ export default function* allUserWorkers(action) {
             
         case "AUTHENTICATE":
             yield authenticateUserWorker(authenticate, action)
+            break;
+        
+        case "AUTHORIZATE":
+            yield userWorker(authorizate, action)
             break;
     }
 }

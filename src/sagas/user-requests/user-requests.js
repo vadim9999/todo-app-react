@@ -12,7 +12,13 @@ const authenticate = (cookie) =>{
         "x-access-token": cookie
     }})
 }
+
+const authorizate = (data) =>{
+    return axios.post(USER_URL + "/authorizate", data)
+}
+
 export {
     addUser, 
-    authenticate
+    authenticate,
+    authorizate
 }
