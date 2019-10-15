@@ -2,14 +2,14 @@ import * as types from "../constants/action-types";
 
 const initialState = {
     user:{},
-    tasks: [],
+    tasks: []
 }
 
 function rootReducer(state = initialState, action){
-    console.error("Reducer");
-    console.log(action);
-    console.log("State");
-    console.log(state);
+    // console.error("Reducer");
+    // console.log(action);
+    // console.log("State");
+    // console.log(state);
     
     
     switch (action.type) {
@@ -25,7 +25,7 @@ function rootReducer(state = initialState, action){
             
         
         case "DATA_REQUESTED":
-            console.log("Reducers data requested");
+            // console.log("Reducers data requested");
             return state;
 
         case "GET_TASKS_SUCCESS":
@@ -51,10 +51,17 @@ function rootReducer(state = initialState, action){
                 ...state,
                 user:action.payload
             }
-        case "FILTER_TASKS_ON_COMPLETE":
+        
+        case "SORT_TASKS_BY_GROWTH_DATE":
+            console.log("call reducer sort tasks");
+            
+            return Object.assign({}, state,{
+                tasks: [...action.payload]
+            }) 
+        case "SORT_TASKS_BY_DECREASE_DATE":
             return {
                 ...state,
-                tasks: action.payload
+                tasks: [...action.payload]
             }
             
         default:

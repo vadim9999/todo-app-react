@@ -44,12 +44,19 @@ export const updateTaskById = payload => {
 //     };
 //   }
 
-export const filterTasksOnComplete = payload =>{
-  return {
-    type: "FILTER_TASKS_ON_COMPLETE", payload
+
+export const sortTasksByGrowthDate = payload => {
+  return{
+    type: "SORT_TASKS_BY_GROWTH_DATE", payload
   }
 }
 
+export const sortTasksByDecreaseDate = payload =>{
+  return {
+    type: "SORT_TASKS_BY_DECREASE_DATE", 
+    payload
+  }
+}
 export function getData() {
   console.log("getData in action");
 

@@ -43,7 +43,7 @@ class ConnectedLogin extends Component{
         })
     }
     render(){
-        console.log("Login page");
+        // console.log("Login page");
 
         if (this.props.user_id) return <Redirect to={"/todolist"}/>
 
