@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment"
-import {sortTasksByGrowthDate} from "../actions"
+import {sortTasksByGrowthDate, sortTasksByDecreaseDate} from "../actions"
 import Task from './Task'
 
 function mapStateToProps(state) {
@@ -14,7 +14,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch =>{
     return {
-        sortTasksByGrowthDate: (tasks) => dispatch(sortTasksByGrowthDate(tasks))
+        sortTasksByGrowthDate: (tasks) => dispatch(sortTasksByGrowthDate(tasks)),
+        sortTasksByDecreaseDate: (tasks) => dispatch(sortTasksByDecreaseDate(tasks))
     }
 }
 
@@ -97,25 +98,27 @@ class ConnectedList extends Component {
                 this.setState({
                     isSorted:false,
                     sortOption:sortOption, 
-                    sortOptionName: "Unsort"
+                    sortOptionName: "Sort by growth date"
                 })
                 break;
             case 1:
                 // this.props.filterUncompletedTasks(tasks)
+                this.props.sortTasksByGrowthDate([...this.props.tasks])
+
                 this.setState({
                     isSorted: true,
                     sortOption: sortOption,
-                    sortOptionName: "Sort by growth date"
+                    sortOptionName: "Sort by decrease date"
                 })
                 break;
 
             case 2:
                 // this.props.filterCompletedTasks(tasks)
-                    
+                this.props.sortTasksByDecreaseDate([...this.props.tasks])
                     this.setState({
                         isSorted: true,
                         sortOption: sortOption,
-                        sortOptionName: "Sort by decrease date"
+                        sortOptionName: "Unsort"
             
                     })
             break;
@@ -125,7 +128,7 @@ class ConnectedList extends Component {
                     
         }
 
-        this.props.sortTasksByGrowthDate([...this.props.tasks])
+        
     }
 //    0 - reset(all tasks will be unfiltered)
 //    1 - filter uncompleted tasks

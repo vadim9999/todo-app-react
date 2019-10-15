@@ -30,6 +30,19 @@ export function forbiddenWordsMiddleware({ dispatch }) {
                     console.log("After sorting",tasks);
                     
                     break;
+                case 'SORT_TASKS_BY_DECREASE_DATE':
+                    console.log("Middleware _ decrease date");
+                    const tasks1 = [...action.payload]
+                    console.log("New created object with array",tasks1);
+                    // const tasks = action.payload;
+                    tasks1.sort((task1, task2) => {
+
+                        if (task1.date < task2.date) return 1;
+                        else return -1;
+
+                    })
+                    action.payload = tasks1;
+                    break;
             }
             // if (action.type === ADD_TASK) {
 
