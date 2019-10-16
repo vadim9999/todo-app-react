@@ -32,6 +32,7 @@ class ConnectedList extends Component {
             sortOption:0,
             sortOptionName: "Sort by growth date"
         }
+        
         this.onSort= this.onSort.bind(this)
         this.onClickFilter = this.onClickFilter.bind(this)
     }
@@ -40,6 +41,7 @@ class ConnectedList extends Component {
         
     }
 
+    
     onClickFilter(){
 
         let option = this.state.filterOption;
@@ -85,10 +87,13 @@ class ConnectedList extends Component {
         
     }
 
+    
     onSort(e){
+        console.log(this);
+        
         console.log("call button sort");
         
-        console.log(this.props.tasks);
+        // console.log(this.props.tasks);
 
         let sortOption = this.state.sortOption;
         sortOption = ++sortOption
