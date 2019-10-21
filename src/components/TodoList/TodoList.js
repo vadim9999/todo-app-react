@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import InputItem from './InputItem/InputItem'
-import List from "./List/List"
+import InputItem from '../InputItem/InputItem'
+import List from "../List/List"
 // import ConnectedLogin from './Login/Login';
-import {getTasks} from "../actions/index"
+import {getTasks} from "../../actions/index"
 import {connect} from "react-redux"
 // import { connect } from "react-redux";
 import {Redirect} from "react-router-dom"

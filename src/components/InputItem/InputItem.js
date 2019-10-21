@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { addTask } from "../../actions/index";
 import moment from "moment"
+import "./InputItem.css"
 // function mapDispatchToProps(dispatch){
 //     console.log("Call mapDispatchToProps");
     
@@ -51,7 +52,7 @@ class ConnectedInputItem extends Component {
 
     render() {
         return (
-            <div className="todoListMain">
+            <div className="input-item-block">
                 <div className="header">
                     <form onSubmit={this.onAddTask}>
                         <input placeholder="Task" onChange={this.onHandleInput} />

@@ -57,11 +57,7 @@ export const sortTasksByDecreaseDate = payload =>{
     payload
   }
 }
-export function getData() {
-  console.log("getData in action");
 
-  return { type: "DATA_REQUESTED" };
-}
 
 
 // export function saveTask(){

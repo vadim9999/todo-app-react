@@ -6,7 +6,7 @@ import { connect } from "react-redux"
 import { authenticate } from "./actions/user"
 import Login from "./components/Login/Login"
 import Signup from "./components/Signup/Signup"
-import TodoList from "./components/TodoList"
+import TodoList from "./components/TodoList/TodoList"
 import Cookies from 'universal-cookie'
 
 import "./Router.css"

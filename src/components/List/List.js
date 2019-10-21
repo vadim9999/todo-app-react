@@ -4,6 +4,7 @@ import moment from "moment"
 import {sortTasksByGrowthDate, sortTasksByDecreaseDate} from "../../actions"
 import Task from '../Task/Task'
 
+import "./List.css"
 function mapStateToProps(state) {
     return {
         tasks: state.tasks,
@@ -89,12 +90,7 @@ class ConnectedList extends Component {
 
     
     onSort(e){
-        console.log(this);
         
-        console.log("call button sort");
-        
-        // console.log(this.props.tasks);
-
         let sortOption = this.state.sortOption;
         sortOption = ++sortOption
         if(sortOption === 3) {sortOption = 0;}
@@ -140,15 +136,9 @@ class ConnectedList extends Component {
 //    2 - filter completed tasks
 
     render() {
-        // console.log(this.props.tasks);
-        console.log("Counter", this.state.filterOption);
-        
-        
-        
+
         let {tasks} = this.props;
-       
-        console.log(tasks);
-        
+             
         if(this.state.isFiltered) {
             console.log("call checking conditions");
             if(this.state.filterOption === 1){
@@ -158,17 +148,13 @@ class ConnectedList extends Component {
             }
 
             }
-        // console.log("____List_ filtered tasks", filteredTasks);
-        // console.log("____Data", data);
-        console.log(tasks);
-        console.log(this.state);
-            
+
         return (
-            <div>
+            <div className="list-block">
             
             <button onClick = {this.onClickFilter} >{this.state.filterOptionName}</button>
             <button onClick = {this.onSort}>{this.state.sortOptionName}</button>
-            <ul>
+            <ul className="tasks-list-block">
  
                 {tasks.map(
                     task => {
@@ -176,7 +162,7 @@ class ConnectedList extends Component {
                         
                         return (
                             
-                            <li key={task["_id"]} >
+                            <li className="task-block" key={task["_id"]} >
                                <Task task={task}/>
                             </li>
                         )

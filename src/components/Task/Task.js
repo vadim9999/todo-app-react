@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { addTask, deleteTaskById, updateTaskById } from "../../actions/index";
-
+import "./Task.css"
 import moment from "moment"
 
 const mapDispatchToProps = (dispatch) => {
