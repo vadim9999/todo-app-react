@@ -9,6 +9,7 @@ import Signup from "./components/Signup/Signup"
 import TodoList from "./components/TodoList"
 import Cookies from 'universal-cookie'
 
+import "./Router.css"
 // const mapDispatchToProps = (dispatch) =>{
 //     return {
 //         a
@@ -39,7 +40,7 @@ class ConnectedRouter extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <div>
+                <div class="header-block">
                     {/* <AuthButton /> */}
 
                     {

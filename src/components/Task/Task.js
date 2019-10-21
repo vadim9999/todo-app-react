@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
-import { addTask, deleteTaskById, updateTaskById } from "../actions/index";
+import { addTask, deleteTaskById, updateTaskById } from "../../actions/index";
 
 import moment from "moment"
 

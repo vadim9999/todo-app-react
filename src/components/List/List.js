@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment"
-import {sortTasksByGrowthDate, sortTasksByDecreaseDate} from "../actions"
-import Task from './Task'
+import {sortTasksByGrowthDate, sortTasksByDecreaseDate} from "../../actions"
+import Task from '../Task/Task'
 
 function mapStateToProps(state) {
     return {
