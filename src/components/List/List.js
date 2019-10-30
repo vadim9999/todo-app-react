@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment"
-import {sortTasksByGrowthDate, sortTasksByDecreaseDate} from "../../actions"
+import { sortTasksByGrowthDate, sortTasksByDecreaseDate } from "../../actions"
 import Task from '../Task/Task'
 
 import "./List.css"
@@ -13,7 +13,7 @@ function mapStateToProps(state) {
     }
 }
 
-const mapDispatchToProps = dispatch =>{
+const mapDispatchToProps = dispatch => {
     return {
         sortTasksByGrowthDate: (tasks) => dispatch(sortTasksByGrowthDate(tasks)),
         sortTasksByDecreaseDate: (tasks) => dispatch(sortTasksByDecreaseDate(tasks))
@@ -23,41 +23,41 @@ const mapDispatchToProps = dispatch =>{
 class ConnectedList extends Component {
     constructor() {
         super()
-        
-        this.state ={
+
+        this.state = {
             isFiltered: false,
-            isSorted:false,
+            isSorted: false,
             filterOption: 0,
             filterOptionName: "Display uncompleted tasks",
             isSorted: false,
-            sortOption:0,
+            sortOption: 0,
             sortOptionName: "Sort by growth date"
         }
-        
-        this.onSort= this.onSort.bind(this)
+
+        this.onSort = this.onSort.bind(this)
         this.onClickFilter = this.onClickFilter.bind(this)
     }
 
-    componentDidMount(){
-        
+    componentDidMount() {
+
     }
 
-    
-    onClickFilter(){
+
+    onClickFilter() {
 
         let option = this.state.filterOption;
         option = ++option;
         console.log("Option", option);
-        
-        if(option === 3) {option = 0;}
+
+        if (option === 3) { option = 0; }
         console.log("after assigne option");
         console.log(option);
-        
-        switch(option){
+
+        switch (option) {
             case 0:
                 this.setState({
-                    isFiltered:false,
-                    filterOption:option, 
+                    isFiltered: false,
+                    filterOption: option,
                     filterOptionName: "Display uncompleted tasks"
                 })
                 break;
@@ -72,33 +72,33 @@ class ConnectedList extends Component {
 
             case 2:
                 // this.props.filterCompletedTasks(tasks)
-                    
-                    this.setState({
-                        isFiltered: true,
-                        filterOption: option,
-                        filterOptionName: "Display all tasks"
-            
-                    })
-            break;
+
+                this.setState({
+                    isFiltered: true,
+                    filterOption: option,
+                    filterOptionName: "Display all tasks"
+
+                })
+                break;
             default:
-               
-            break;
-                    
+
+                break;
+
         }
-        
+
     }
 
-    
-    onSort(e){
-        
+
+    onSort(e) {
+
         let sortOption = this.state.sortOption;
         sortOption = ++sortOption
-        if(sortOption === 3) {sortOption = 0;}
-        switch(sortOption){
+        if (sortOption === 3) { sortOption = 0; }
+        switch (sortOption) {
             case 0:
                 this.setState({
-                    isSorted:false,
-                    sortOption:sortOption, 
+                    isSorted: false,
+                    sortOption: sortOption,
                     sortOptionName: "Sort by growth date"
                 })
                 break;
@@ -116,59 +116,64 @@ class ConnectedList extends Component {
             case 2:
                 // this.props.filterCompletedTasks(tasks)
                 this.props.sortTasksByDecreaseDate([...this.props.tasks])
-                    this.setState({
-                        isSorted: true,
-                        sortOption: sortOption,
-                        sortOptionName: "Unsort"
-            
-                    })
-            break;
+                this.setState({
+                    isSorted: true,
+                    sortOption: sortOption,
+                    sortOptionName: "Unsort"
+
+                })
+                break;
             default:
-               
-            break;
-                    
+
+                break;
+
         }
 
-        
+
     }
-//    0 - reset(all tasks will be unfiltered)
-//    1 - filter uncompleted tasks
-//    2 - filter completed tasks
+    //    0 - reset(all tasks will be unfiltered)
+    //    1 - filter uncompleted tasks
+    //    2 - filter completed tasks
 
     render() {
 
-        let {tasks} = this.props;
-             
-        if(this.state.isFiltered) {
+        let { tasks } = this.props;
+
+        if (this.state.isFiltered) {
             console.log("call checking conditions");
-            if(this.state.filterOption === 1){
+            if (this.state.filterOption === 1) {
                 tasks = tasks.filter(task => !task.completed)
-            }else {
+            } else {
                 tasks = tasks.filter(task => task.completed)
             }
 
-            }
+        }
 
         return (
             <div className="list-block">
-            
-            <button onClick = {this.onClickFilter} >{this.state.filterOptionName}</button>
-            <button onClick = {this.onSort}>{this.state.sortOptionName}</button>
-            <ul className="tasks-list-block">
- 
-                {tasks.map(
-                    task => {
-                    
-                        
-                        return (
-                            
-                            <li className="task-block" key={task["_id"]} >
-                               <Task task={task}/>
-                            </li>
-                        )
-                    }
-                )}
-            </ul>
+                <div>
+                <button onClick={this.onClickFilter} >{this.state.filterOptionName}</button>
+                <button onClick={this.onSort}>{this.state.sortOptionName}</button>
+                
+                </div>
+                <div className="block-animation">
+                    <ul className="tasks-list-block">
+
+                        {tasks.map(
+                            task => {
+
+
+                                return (
+
+                                    <li className="task-block" key={task["_id"]} >
+                                        <Task task={task} />
+                                    </li>
+                                )
+                            }
+                        )}
+                    </ul>
+                </div>
+
             </div>
         )
     }

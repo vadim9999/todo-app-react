@@ -1,17 +1,62 @@
 .list-block{
-    border: solid 2px blue
+    border: solid 2px blue;
+
+    display:flex;
+    flex-direction:column;
+    align-items: flex-start;
+    /* justify-content: flex-start; */
 }
 
 .task-block{
-    border: solid 2px mediumvioletred;
-
+    /* border: 2px solid mediumvioletred; */
+    /* background:black */
+    
     
 }
 
 .tasks-list-block{
+    /* border:2px solid green; */
+    padding:0px;
     list-style:none;
     display:flex;
     flex-direction: column;
     width:600px;
+    font-size: larger;
+    /* background:white; */
+    margin:0px;
 }
 
+.block-animation{
+    background: radial-gradient( rgba(3, 161, 3, 0.568) 30%, rgba(90, 10, 10, 0.425) 60%);
+    /* padding:5px; */
+    /* width:620px; */
+    padding:5px;
+    border-radius:3px;
+    background-size:200% 200%;
+    /* background-position: 150% 150%  */
+    /* background-position: 100% 50%  */
+    /* background-position: 100% 50%; */
+    /* background: linear-gradient(90deg,green,white);
+        background-position: 200% 290%  */
+
+    animation: gradientb 15s ease infinite;
+}
+
+ @keyframes gradientb{
+     
+    0% {
+       background-position: 0% 0%;
+    }
+    25% {
+        background-position: 100% 0%
+    }
+    50%{
+        background-position: 100% 100%
+    }
+    85%{
+        background-position: 0% 100%
+    }
+    100% {
+        background-position: 0% 0%
+    }
+ }  

@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { addTask, deleteTaskById, updateTaskById } from "../../actions/index";
 import "./Task.css"
 import moment from "moment"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt, faSave } from '@fortawesome/free-solid-svg-icons'
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -23,8 +25,8 @@ class ConnectedTask extends Component {
         this.state = {
             isHiddenInput: true,
             name: this.props.task.name,
-            isCompleted: this.props.task.completed
-
+            isCompleted: this.props.task.completed,
+            size: 1,
         }
         this.onDelete = this.onDelete.bind(this)
         this.onClickTaskName = this.onClickTaskName.bind(this)
@@ -33,67 +35,88 @@ class ConnectedTask extends Component {
         this.onCheck = this.onCheck.bind(this)
 
     }
-        onDelete(e){
-            // console.log(e.target.id);
-            console.log("__onDelete ", this.props.task._id);
-            
-            this.props.deleteTaskById({ task_id: this.props.task._id, login_id: this.props.user_id })
-            // this.props.getTasks("5d7fc031ffc1684b52083d09")
-        }
+    onDelete(e) {
+        // console.log(e.target.id);
+        console.log("__onDelete ", this.props.task._id);
 
-        onClickTaskName(e){
-            e.preventDefault()
-            console.log("its clicked task");
-            console.log(e.target);
-            this.setState({
-                isHiddenInput: !this.state.isHiddenInput
-            })
-        }
+        this.props.deleteTaskById({ task_id: this.props.task._id, login_id: this.props.user_id })
+        // this.props.getTasks("5d7fc031ffc1684b52083d09")
+    }
+
+    onClickTaskName(e) {
+        e.preventDefault()
+        console.log("its clicked task");
+        console.log(e.target);
+        this.setState({
+            isHiddenInput: !this.state.isHiddenInput,
+            size: this.state.name.length
+        })
+    }
 
 
-        onSave(e){
-            e.preventDefault()
+    onSave(e) {
+        e.preventDefault()
 
-            console.log("on save");
-            this.setState({
-                isHiddenInput: !this.state.isHiddenInput,
-            })
-            this.props.updateTaskById({
-                ...this.props.task,
-                name: this.state.name,
-                completed: this.state.isCompleted,
-                login_id: this.props.user_id,
-                date: moment().toISOString()
-            })
-        }
+        console.log("on save");
+        this.setState({
+            isHiddenInput: !this.state.isHiddenInput,
+        })
+        this.props.updateTaskById({
+            ...this.props.task,
+            name: this.state.name,
+            completed: this.state.isCompleted,
+            login_id: this.props.user_id,
+            date: moment().toISOString()
+        })
+    }
 
-        onChange(e){
-            console.log("on change");
-            this.setState({
-                name: e.target.value
-            })
-        }
+    onChange(e) {
+        console.log("on change");
+        this.setState({
+            name: e.target.value,
 
-        onCheck(){
-            this.setState({
-                isCompleted: !this.state.isCompleted,
-                isHiddenInput: !this.state.isHiddenInput,
+        })
+    }
 
-            })
-        }
+    onCheck() {
+        this.setState({
+            isCompleted: !this.state.isCompleted,
+            isHiddenInput: !this.state.isHiddenInput,
+
+        })
+    }
 
     render() {
-        const {task} = this.props;
+        const { task } = this.props;
         return (
-            <div style={ task.completed ?{textDecoration: "line-through"} : {}}>
-                <input type="checkbox" checked={this.state.isCompleted} onChange={this.onCheck} ></input>
-                <input onChange={this.onChange} value={this.state.name} hidden={this.state.isHiddenInput}></input>
+            
 
-                <a  onClick={this.onClickTaskName} hidden={!this.state.isHiddenInput} >{task.name + "   "}</a>
-                {moment(task.date).format("HH:mm:ss, dddd DD MMMM YYYY")}
-                <button hidden={this.state.isHiddenInput} onClick={this.onSave}>Save</button>
-                <button onClick={this.onDelete} >delete</button>
+            
+            <div className="task" >
+            
+                <div className="task-header" style={task.completed ? { textDecoration: "line-through" } : {}}>
+                    <input type="checkbox" className="checkbox-task" checked={this.state.isCompleted} onChange={this.onCheck} ></input>
+                    <input type="text" className="input-change-task" size={this.state.size} onChange={this.onChange} value={this.state.name} hidden={this.state.isHiddenInput}></input>
+
+                    <a onClick={this.onClickTaskName} hidden={!this.state.isHiddenInput} >{task.name + "   "}</a>
+                    
+                </div>
+
+                <div className="additional-btn">
+                    <div hidden={this.state.isHiddenInput} className="save-btn" onClick={this.onSave}  >
+                        <FontAwesomeIcon icon={faSave} />
+                    </div>
+
+                    <div className="delete-btn" onClick={this.onDelete}>
+                    <FontAwesomeIcon  icon={faTrashAlt} />
+                    </div>
+                    <div className="date">{moment(task.date).format("HH:mm:ss, DD.MM.YYYY")}</div>
+
+                </div>
+
             </div>
+            
+        
         )
     }
 }

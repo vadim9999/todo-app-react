@@ -1,3 +1,112 @@
-.delete-btn{
+
+
+.task{
+    /* border: 2px solid gray;  */
     
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:10px;
+    /* border-radius:5px 5px 0px 5px;
+     */
+    border-radius: 5px;
+    padding:5px;
+    /* background: black; */
+    
+    box-shadow: 5px 10px 10px rgba(100,0,0, 0.5), 5px 10px 10px rgba(100,0,0, 0.2);
+    /* box-shadow: 5px 10px 10px rgba(100,0,0, 0.5); */
+    height: 20px;
+    /* equal */
+    /* transition: height 0.5s, transform 0.5s;
+    transition-timing-function: linear;
+    transition-delay: 0.5s; */
+    
+    /* transition: height 0.5s linear 0.6s; */
+
+    
+    background: linear-gradient(45deg, rgba(22, 1, 1, 0.815), 
+    rgba(173, 5, 5, 0.815), 
+    rgba(194, 69, 69, 0.925), 
+    rgb(177, 161, 161));
+    
+    /* animation */
+    /* animation-name: example; 
+    animation-duration: 10s; 
+    animation-delay: 3s;
+    animation-direction: alternate; */
+    /* animation-iteration-count: infinite; */
+    /* -------------------------------- */
 }
+
+@keyframes example {
+    /* from {} 
+    to {background: linear-gradient(to right, red, rgb(141, 64, 141) );;} */
+
+    /* 25% {background: linear-gradient(to right, rgb(27, 15, 15), rgb(211, 76, 211));;} */
+    /* 0% {background-position:0% 50%}
+    50% {background-position: 100% 50%}
+    100% {background-position:0% 50%} */
+
+    0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+		
+    /* 0% {background: linear-gradient(to right, red, rgb(141, 64, 141));;}
+    25% {background: linear-gradient(to right, rgb(27, 15, 15), rgb(211, 76, 211));;}
+    50% {background-color: rgba(201, 201, 201, 0.966);}
+    100% {background-color: rgb(201, 201, 201);} */
+  }
+
+.task:hover {
+    /* height: 50px; */
+    
+    background-size:150% 150%;
+    animation: example 3s ease infinite;
+    /* animation-name: example; 
+    animation-duration: 1s; 
+     animation-delay: 0.5s;
+    animation-direction: ease;
+    animation-iteration-count: infinite; */
+
+    /* box-shadow: 25px 20px 10px rgba(100,0,0, 0.2); */
+}
+
+.additional-btn{
+    display: flex;
+    align-items: center
+}   
+
+.delete-btn{
+    margin: 0px 10px 0px 10px;
+}
+.input-change-task{
+    font-size:large;
+    background-color: rgba(49, 4, 4, 0);
+    border:none;
+    color:white;
+    width:20px;
+    height: 20px;
+}
+
+.task-header{
+    display: flex;
+    align-items: center;
+}
+.date{
+    font-size:smaller
+
+}
+
+.checkbox-task{
+    width:20px;
+    height:20px;
+}
+/* a::before{
+    content:"Read this man!!!"
+} */
