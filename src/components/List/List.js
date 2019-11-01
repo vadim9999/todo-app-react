@@ -151,7 +151,7 @@ class ConnectedList extends Component {
 
         return (
             <div className="list-block">
-                <div>
+                <div className="btn-block">
                 <button onClick={this.onClickFilter} >{this.state.filterOptionName}</button>
                 <button onClick={this.onSort}>{this.state.sortOptionName}</button>
                 

@@ -16,3 +16,69 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+input{
+  color:white;
+  background: linear-gradient(-45deg,rgba(255, 0, 0, 0.514), rgba(73, 13, 13, 0.692),rgb(73, 5, 5));
+  border:none;
+    border-radius: 10px;
+  /* margin:0px; */
+    font-size: large;
+    box-shadow:2px 3px 5px 3px rgb(189, 64, 64);
+    background-size:200% 200%;
+    animation: inputShadow 5s ease infinite, inputAnimation 5s ease infinite;
+    /* transform: scale(0); */
+    /* transition: scale 0.4s ease 10s; */
+    text-shadow: 2px 2px 2px rgb(36, 36, 184);
+    /* border:1px solid deeppink; */
+
+    margin: 10px 0px 10px 0px;
+}
+
+input:hover{
+  box-shadow: 1px 2px 5px 5px rgb(148, 224, 35), 2px 2px 10px 6px rgb(194, 69, 69);
+  /* transform: scale(1.2); */
+  animation: none;
+}
+
+@keyframes inputShadow{
+  0%{
+      box-shadow: 1px 2px 5px 3px rgb(54, 6, 6)
+  }
+  50%{
+      box-shadow: 2px 3px 10px 5px rgb(189, 80, 80) 
+  }
+  100%{
+      box-shadow: 1px 2px 5px 3px rgb(54, 6, 6)
+  }
+}
+@keyframes inputAnimation{
+  0%{
+      background-position: 0% 100%;
+  }
+  50%{
+      background-position: 100% 50%;
+  }
+  100%{
+      background-position:0% 100%;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  /* border: 1px solid green; */
+ -webkit-text-fill-color: white; 
+ /* -webkit-box-shadow: 0 0 0px 1000px  inset; */
+  
+  /* background:yellow; */
+  background-color:green;
+  transition: background-color 5000s ease-in-out 0s; 
+}
+

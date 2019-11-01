@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {Redirect} from "react-router-dom"
 import {connect} from "react-redux"
 import {authorizate} from "../../actions/user"
+import "./Login.css"
 const mapStateToProps = (state) =>{
     return{
         user_id:state.user._id
@@ -49,11 +50,13 @@ class ConnectedLogin extends Component{
 
         return( 
             
-            <div>
-            <form onSubmit = {this.login}>
-                <input onChange={this.onHandleChange} value={this.state.email} type="email" name="email"></input>
-                <input onChange={this.onHandleChange} value={this.state.password} type="password" name="password"></input>
-                <button type="submit">Login</button>
+            <div className = "login-block">
+            <form className="login-form" onSubmit = {this.login}>
+                <label>Email:</label>
+                <input className ="input-email" onChange={this.onHandleChange} value={this.state.email} type="email" name="email"></input>
+                <label>Password:</label>
+                <input className = "input-pass" onChange={this.onHandleChange} value={this.state.password} type="password" name="password"></input>
+                <button className = "btn-login" type="submit">Login</button>
             </form>
             </div>
         

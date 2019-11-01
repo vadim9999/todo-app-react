@@ -55,9 +55,9 @@ class ConnectedInputItem extends Component {
             <div className="input-item-block">
                 <div className="header">
                     <form onSubmit={this.onAddTask}>
-                        <input type="text" onChange={this.onHandleInput} />
+                        <input className="input-task" type="text" onChange={this.onHandleInput} />
                         
-                        <button type="submit"> Add Task </button>
+                        <button className = "add-btn " type="submit"> Add Task </button>
                         
                     </form>
                 </div>

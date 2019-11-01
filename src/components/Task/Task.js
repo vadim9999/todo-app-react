@@ -96,7 +96,7 @@ class ConnectedTask extends Component {
             
                 <div className="task-header" style={task.completed ? { textDecoration: "line-through" } : {}}>
                     <input type="checkbox" className="checkbox-task" checked={this.state.isCompleted} onChange={this.onCheck} ></input>
-                    <input type="text" className="input-change-task" size={this.state.size} onChange={this.onChange} value={this.state.name} hidden={this.state.isHiddenInput}></input>
+                    <input type="text" className="input-change-task"  onChange={this.onChange} value={this.state.name} hidden={this.state.isHiddenInput}></input>
 
                     <a onClick={this.onClickTaskName} hidden={!this.state.isHiddenInput} >{task.name + "   "}</a>
                     

@@ -36,8 +36,20 @@
     animation-direction: alternate; */
     /* animation-iteration-count: infinite; */
     /* -------------------------------- */
+    
 }
 
+@keyframes currentTask{
+    0%{
+        transform: translate(0px, 0px)
+    }
+    50%{
+        transform: translate(50px,0px)
+    }
+    100%{
+        transform: translate( 0px,0px)
+    }
+}
 @keyframes example {
     /* from {} 
     to {background: linear-gradient(to right, red, rgb(141, 64, 141) );;} */
@@ -89,9 +101,9 @@
     font-size:large;
     background-color: rgba(49, 4, 4, 0);
     border:none;
-    color:white;
-    width:20px;
-    height: 20px;
+    /* color:white; */
+    
+    font-size:large;
 }
 
 .task-header{
@@ -106,6 +118,7 @@
 .checkbox-task{
     width:20px;
     height:20px;
+    background:black;
 }
 /* a::before{
     content:"Read this man!!!"

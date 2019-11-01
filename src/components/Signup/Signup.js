@@ -4,7 +4,7 @@ import { addUser } from "../../actions/user"
 import { getTasks } from "../../actions/index"
 
 import {Redirect} from "react-router-dom"
-
+import "./Signup.css"
 function mapDispatchToProps(dispatch) {
     return {
         addUser: (data) => dispatch(addUser(data)),
@@ -78,10 +78,13 @@ class ConnectedLogin extends Component {
         const {name, email, password, redirect} = this.state;
         if(redirect || this.props.user_id != undefined) return (<Redirect to={"/todolist"}/>)
         return (
-            <div>
-                <form onSubmit={this.onSubmit}>
+            <div className="signup-block">
+                <form className = "signup-form" onSubmit={this.onSubmit}>
+                    <label>Name:</label>
                     <input onChange={this.onHandleChange} value={name} type="text" name="name"></input>
+                    <label>Email:</label>
                     <input onChange={this.onHandleChange} value={email} type="email" name="email" />
+                    <label>Password:</label>
                     <input onChange={this.onHandleChange} value={password} type="password" name="password" />
                     <button type="submit" >Save</button>
                 </form>

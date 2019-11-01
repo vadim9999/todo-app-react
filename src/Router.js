@@ -45,20 +45,18 @@ class ConnectedRouter extends React.Component {
 
                     {
                         this.props.user_id != undefined ? (
-                            <ul>
-                                <li >
-                                    <Link to="/todolist">Todolist</Link>
-                                </li>
-                            </ul>
+                                    <div className="header-block-btns">
+                                    <Link to="/todolist"><button>Todolist</button></Link>
+                                    <Link to="/signout"><button>SignOut</button></Link>
+                                    </div>
                         ) : (
-                                <ul>
-                                    <li>
-                                        <Link to="/"> Login</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/signup" >Signup</Link>
-                                    </li>
-                                </ul>
+                               <div>
+
+                               
+                                        <Link to="/"><button>Login</button></Link>
+                                        <a> or</a>
+                                        <Link to="/signup" ><button>Signup</button></Link>
+                                        </div>
                             )
 
 

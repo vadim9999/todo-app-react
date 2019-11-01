@@ -9,11 +9,12 @@
 }
 
 .main-block{
-  border: solid 2px green;
+  /* border: solid 2px green; */
   padding:5px;
   display: flex;
   flex-direction: column;
-  align-items: stretch
+  /* align-items: stretch; */
+  height:98vh;
 }
 
 .App-header {

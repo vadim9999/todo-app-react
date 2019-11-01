@@ -1,3 +1,15 @@
 .header-block{
-    border: solid 2px magenta;
+    /* border: solid 2px magenta; */
+    border-radius:5px;
+    padding:10px;
+    background: linear-gradient( -45deg,rgba(146, 45, 45, 0.685), 
+    rgba(73, 13, 13, 0.664), 
+    rgb(173, 99, 99), 
+    rgba(136, 18, 18, 0.651))
+}
+
+.header-block-btns{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

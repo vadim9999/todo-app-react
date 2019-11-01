@@ -1,0 +1,63 @@
+
+.login-block{
+    /* border: 2px solid red; */
+
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    height: 70vh;
+    justify-content: center;
+    /* justify-content: stretch; */
+}
+.login-form{
+    /* border: 2px solid green; */
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    
+}
+.btn-login{
+    align-self: flex-end;
+    margin:5px 5px 0px 0px;
+    
+    
+}
+.btn-login:hover{
+    animation: loginRotation 1s linear 1
+}
+
+@keyframes loginRotation{
+    0%{
+        transform:translate(0px, 0px)
+    }
+    25%{
+        transform:translate(20px, 0px)
+    }
+    50%{
+        transform: translate(-20px, 0px)
+    }
+    100%{
+        transform:translate( 0px,0px)
+    }
+}
+label{
+    color: rgba(247, 233, 233, 0.733);
+    align-self: flex-start;
+}
+
+.input-email,.input-pass{
+    
+    height: 30px;
+    
+    
+}
+
+
+.input-email{
+    
+    /* background-size:200% 200%; */
+    /* animation: inputAnimationEmail 4s ease infinite; */
+}
+
+
+

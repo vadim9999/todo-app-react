@@ -1,3 +1,72 @@
 .input-item-block{
-    border: solid 2px red;
+    /* border: solid 2px red; */
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+    justify-content: center;
+    margin:20px;
+    padding:10px;
 }
+
+.input-task{
+    background:rgba(190, 99, 99, 0.658);
+    height:30px;
+    font-size:large;
+    color:white;
+    border:none;
+    border-radius:10px;
+    box-shadow: 1px 2px 15px 4px rgb(88, 192, 28);
+    
+    transform: translate(0px, 0px);
+    /* transition: translate 0s linear 10s */
+    animation: animation-input 1s ease 1;
+}
+
+.input-task:hover{
+    /* transform: translate(50px, 100px); */
+    
+}
+.add-btn{
+    /* transform:rotate(20deg) */
+    /* transform: translate(50px, 100px) */
+    /* transform: rotate(-20deg) */
+    /* transform: scale(2,3); */
+    /* transform: scaleX(2) */
+    /* transform: skewX(20deg) */
+    /* transform: skewY(20deg) */
+    /* transform: rotateX(100deg) */
+    /* transform: rotateZ(10deg) */
+    animation: rotate-btn 5s ease infinite;
+    /* transform: rotate(100deg) */
+}
+
+@keyframes animation-input{
+    0%{
+        transform: translate(0px, 0px);
+    }
+    25%{
+        transform:translate(5px,5px);
+    }
+    50%{
+        transform:translate(-5px, -5px)
+    }
+    100%{
+        transform:translate(0px, 0px)
+    }
+
+}
+@keyframes rotate-btn{
+    0%{
+        transform:rotate(0deg)
+    }
+    25%{
+        transform:rotate(100deg)
+    }
+    50%{
+        transform:rotate(-100deg)
+    }
+    100%{
+        transform: rotate(0deg)
+    }
+}
+
