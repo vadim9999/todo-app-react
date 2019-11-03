@@ -2,7 +2,9 @@ import * as types from "../constants/action-types";
 
 const initialState = {
     user:{},
-    tasks: []
+    tasks: [],
+    currentPage: 0,
+
 }
 
 function rootReducer(state = initialState, action){
@@ -30,7 +32,8 @@ function rootReducer(state = initialState, action){
 
         case "GET_TASKS_SUCCESS":
             return Object.assign({}, state, {
-                tasks: action.payload
+                tasks: action.payload,
+
             })
         
         case "ADD_USER_SUCCESS":
@@ -63,7 +66,12 @@ function rootReducer(state = initialState, action){
                 ...state,
                 tasks: [...action.payload]
             }
-            
+        
+        case "ADD_CURRENT_PAGE":
+            return {
+                ...state, 
+                currentPage: action.payload
+            }
         default:
             return state;
     }

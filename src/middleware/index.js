@@ -12,6 +12,7 @@ export function forbiddenWordsMiddleware({ dispatch }) {
             
 
             switch (action.type) {
+                
                 case "SORT_TASKS_BY_GROWTH_DATE":
                     console.log("__Middleware_sortTasks");
                     console.log("Before sorting",action.payload);

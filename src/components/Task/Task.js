@@ -61,7 +61,7 @@ class ConnectedTask extends Component {
             console.log("on save");
             this.setState({
                 isHiddenInput: !this.state.isHiddenInput,
-                
+               
             })
             this.props.updateTaskById({
                 ...this.props.task,

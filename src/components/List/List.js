@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import moment from "moment"
 import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks } from "../../actions"
 import Task from '../Task/Task'
-
+import Pagination from '../Pagination/Pagination'
 import "./List.css"
 function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         filteredTasks: state.filteredTasks,
-        date: state.date, 
-        user_id: state.user._id 
+        date: state.date,
+        user_id: state.user._id,
+        currentPage: state.currentPage
     }
 }
 
@@ -18,7 +19,7 @@ const mapDispatchToProps = dispatch => {
     return {
         sortTasksByGrowthDate: (tasks) => dispatch(sortTasksByGrowthDate(tasks)),
         sortTasksByDecreaseDate: (tasks) => dispatch(sortTasksByDecreaseDate(tasks)),
-        getTasks:(user_id) => dispatch(getTasks(user_id))
+        getTasks: (user_id) => dispatch(getTasks(user_id))
     }
 }
 
@@ -138,7 +139,42 @@ class ConnectedList extends Component {
     //    0 - reset(all tasks will be unfiltered)
     //    1 - filter uncompleted tasks
     //    2 - filter completed tasks
+    displayTasks(tasks) {
+        const result = []
+        const firstItem = this.props.currentPage * 10;
+        // const lastItem = firstItem + 9;
+        let lastTask;
+        let lengthTasksInCurrentPage = (tasks.length - 1) - firstItem;
+        if (lengthTasksInCurrentPage <= 9)
+            lastTask = firstItem + lengthTasksInCurrentPage;
+        else
+            lastTask = firstItem + 9;
 
+        for (let currentTask = firstItem; currentTask <= lastTask; currentTask++) {
+            console.log(tasks[currentTask]);
+            result.push(
+                <li className="task-block" key={tasks[currentTask]["_id"]} >
+                    <Task task={tasks[currentTask]} />
+                </li>
+                )
+
+        }
+        // const result = tasks.map(
+        //     (task, index) => {
+
+
+        //         return (
+
+        //             <li className="task-block" key={task["_id"]} >
+        //                 <Task task={task} />
+        //             </li>
+        //         )
+        //     }
+        // )
+        console.log("result", result);
+
+        return result;
+    }
     render() {
 
         let { tasks } = this.props;
@@ -156,28 +192,17 @@ class ConnectedList extends Component {
         return (
             <div className="list-block">
                 <div className="btn-block">
-                <button onClick={this.onClickFilter} >{this.state.filterOptionName}</button>
-                <button onClick={this.onSort}>{this.state.sortOptionName}</button>
-                
+                    <button onClick={this.onClickFilter} >{this.state.filterOptionName}</button>
+                    <button onClick={this.onSort}>{this.state.sortOptionName}</button>
+
                 </div>
                 <div className="block-animation">
                     <ul className="tasks-list-block">
 
-                        {tasks.map(
-                            task => {
-
-
-                                return (
-
-                                    <li className="task-block" key={task["_id"]} >
-                                        <Task task={task} />
-                                    </li>
-                                )
-                            }
-                        )}
+                        {this.displayTasks(tasks)}
                     </ul>
                 </div>
-
+                <Pagination />
             </div>
         )
     }

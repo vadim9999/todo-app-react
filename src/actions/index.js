@@ -58,7 +58,12 @@ export const sortTasksByDecreaseDate = payload =>{
   }
 }
 
-
+export const addCurrentPage = payload =>{
+  return {
+    type: "ADD_CURRENT_PAGE",
+    payload
+  }
+}
 
 // export function saveTask(){
 //   return { type: "SAVE_TASK"}

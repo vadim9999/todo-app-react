@@ -46,7 +46,9 @@ class ConnectedInputItem extends Component {
         const login = "miron2311";
         const completed = true
         
-        
+        this.setState({
+            name:""
+        })
         this.props.addTask({login_id: this.props.user_id, completed:false, name, date})
     }
 
@@ -55,7 +57,7 @@ class ConnectedInputItem extends Component {
             <div className="input-item-block">
                 <div className="header">
                     <form onSubmit={this.onAddTask}>
-                        <input className="input-task" type="text" onChange={this.onHandleInput} />
+                        <input className="input-task" value={this.state.name} type="text" onChange={this.onHandleInput} />
                         
                         <button className = "add-btn " type="submit"> Add Task </button>
                         
