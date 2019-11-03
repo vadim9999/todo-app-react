@@ -5,7 +5,9 @@
     background: linear-gradient( -45deg,rgba(146, 45, 45, 0.685), 
     rgba(73, 13, 13, 0.664), 
     rgb(173, 99, 99), 
-    rgba(136, 18, 18, 0.651))
+    rgba(136, 18, 18, 0.651));
+
+    box-shadow: 2px 5px 10px 5px rgba(8, 78, 8, 0.808)
 }
 
 .header-block-btns{

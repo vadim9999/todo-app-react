@@ -28,7 +28,7 @@
     rgba(173, 5, 5, 0.815), 
     rgba(194, 69, 69, 0.925), 
     rgb(177, 161, 161));
-    
+   
     /* animation */
     /* animation-name: example; 
     animation-duration: 10s; 
@@ -39,15 +39,15 @@
     
 }
 
-@keyframes currentTask{
+@keyframes boxShadow{
     0%{
-        transform: translate(0px, 0px)
+        box-shadow:2px 2px 20px 5px rgb(20, 97, 37);;
     }
     50%{
-        transform: translate(50px,0px)
+        box-shadow: 2px 4px 40px 15px rgb(20, 97, 37);;
     }
     100%{
-        transform: translate( 0px,0px)
+        box-shadow: 2px 2px 20px 5px rgb(20, 97, 37);;
     }
 }
 @keyframes example {
@@ -60,13 +60,16 @@
     100% {background-position:0% 50%} */
 
     0% {
-		background-position: 0% 50%;
+        background-position: 0% 50%;
+        box-shadow:2px 2px 20px 5px rgb(20, 97, 37);;
 	}
 	50% {
-		background-position: 100% 50%;
+        background-position: 100% 50%;
+        box-shadow:2px 2px 20px 5px rgb(218, 190, 31);;
 	}
 	100% {
-		background-position: 0% 50%;
+        background-position: 0% 50%;
+        box-shadow:2px 2px 20px 5px rgb(20, 97, 37);;
 	}
 		
     /* 0% {background: linear-gradient(to right, red, rgb(141, 64, 141));;}
@@ -100,10 +103,11 @@
 .input-change-task{
     font-size:large;
     background-color: rgba(49, 4, 4, 0);
+    /* box-shadow: 1px 2px 5px 5px rgb(148, 224, 35), 2px 2px 10px 6px rgb(194, 69, 69); */
+    box-shadow: 0px 0px 5px 2px greenyellow;
+    color:white;
     border:none;
-    /* color:white; */
     
-    font-size:large;
 }
 
 .task-header{

@@ -17,7 +17,7 @@ code {
     monospace;
 }
 
-input{
+.login-form input, .signup-form input{
   color:white;
   background: linear-gradient(-45deg,rgba(255, 0, 0, 0.514), rgba(73, 13, 13, 0.692),rgb(73, 5, 5));
   border:none;
@@ -26,7 +26,7 @@ input{
     font-size: large;
     box-shadow:2px 3px 5px 3px rgb(189, 64, 64);
     background-size:200% 200%;
-    animation: inputShadow 5s ease infinite, inputAnimation 5s ease infinite;
+    animation:  inputAnimation 5s ease infinite;
     /* transform: scale(0); */
     /* transition: scale 0.4s ease 10s; */
     text-shadow: 2px 2px 2px rgb(36, 36, 184);
@@ -41,7 +41,10 @@ input:hover{
   animation: none;
 }
 
-@keyframes inputShadow{
+input{
+  color: white;
+}
+/* @keyframes inputShadow{
   0%{
       box-shadow: 1px 2px 5px 3px rgb(54, 6, 6)
   }
@@ -51,16 +54,19 @@ input:hover{
   100%{
       box-shadow: 1px 2px 5px 3px rgb(54, 6, 6)
   }
-}
+} */
 @keyframes inputAnimation{
   0%{
       background-position: 0% 100%;
+      box-shadow: 1px 2px 5px 3px rgb(54, 6, 6)
   }
   50%{
       background-position: 100% 50%;
+      box-shadow: 2px 3px 10px 5px rgb(189, 80, 80) 
   }
   100%{
       background-position:0% 100%;
+      box-shadow: 1px 2px 5px 3px rgb(54, 6, 6)
   }
 }
 

@@ -8,6 +8,9 @@
     /* justify-content: flex-start; */
 }
 
+.block-animation:hover{
+    
+}
 .task-block{
     /* border: 2px solid mediumvioletred; */
     /* background:black */
@@ -22,6 +25,7 @@
     display:flex;
     flex-direction: column;
     width:600px;
+    /* width:100vh; */
     font-size: larger;
     /* background:white; */
     margin:0px;
@@ -43,22 +47,15 @@
     
 
     box-shadow: 2px 2px 20px 5px rgb(20, 97, 37);
-    animation: gradientb 15s ease infinite,  boxShadow 5s ease infinite;;
+    /* animation: gradientb 15s ease infinite,  boxShadow 5s ease infinite; */
+
+    /* animation:  boxShadow 5s ease infinite; */
+
     
     margin: 25px;
 }
 
-@keyframes boxShadow{
-    0%{
-        box-shadow:2px 2px 20px 5px rgb(20, 97, 37);;
-    }
-    50%{
-        box-shadow: 2px 4px 40px 15px rgb(20, 97, 37);;
-    }
-    100%{
-        box-shadow: 2px 2px 20px 5px rgb(20, 97, 37);;
-    }
-}
+
 
  @keyframes gradientb{
      
@@ -118,6 +115,7 @@ button:hover{
 @keyframes buttonAnimation{
     0%{
         background-position: 0% 50%;
+        
 
     }
     50%{

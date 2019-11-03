@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment"
-import { sortTasksByGrowthDate, sortTasksByDecreaseDate } from "../../actions"
+import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks } from "../../actions"
 import Task from '../Task/Task'
 
 import "./List.css"
@@ -9,14 +9,16 @@ function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         filteredTasks: state.filteredTasks,
-        date: state.date
+        date: state.date, 
+        user_id: state.user._id 
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         sortTasksByGrowthDate: (tasks) => dispatch(sortTasksByGrowthDate(tasks)),
-        sortTasksByDecreaseDate: (tasks) => dispatch(sortTasksByDecreaseDate(tasks))
+        sortTasksByDecreaseDate: (tasks) => dispatch(sortTasksByDecreaseDate(tasks)),
+        getTasks:(user_id) => dispatch(getTasks(user_id))
     }
 }
 
@@ -95,7 +97,9 @@ class ConnectedList extends Component {
         sortOption = ++sortOption
         if (sortOption === 3) { sortOption = 0; }
         switch (sortOption) {
+
             case 0:
+                this.props.getTasks(this.props.user_id)
                 this.setState({
                     isSorted: false,
                     sortOption: sortOption,

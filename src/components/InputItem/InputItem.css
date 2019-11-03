@@ -19,7 +19,7 @@
     
     transform: translate(0px, 0px);
     /* transition: translate 0s linear 10s */
-    animation: animation-input 1s ease 1;
+    /* animation: animation-input 1s ease 1; */
 }
 
 .input-task:hover{
@@ -36,7 +36,7 @@
     /* transform: skewY(20deg) */
     /* transform: rotateX(100deg) */
     /* transform: rotateZ(10deg) */
-    animation: rotate-btn 5s ease infinite;
+    /* animation: rotate-btn 5s ease infinite; */
     /* transform: rotate(100deg) */
 }
 
