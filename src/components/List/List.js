@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import moment from "moment"
 import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks } from "../../actions"
 import Task from '../Task/Task'
+import BlockAnimation  from "./BlockAnimation.js"
 import Pagination from '../Pagination/Pagination'
 import "./List.css"
+
 function mapStateToProps(state) {
     return {
         tasks: state.tasks,
@@ -196,12 +198,12 @@ class ConnectedList extends Component {
                     <button onClick={this.onSort}>{this.state.sortOptionName}</button>
 
                 </div>
-                <div className="block-animation">
+                <BlockAnimation className="block-animation">
                     <ul className="tasks-list-block">
 
                         {this.displayTasks(tasks)}
                     </ul>
-                </div>
+                </BlockAnimation>
                 <Pagination />
             </div>
         )

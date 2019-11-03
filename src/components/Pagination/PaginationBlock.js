@@ -15,7 +15,8 @@ export const Item = styled.a`
     height: 30px;
     margin: 5px;
     &:hover {
-        color:black;
+       
         background-color: black;
+        cursor:pointer
     }
 `

@@ -69,8 +69,7 @@ export const InputTask = styled.input.attrs(props =>({
     
 
      animation-name:  ${props => {
-        console.log("In custom element");
-        console.log(props.shakeField);
+        
         if(props.shakeField){
             console.log("shake",shake);
             console.log("shake1", shake1);
