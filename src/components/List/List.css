@@ -28,7 +28,7 @@
     list-style:none;
     display:flex;
     flex-direction: column;
-    width:600px;
+    /* width:600px; */
     /* width:100vh; */
     font-size: larger;
     /* background:white; */
@@ -55,8 +55,11 @@
     /* animation: gradientb 15s ease infinite,  boxShadow 5s ease infinite; */
 
     /* animation:  boxShadow 5s ease infinite; */
-
     
+  
+    /* width: 50%; */
+    /* max-width: 40%; */
+     min-width: 30%;
     margin: 25px;
 }
 

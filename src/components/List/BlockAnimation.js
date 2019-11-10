@@ -32,6 +32,7 @@ const mapStateToProps = (state) =>{
 }
 let currentPageTmp = -1;
 let toggle = 0;
+
 const ConnectedBlockAnimation = styled.div.attrs((props)=>({
 
 }))`
@@ -55,6 +56,7 @@ const ConnectedBlockAnimation = styled.div.attrs((props)=>({
     }};
     animation-duration:1s;
     animation-iteration-count:1;
+    
 `
 
 const BlockAnimation = connect(mapStateToProps)(ConnectedBlockAnimation)
