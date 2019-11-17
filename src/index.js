@@ -6,6 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import store from './store/index'
 import { Provider } from 'react-redux'
 
+import 'antd/dist/antd.css'
+
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
