@@ -8,6 +8,8 @@ import Login from "./components/Login/Login"
 import Signup from "./components/Signup/Signup"
 import TodoList from "./components/TodoList/TodoList"
 import Cookies from 'universal-cookie'
+import {Layout, Button} from 'antd'
+
 
 import "./Router.css"
 // const mapDispatchToProps = (dispatch) =>{
@@ -15,6 +17,7 @@ import "./Router.css"
 //         a
 //     }
 // }
+const { Header, Footer, Content} = Layout;
 const mapStateToProps = (state) => {
     return {
         user_id: state.user._id
@@ -40,30 +43,40 @@ class ConnectedRouter extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <div class="header-block">
+            <Layout>
+            <Header>
+                {/* <div class="header-block"> */}
+               
+                    
+
+                   
+               
                     {/* <AuthButton /> */}
 
                     {
                         this.props.user_id != undefined ? (
                                     <div className="header-block-btns">
-                                    <Link to="/todolist"><button>Todolist</button></Link>
-                                    <Link to="/signout"><button>SignOut</button></Link>
+                                    <Link to="/todolist"><Button type="primary">Todolist</Button></Link>
+                                    <Link to="/signout"><Button type="primary">SignOut</Button></Link>
                                     </div>
                         ) : (
                                <div>
 
                                
-                                        <Link to="/"><button>Login</button></Link>
+                                        <Link to="/"><Button type="primary">Login</Button></Link>
                                         <a> or</a>
-                                        <Link to="/signup" ><button>Signup</button></Link>
+                                        <Link to="/signup" ><Button type="primary">Signup</Button></Link>
                                         </div>
                             )
 
 
                     }
+                    
+                {/* </div> */}
+                </Header>
+                <Content style={{display:'flex' , justifyContent:"center", alignItems: "center", }} >
 
-                </div>
-
+                
                 <Switch>
                     <Route path="/" exact component={Login} />
                     <Route path="/signup" exact component={Signup} />
@@ -71,6 +84,11 @@ class ConnectedRouter extends React.Component {
                     <Route path="/todolist" component={TodoList} />
                     {/* <Route path="sign" */}
                 </Switch>
+                </Content>
+                <Footer style={{display:'flex', justifyContent:'center'}}>
+                    <p >2019</p>
+                </Footer>
+                </Layout>
             </BrowserRouter>
         )
 

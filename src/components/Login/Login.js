@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import { authorizate } from "../../actions/user"
 // import "./Login.css"
 
-import { Input, Tooltip, Icon, Button } from 'antd';
+import { Input, Tooltip, Icon, Button, Form, Row, Col } from 'antd';
 
 const mapStateToProps = (state) => {
     return {
@@ -54,9 +54,13 @@ class ConnectedLogin extends Component {
 
         return (
 
-            <div className="login-block">
-                <form className="login-form" onSubmit={this.login}>
+            <div>
 
+            
+                <Row type="flex"  justify="center" >
+                    <Col >
+                    <Form onSubmit={this.login}>
+                    <Form.Item>
                     <Input
                         placeholder="Enter your username"
                         className="input-email"
@@ -70,15 +74,25 @@ class ConnectedLogin extends Component {
                             </Tooltip>
                         }
                     />
-                    <Input.Password name ="password" className="input-pass" onChange={this.onHandleChange} value={this.state.password} placeholder="input password" />
+                    </Form.Item>
+                    <Form.Item>
+                    <Input.Password name ="password" 
+                    className="input-pass" 
+                    onChange={this.onHandleChange} 
+                    value={this.state.password} 
+                    placeholder="Input password" />
 
-                   
-                  
-                    {/* <input  type="password" name="password"></input> */}
-                    <Button type="primary" >Login</Button>
-                    <button className="btn-login" type="submit">Login</button>
-                </form>
-            </div>
+                    </Form.Item>
+                    <Form.Item>
+                    <Button type="primary" htmlType="submit" className="login-form-button">Log in</Button>
+                    </Form.Item>
+                </Form>
+                    </Col>
+                
+                </Row>
+                </div>
+                
+            
 
         )
     }
