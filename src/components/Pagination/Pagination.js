@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { PaginationBlock, Item } from './PaginationBlock'
 import {connect} from "react-redux";
 import {addCurrentPage} from '../../actions/'
+
+import {Pagination} from 'antd'
 const MapStateToProps = (state) =>{
     return {
         tasks: state.tasks
@@ -17,13 +19,21 @@ const MapDispatchToProps = (dispatch)=>{
 class ConnectedPagination extends Component{
     constructor(){
         super()
-        this.onClick = this.onClick.bind(this)
+        this.state={
+            current:1,
+        }
+        this.onChange = this.onChange.bind(this)
     }
 
-    onClick(e){
+    onChange(page){
         console.log("onClick");
-        console.log(e.target.id);
-        this.props.addCurrentPage(e.target.id)
+        console.log(page);
+        
+        // console.log(e.target.id);
+        this.setState({
+            current: page
+        })
+        this.props.addCurrentPage(page-1)
     }
 
     componentDidMount(){
@@ -31,23 +41,42 @@ class ConnectedPagination extends Component{
     }
     getPagination(tasks){
         let counter = 0;
-        let pagination =  tasks.map((elem, index)=>{
+        tasks.map((elem, index)=>{
             // console.log(index);
                 if(index % 10 ===0) {
                     console.log("Index", index);
+                    counter++;
+                    console.log("counter", counter);
                     
-                    return(<Item onClick= {this.onClick} key = {elem["_id"]} id={counter++}>{counter}</Item>)
+                    // return(<Item onClick= {this.onClick} key = {elem["_id"]} id={counter++}>{counter}</Item>)
                 }
             })
         
+        console.log(counter);
         
-        return pagination
+        return counter ;
     }
     render(){
         console.log(this.props.tasks);
         
         return (
-            <PaginationBlock>
+            
+
+            
+                <Pagination  current={this.state.current} total={this.getPagination(this.props.tasks) *10} onChange={this.onChange}> 
+
+</Pagination>    
+
+        )
+    }
+       
+    
+}
+
+const CustomPagination = connect(MapStateToProps, MapDispatchToProps)(ConnectedPagination)
+export default CustomPagination;
+
+{/* <PaginationBlock>
             <Item>&laquo;</Item>
                 {
                     
@@ -56,14 +85,4 @@ class ConnectedPagination extends Component{
                 }
                 
                     <Item href="#">&raquo;</Item>
-            </PaginationBlock>
-                    
-
-        )
-    }
-       
-    
-}
-
-const Pagination = connect(MapStateToProps, MapDispatchToProps)(ConnectedPagination)
-export default Pagination;
+            </PaginationBlock> */}

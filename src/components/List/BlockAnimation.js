@@ -36,7 +36,7 @@ let toggle = 0;
 const ConnectedBlockAnimation = styled.div.attrs((props)=>({
 
 }))`
-    animation-name: ${props =>{
+    /* animation-name: ${props =>{
         console.log("props");
         if (props.currentPageTmp !== currentPageTmp){
             currentPageTmp =props.currentPage
@@ -55,7 +55,7 @@ const ConnectedBlockAnimation = styled.div.attrs((props)=>({
         
     }};
     animation-duration:1s;
-    animation-iteration-count:1;
+    animation-iteration-count:1; */
     
 `
 

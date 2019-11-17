@@ -9,7 +9,9 @@ import {Redirect} from "react-router-dom"
 // function mapStateToProps(state){
 //     return { tasks: state.tasks }
 // }
+import {Layout} from 'antd'
 
+const {Content} = Layout;
 const mapDispatchToProps = (dispatch) =>{
     return {
         getTasks: (login_id) => dispatch(getTasks(login_id)) 
@@ -38,11 +40,15 @@ class ConnectedTodoList extends Component {
         if(this.props.user_id === undefined) return (<Redirect to={"/"} />)
         
         return (
-            <div className="todoListMain">
+            <Content>
+                
+          
+            {/* <div className="todoListMain"> */}
                 <List />
                 <InputItem />
                 {/* <ConnectedLogin /> */}
-            </div>
+            {/* </div> */}
+            </Content>
         )
     
     }

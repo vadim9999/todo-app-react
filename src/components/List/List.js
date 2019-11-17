@@ -4,7 +4,9 @@ import moment from "moment"
 import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks } from "../../actions"
 import Task from '../Task/Task'
 import BlockAnimation  from "./BlockAnimation.js"
-import Pagination from '../Pagination/Pagination'
+import CustomPagination from '../Pagination/Pagination'
+
+
 import "./List.css"
 
 function mapStateToProps(state) {
@@ -204,7 +206,8 @@ class ConnectedList extends Component {
                         {this.displayTasks(tasks)}
                     </ul>
                 </BlockAnimation>
-                <Pagination />
+                <CustomPagination />
+                
             </div>
         )
     }
