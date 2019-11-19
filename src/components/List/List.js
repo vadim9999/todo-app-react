@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment"
-import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks } from "../../actions"
+import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks, deleteTaskById } from "../../actions"
 import Task from '../Task/Task'
 import BlockAnimation  from "./BlockAnimation.js"
 import CustomPagination from '../Pagination/Pagination'
 
-import {Table} from 'antd'
+import {Table, Popconfirm} from 'antd'
 
 import "./List.css"
 
@@ -17,7 +17,8 @@ function mapStateToProps(state) {
         date: state.date,
         user_id: state.user._id,
         currentPage: state.currentPage,
-        selectedRows: state.selectedRowKeys
+        selectedRows: state.selectedRowKeys,
+        user_id: state.user._id
     }
 }
 
@@ -25,7 +26,8 @@ const mapDispatchToProps = dispatch => {
     return {
         sortTasksByGrowthDate: (tasks) => dispatch(sortTasksByGrowthDate(tasks)),
         sortTasksByDecreaseDate: (tasks) => dispatch(sortTasksByDecreaseDate(tasks)),
-        getTasks: (user_id) => dispatch(getTasks(user_id))
+        getTasks: (user_id) => dispatch(getTasks(user_id)),
+        deleteTaskById: (task_id) => dispatch(deleteTaskById(task_id))
     }
 }
 
@@ -208,6 +210,8 @@ class ConnectedList extends Component {
                 ...tasks[i],
                 key: i,
                 
+                date: moment(tasks[i].date).format("HH:mm:ss, DD.MM.YYYY")    
+                
             })
         }
         
@@ -231,7 +235,19 @@ class ConnectedList extends Component {
             title:'Date',
             dataIndex: 'date',
         },
-        
+        {
+            title: 'Action',
+            dataIndex:'',
+            key: 'x',
+            render: (text,record) => this.props.tasks.length >= 1 ? (
+                <Popconfirm title="Sure to delete?" onConfirm={()=> {
+                    this.props.deleteTaskById({ task_id: record._id, login_id: this.props.user_id })
+                    console.log("record", record);
+                    }}>
+                    <a>Delete</a>
+                </Popconfirm>
+            ): null,
+        }
     ]
     
     getSelectedRowKeys(tasks){
