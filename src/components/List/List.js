@@ -3,12 +3,14 @@ import { connect } from "react-redux";
 import moment from "moment"
 import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks, deleteTaskById } from "../../actions"
 import Task from '../Task/Task'
-import BlockAnimation  from "./BlockAnimation.js"
-import CustomPagination from '../Pagination/Pagination'
-
-import {Table, Popconfirm} from 'antd'
+// import BlockAnimation  from "./BlockAnimation.js"
+// import CustomPagination from '../Pagination/Pagination'
+// import 'antd/dist/antd.css'
+import { Table, Popconfirm, Form, Input } from 'antd'
 
 import "./List.css"
+
+import { EditableCell, EditableRow } from '../EditableCell/EditableCell'
 
 function mapStateToProps(state) {
     return {
@@ -31,6 +33,13 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
+
+
+const EditableFormRow = Form.create()(EditableRow)
+
+
+
+
 class ConnectedList extends Component {
     constructor() {
         super()
@@ -44,26 +53,28 @@ class ConnectedList extends Component {
             sortOption: 0,
             sortOptionName: "Sort by growth date",
             selectedRowKeys: [],
-            toggle:0
+            toggle: 0
         }
 
-        
+
         this.onSort = this.onSort.bind(this)
         this.onClickFilter = this.onClickFilter.bind(this)
         this.onSelectChange = this.onSelectChange.bind(this)
+        this.getRowSelection = this.getRowSelection.bind(this)
+        this.getColumns = this.getColumns.bind(this)
         // this.getTasksForTable = this.getTasksForTable.bind(this)
     }
 
     componentDidMount() {
         // this.props.getTasks(this.props.user_id);
         console.log(this.props.tasks);
-        console.log("selectedkeyrows redux",this.props.selectedRowKeys);
-        
-        
-        
+        console.log("selectedkeyrows redux", this.props.selectedRowKeys);
+
+
+
     }
 
-    onSelectChange = selectedRowKeys =>{
+    onSelectChange = selectedRowKeys => {
         console.log("selectedRowKeys changed: ", selectedRowKeys);
         this.setState({
             selectedRowKeys
@@ -180,7 +191,7 @@ class ConnectedList extends Component {
                 <li className="task-block" key={tasks[currentTask]["_id"]} >
                     <Task task={tasks[currentTask]} />
                 </li>
-                )
+            )
 
         }
         // const result = tasks.map(
@@ -200,62 +211,64 @@ class ConnectedList extends Component {
         return result;
     }
 
-    getTasksForTable(tasks){
+    getTasksForTable(tasks) {
         console.log("getTasks for table");
-        
-        const data=[];
-       
-        for(let i=0; i < tasks.length; i++){
+
+        const data = [];
+
+        for (let i = 0; i < tasks.length; i++) {
             data.push({
                 ...tasks[i],
                 key: i,
-                
-                date: moment(tasks[i].date).format("HH:mm:ss, DD.MM.YYYY")    
-                
+
+                date: moment(tasks[i].date).format("HH:mm:ss, DD.MM.YYYY")
+
             })
         }
-        
-       
-        
-        
+
+
+
+
         // this.setState({
         //     selectedRowKeys: 
         // })
         // console.log("data", data);
-        
+
         return data
     }
 
     columns = [
         {
             title: 'Name',
-            dataIndex: 'name'
+            dataIndex: 'name',
+            width: '30%',
+            editable: true,
         },
         {
-            title:'Date',
+            title: 'Date',
             dataIndex: 'date',
         },
         {
             title: 'Action',
-            dataIndex:'',
-            key: 'x',
-            render: (text,record) => this.props.tasks.length >= 1 ? (
-                <Popconfirm title="Sure to delete?" onConfirm={()=> {
+            dataIndex: '',
+
+            render: (text, record) => this.props.tasks.length >= 1 ? (
+                <Popconfirm title="Sure to delete?" onConfirm={() => {
                     this.props.deleteTaskById({ task_id: record._id, login_id: this.props.user_id })
                     console.log("record", record);
-                    }}>
+                }}>
                     <a>Delete</a>
                 </Popconfirm>
-            ): null,
+            ) : null,
         }
     ]
-    
-    getSelectedRowKeys(tasks){
+
+    getSelectedRowKeys(tasks) {
         console.log("call selectedRowKeys");
         // const {selectedRows} = this.props;
         const selectedRows = []
-        tasks.map((task, index) =>{
-            if(task.completed){
+        tasks.map((task, index) => {
+            if (task.completed) {
                 selectedRows.push(index)
             }
         })
@@ -263,34 +276,42 @@ class ConnectedList extends Component {
 
         console.log("selected Keys", selectedRows);
 
-        if(tasks != undefined && tasks.length > 0 && this.state.toggle === 0){
+        if (tasks != undefined && tasks.length > 0 && this.state.toggle === 0) {
             this.setState({
                 selectedRowKeys: [...selectedRows],
-                toggle:1
+                toggle: 1
             })
         }
     }
-    componentWillReceiveProps(newProps){
+    componentWillReceiveProps(newProps) {
         console.log("component will receive props");
-        
-        if(this.props != newProps && newProps.tasks != undefined){
+
+        if (this.props != newProps && newProps.tasks != undefined) {
             this.getSelectedRowKeys(newProps.tasks)
         }
-        
+
     }
-    render() {
-        
-        console.log("UPDATE");
-  
-   
+
+    handleSave = row => {
+        const newData = [...this.props.tasks];
+        const index = newData.findIndex(item => row.key === item.key);
+        const item = newData[index];
+        newData.splice(index, 1, {
+            ...item,
+            ...row,
+        })
+
+        this.setState({
+
+        })
+    }
 
 
-        
+    getRowSelection = () => {
         let { tasks } = this.props;
         console.log(tasks);
-        
-        const {selectedRowKeys} = this.state;
-console.log("selected row keys state", selectedRowKeys);
+
+        const { selectedRowKeys } = this.state;
 
         const rowSelection = {
             selectedRowKeys,
@@ -300,19 +321,68 @@ console.log("selected row keys state", selectedRowKeys);
                 {
                     key: 'all-data',
                     text: 'Select All Data',
-                    onSelect: ()=>{
+                    onSelect: () => {
                         console.log("This is on select");
-                        
+
                         this.setState({
-                            selectedRowKeys:[...Array(tasks.length).keys()]
-                        },()=>{
+                            selectedRowKeys: [...Array(tasks.length).keys()]
+                        }, () => {
                             console.log("after render", this.state.selectedRowKeys);
-                            
+
                         })
                     }
                 }
             ]
         }
+
+        return rowSelection;
+
+    }
+
+    getComponents = ()=>{
+        const components = {
+            body: {
+                row: EditableFormRow,
+                cell: EditableCell,
+            }
+        }
+        
+        return components
+    }
+
+    getColumns =() =>{
+        const columns = this.columns.map(col => {
+            if (!col.editable) {
+                return col;
+            }
+
+            return {
+                ...col,
+                onCell: record => ({
+                    record,
+                    editable: col.editable,
+                    dataIndex: col.dataIndex,
+                    title: col.title,
+                    handleSave: this.handleSave
+                })
+            }
+        })
+
+        return columns
+    }
+
+    render() {
+
+        console.log("UPDATE");
+
+        let { tasks } = this.props;
+        console.log(tasks);
+
+        const { selectedRowKeys } = this.state;
+        console.log("selected row keys state", selectedRowKeys);
+
+        const {getComponents, getRowSelection, getTasksForTable, getColumns} = this;
+
         if (this.state.isFiltered) {
             console.log("call checking conditions");
             if (this.state.filterOption === 1) {
@@ -324,9 +394,16 @@ console.log("selected row keys state", selectedRowKeys);
         }
 
         return (
-            <div className="list-block">
+            <div >
 
-                <Table rowSelection={rowSelection} columns={this.columns} dataSource={this.getTasksForTable(this.props.tasks)}/>
+                <Table
+                    components={getComponents()}
+                    rowClassName={() => 'editable-row'}
+                    bordered
+                    rowSelection={getRowSelection()}
+                    dataSource={getTasksForTable(tasks)}
+                    columns={getColumns()}
+                />
 
                 {/* <div className="btn-block">
                     <button onClick={this.onClickFilter} >{this.state.filterOptionName}</button>
@@ -340,7 +417,7 @@ console.log("selected row keys state", selectedRowKeys);
                     </ul>
                 </BlockAnimation>
                 <CustomPagination /> */}
-                
+
             </div>
         )
     }
