@@ -65,6 +65,12 @@ export const addCurrentPage = payload =>{
   }
 }
 
+export const addSelectedRowKeys = payload =>{
+  return{
+    type: "ADD_SELECTED_ROW_KEYS",
+    payload
+  }
+}
 // export function saveTask(){
 //   return { type: "SAVE_TASK"}
 // }

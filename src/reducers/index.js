@@ -4,7 +4,7 @@ const initialState = {
     user:{},
     tasks: [],
     currentPage: 0,
-
+    selectedRowKeys:[]
 }
 
 function rootReducer(state = initialState, action){
@@ -32,8 +32,8 @@ function rootReducer(state = initialState, action){
 
         case "GET_TASKS_SUCCESS":
             return Object.assign({}, state, {
-                tasks: action.payload,
-
+                tasks: action.payload.data,
+                selectedRowKeys: [...action.payload.selectedRowKeys]
             })
         
         case "ADD_USER_SUCCESS":
@@ -71,6 +71,12 @@ function rootReducer(state = initialState, action){
             return {
                 ...state, 
                 currentPage: action.payload
+            }
+        case "ADD_SELECTED_ROW_KEYS":
+            return {
+                ...state,
+                selectedRowKeys: [...action.payload],
+
             }
         default:
             return state;

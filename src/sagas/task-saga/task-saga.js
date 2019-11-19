@@ -13,7 +13,7 @@ export default function* allTaskWorkers(action) {
             break;
 
         case "GET_TASKS":
-            yield taskWorker({
+            yield taskWorkerGetTasks({
                 requestFunction: getTasks,
                 action
             })
@@ -32,6 +32,33 @@ export default function* allTaskWorkers(action) {
                 action,
                 callback: taskWorkerDeleteTask
             })
+
+    }
+}
+
+function* taskWorkerGetTasks({ requestFunction, action, callback }){
+    yield console.log("********TAsk worker");
+    const { type, payload } = action;
+    try {
+        if (callback !== undefined) {
+
+            yield callback(action)
+            yield console.log("this is workder and calling callback");
+        } else {
+            const {data} = yield call(requestFunction, payload)
+
+            // const selectedRowKeys = yield data.filter(task => task.completed)
+      
+        
+            yield put({ type: `${type}_SUCCESS`, payload: {data, selectedRowKeys: [2] }})
+
+            // yield put({ type: 'ADD_SELECTED_ROW_KEYS', payload:[2]})
+        }
+
+
+    } catch (e) {
+        console.log("error");
+        yield put({ type: `${type}_FAILED`, e })
 
     }
 }

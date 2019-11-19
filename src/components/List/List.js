@@ -6,6 +6,7 @@ import Task from '../Task/Task'
 import BlockAnimation  from "./BlockAnimation.js"
 import CustomPagination from '../Pagination/Pagination'
 
+import {Table} from 'antd'
 
 import "./List.css"
 
@@ -15,7 +16,8 @@ function mapStateToProps(state) {
         filteredTasks: state.filteredTasks,
         date: state.date,
         user_id: state.user._id,
-        currentPage: state.currentPage
+        currentPage: state.currentPage,
+        selectedRows: state.selectedRowKeys
     }
 }
 
@@ -38,17 +40,33 @@ class ConnectedList extends Component {
             filterOptionName: "Display uncompleted tasks",
             isSorted: false,
             sortOption: 0,
-            sortOptionName: "Sort by growth date"
+            sortOptionName: "Sort by growth date",
+            selectedRowKeys: [],
+            toggle:0
         }
 
+        
         this.onSort = this.onSort.bind(this)
         this.onClickFilter = this.onClickFilter.bind(this)
+        this.onSelectChange = this.onSelectChange.bind(this)
+        // this.getTasksForTable = this.getTasksForTable.bind(this)
     }
 
     componentDidMount() {
-
+        // this.props.getTasks(this.props.user_id);
+        console.log(this.props.tasks);
+        console.log("selectedkeyrows redux",this.props.selectedRowKeys);
+        
+        
+        
     }
 
+    onSelectChange = selectedRowKeys =>{
+        console.log("selectedRowKeys changed: ", selectedRowKeys);
+        this.setState({
+            selectedRowKeys
+        })
+    }
 
     onClickFilter() {
 
@@ -179,10 +197,106 @@ class ConnectedList extends Component {
 
         return result;
     }
+
+    getTasksForTable(tasks){
+        console.log("getTasks for table");
+        
+        const data=[];
+       
+        for(let i=0; i < tasks.length; i++){
+            data.push({
+                ...tasks[i],
+                key: i,
+                
+            })
+        }
+        
+       
+        
+        
+        // this.setState({
+        //     selectedRowKeys: 
+        // })
+        // console.log("data", data);
+        
+        return data
+    }
+
+    columns = [
+        {
+            title: 'Name',
+            dataIndex: 'name'
+        },
+        {
+            title:'Date',
+            dataIndex: 'date',
+        },
+        
+    ]
+    
+    getSelectedRowKeys(tasks){
+        console.log("call selectedRowKeys");
+        // const {selectedRows} = this.props;
+        const selectedRows = []
+        tasks.map((task, index) =>{
+            if(task.completed){
+                selectedRows.push(index)
+            }
+        })
+        // const selectedKeys = tasks.filter(task => task.completed)
+
+        console.log("selected Keys", selectedRows);
+
+        if(tasks != undefined && tasks.length > 0 && this.state.toggle === 0){
+            this.setState({
+                selectedRowKeys: [...selectedRows],
+                toggle:1
+            })
+        }
+    }
+    componentWillReceiveProps(newProps){
+        console.log("component will receive props");
+        
+        if(this.props != newProps && newProps.tasks != undefined){
+            this.getSelectedRowKeys(newProps.tasks)
+        }
+        
+    }
     render() {
+        
+        console.log("UPDATE");
+  
+   
 
+
+        
         let { tasks } = this.props;
+        console.log(tasks);
+        
+        const {selectedRowKeys} = this.state;
+console.log("selected row keys state", selectedRowKeys);
 
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+            hideDefaultSelections: true,
+            selections: [
+                {
+                    key: 'all-data',
+                    text: 'Select All Data',
+                    onSelect: ()=>{
+                        console.log("This is on select");
+                        
+                        this.setState({
+                            selectedRowKeys:[...Array(tasks.length).keys()]
+                        },()=>{
+                            console.log("after render", this.state.selectedRowKeys);
+                            
+                        })
+                    }
+                }
+            ]
+        }
         if (this.state.isFiltered) {
             console.log("call checking conditions");
             if (this.state.filterOption === 1) {
@@ -195,7 +309,10 @@ class ConnectedList extends Component {
 
         return (
             <div className="list-block">
-                <div className="btn-block">
+
+                <Table rowSelection={rowSelection} columns={this.columns} dataSource={this.getTasksForTable(this.props.tasks)}/>
+
+                {/* <div className="btn-block">
                     <button onClick={this.onClickFilter} >{this.state.filterOptionName}</button>
                     <button onClick={this.onSort}>{this.state.sortOptionName}</button>
 
@@ -206,7 +323,7 @@ class ConnectedList extends Component {
                         {this.displayTasks(tasks)}
                     </ul>
                 </BlockAnimation>
-                <CustomPagination />
+                <CustomPagination /> */}
                 
             </div>
         )

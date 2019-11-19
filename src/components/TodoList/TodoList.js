@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import InputItem from '../InputItem/InputItem'
 import List from "../List/List"
 // import ConnectedLogin from './Login/Login';
-import {getTasks} from "../../actions/index"
+import {getTasks, addSelectedRowKeys} from "../../actions/index"
 import {connect} from "react-redux"
 // import { connect } from "react-redux";
 import {Redirect} from "react-router-dom"
@@ -14,13 +14,16 @@ import {Layout} from 'antd'
 const {Content} = Layout;
 const mapDispatchToProps = (dispatch) =>{
     return {
-        getTasks: (login_id) => dispatch(getTasks(login_id)) 
+        getTasks: (login_id) => dispatch(getTasks(login_id)),
+        addSelectedRowKeys:  (keys) => dispatch(addSelectedRowKeys(keys))
     }
 }
 
 const mapStateToProps = (state) => {
     return{
-        user_id: state.user._id
+        user_id: state.user._id,
+        tasks: state.tasks,
+        selectedRowKeys: state.selectedRowKeys
     }
 }
 
@@ -32,8 +35,14 @@ class ConnectedTodoList extends Component {
     }
 
     componentDidMount(){
-        const {getTasks, user_id} = this.props;
-        if(user_id != undefined) getTasks(user_id)
+        const {getTasks, user_id, addSelectedRowKeys} = this.props;
+        if(user_id != undefined){
+            getTasks(user_id)
+            
+           
+            
+            // addSelectedRowKeys([2])
+        } 
     }
 
     render() {
@@ -44,7 +53,7 @@ class ConnectedTodoList extends Component {
                 
           
             {/* <div className="todoListMain"> */}
-                <List />
+                <List/>
                 <InputItem />
                 {/* <ConnectedLogin /> */}
             {/* </div> */}
