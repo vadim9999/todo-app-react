@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment"
-import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks, deleteTaskById } from "../../actions"
+import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks, deleteTaskById, updateTaskById } from "../../actions"
 import Task from '../Task/Task'
 // import BlockAnimation  from "./BlockAnimation.js"
 // import CustomPagination from '../Pagination/Pagination'
@@ -17,7 +17,6 @@ function mapStateToProps(state) {
         tasks: state.tasks,
         filteredTasks: state.filteredTasks,
         date: state.date,
-        user_id: state.user._id,
         currentPage: state.currentPage,
         selectedRows: state.selectedRowKeys,
         user_id: state.user._id
@@ -29,7 +28,8 @@ const mapDispatchToProps = dispatch => {
         sortTasksByGrowthDate: (tasks) => dispatch(sortTasksByGrowthDate(tasks)),
         sortTasksByDecreaseDate: (tasks) => dispatch(sortTasksByDecreaseDate(tasks)),
         getTasks: (user_id) => dispatch(getTasks(user_id)),
-        deleteTaskById: (task_id) => dispatch(deleteTaskById(task_id))
+        deleteTaskById: (task_id) => dispatch(deleteTaskById(task_id)),
+        updateTaskById: (task_id) => dispatch(updateTaskById(task_id))
     }
 }
 
@@ -293,17 +293,44 @@ class ConnectedList extends Component {
     }
 
     handleSave = row => {
-        const newData = [...this.props.tasks];
-        const index = newData.findIndex(item => row.key === item.key);
-        const item = newData[index];
-        newData.splice(index, 1, {
+        console.log(row);
+        const {tasks} =  this.props;
+        const index = tasks.findIndex(item => row._id === item._id);
+        const item = tasks[index]
+        console.log("item", item);
+        
+        const founded = this.state.selectedRowKeys.find(item =>{
+            console.log(item);
+            console.log(index);
+            
+            
+            return item === index
+        })
+        console.log("founded", founded);
+        
+        // this.state.selectedRowKeys.find
+        
+        this.props.updateTaskById({
             ...item,
-            ...row,
+            name: row.name,
+            completed: ((founded !== undefined) ? true : false),
+            login_id: this.props.user_id,
+            date: moment().toISOString()
         })
 
-        this.setState({
+        // this.props.deleteTaskById({ task_id: row.key, login_id: this.props.user_id })
 
-        })
+        // const newData = [...this.props.tasks];
+        // const index = newData.findIndex(item => row.key === item.key);
+        // const item = newData[index];
+        // newData.splice(index, 1, {
+        //     ...item,
+        //     ...row,
+        // })
+
+        // this.setState({
+
+        // })
     }
 
 
