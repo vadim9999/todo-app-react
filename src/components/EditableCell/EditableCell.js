@@ -52,7 +52,7 @@ class EditableCell extends React.Component {
 
     renderCell = form =>{
 
-        console.log("render Cell");
+    
         
         this.form = form; 
         const { children, dataIndex, record, title } = this.props;
@@ -83,7 +83,7 @@ class EditableCell extends React.Component {
 
     render(){
         const {editable, dataIndex, title, record, index, handleSave, children, ...restProps} = this.props;
-        console.log("--------------------render editable cell");
+        
         // console.log('editable', editable);
         // console.log("props of editablecell", this.props);
         

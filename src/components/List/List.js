@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment"
 import { sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks, deleteTaskById, updateTaskById } from "../../actions"
-import Task from '../Task/Task'
 // import BlockAnimation  from "./BlockAnimation.js"
 // import CustomPagination from '../Pagination/Pagination'
 // import 'antd/dist/antd.css'
-import { Table, Popconfirm, Form, Input } from 'antd'
-import {onClickFilter, onSort} from './selector'
-import {getTasksForTable, getColumns, getRowSelection} from './selectorTable'
+import { Table, Popconfirm, Form, Input, Button } from 'antd'
+import { onClickFilter, onSort } from './selector'
+import { getTasksForTable, getColumns, getRowSelection } from './selectorTable'
 
 import "./List.css"
 
@@ -35,12 +34,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-
-
 const EditableFormRow = Form.create()(EditableRow)
-
-
-
 
 class ConnectedList extends Component {
     constructor() {
@@ -55,14 +49,78 @@ class ConnectedList extends Component {
             sortOption: 0,
             sortOptionName: "Sort by growth date",
             selectedRowKeys: [],
-            toggle: 0
+            toggle: 0,
+            loading: false
+           
         }
 
         this.onSelectChange = this.onSelectChange.bind(this)
     }
 
+    start = () =>{
+        
+        const {tasks,selectedRows} = this.props;
+        const {selectedRowKeys} = this.state;
 
+        this.setState({
+            loading:true
+        })
+        
+        
+        const keysNotFounded =[] 
+        const changedRowKeys = [...selectedRowKeys]
+        console.log("keys before", changedRowKeys);
+        
+        for (let i =0; i < selectedRows.length; i++){
+            let founded =false;
+            for(let j=0; j < changedRowKeys.length; j++){
+                
+                
+               
 
+                if(selectedRows[i] === changedRowKeys[j]){
+                  
+                    
+                    changedRowKeys.splice(j,1)
+                    founded = true;
+                    break;
+                }
+
+            }
+            
+            
+            if (!founded) {
+               
+                
+                keysNotFounded.push(selectedRows[i])
+            }
+
+        }
+
+        // changedRowKeys[...keysNotFounded]
+
+        const rowKeys = changedRowKeys.concat(keysNotFounded);
+
+        rowKeys.map((item)=>{
+            this.props.updateTaskById({
+                ...tasks[item],
+                // name: row.name,
+                completed: !tasks[item].completed,
+                login_id: this.props.user_id,
+                date: moment().toISOString()
+            })
+            
+        })
+
+        
+      
+
+        setTimeout(() =>{
+            this.setState({
+                loading: false
+            })
+        },1000)
+    }
     onSelectChange = selectedRowKeys => {
         console.log("selectedRowKeys changed: ", selectedRowKeys);
         // const lastIndex = selectedRowKeys.length - 1;
@@ -84,7 +142,7 @@ class ConnectedList extends Component {
         })
     }
 
- 
+
 
     columns = [
         {
@@ -102,8 +160,8 @@ class ConnectedList extends Component {
             dataIndex: '',
 
             render: (text, record) => this.props.tasks.length >= 1 ? (
-             
-                
+
+
 
                 <Popconfirm title="Sure to delete?" onConfirm={() => {
                     this.props.deleteTaskById({ task_id: record._id, login_id: this.props.user_id })
@@ -111,8 +169,8 @@ class ConnectedList extends Component {
                 }}>
                     <a> Delete </a>
                 </Popconfirm>
-            
                 
+
             ) : null,
         }
     ]
@@ -137,6 +195,7 @@ class ConnectedList extends Component {
             })
         }
     }
+
     componentWillReceiveProps(newProps) {
         console.log("component will receive props");
 
@@ -148,22 +207,22 @@ class ConnectedList extends Component {
 
     handleSave = row => {
         console.log(row);
-        const {tasks} =  this.props;
+        const { tasks } = this.props;
         const index = tasks.findIndex(item => row._id === item._id);
         const item = tasks[index]
         console.log("item", item);
-        
-        const founded = this.state.selectedRowKeys.find(item =>{
+
+        const founded = this.state.selectedRowKeys.find(item => {
             console.log(item);
             console.log(index);
-            
-            
+
+
             return item === index
         })
         console.log("founded", founded);
-        
+
         // this.state.selectedRowKeys.find
-        
+
         this.props.updateTaskById({
             ...item,
             name: row.name,
@@ -188,32 +247,38 @@ class ConnectedList extends Component {
     }
 
 
-    
 
-    getComponents = ()=>{
+
+    getComponents = () => {
         const components = {
             body: {
                 row: EditableFormRow,
                 cell: EditableCell,
             }
         }
-        
+
         return components
     }
 
-    
+
 
     render() {
-
-        console.log("UPDATE");
-
         let { tasks } = this.props;
-        console.log(tasks);
 
-        const { selectedRowKeys } = this.state;
-        console.log("selected row keys state", selectedRowKeys);
+        const { selectedRowKeys, loading } = this.state;
+        const sortedKeys = selectedRowKeys.sort((a,b)=>{
+           
+            return (a < b)? true : false
+        }) 
+        let equalRowKeys = false;
 
-        const {getComponents} = this;
+       
+        if(JSON.stringify(sortedKeys) === JSON.stringify(this.props.selectedRows)){
+            
+            equalRowKeys = true;
+        }
+        // const hasSelected = selectedRowKeys.length > 0;
+        const { getComponents } = this;
 
         if (this.state.isFiltered) {
             console.log("call checking conditions");
@@ -227,6 +292,7 @@ class ConnectedList extends Component {
 
         return (
             <div >
+                <Button type="primary" onClick={this.start} disabled={equalRowKeys} loading={loading}>Save</Button>
 
                 <Table
                     components={getComponents()}

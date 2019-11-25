@@ -50,8 +50,14 @@ function* taskWorkerGetTasks({ requestFunction, action, callback }) {
 
       // const selectedRowKeys = yield data.filter(task => task.completed)
 
+      const selectedRows = yield []
+      yield data.map((task, index) => {
+            if (task.completed) {
+                selectedRows.push(index)
+            }
+        })
 
-      yield put({ type: `${type}_SUCCESS`, payload: { data, selectedRowKeys: [2] } });
+      yield put({ type: `${type}_SUCCESS`, payload: { data, selectedRowKeys: selectedRows } });
 
       // yield put({ type: 'ADD_SELECTED_ROW_KEYS', payload:[2]})
     }

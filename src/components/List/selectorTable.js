@@ -14,7 +14,7 @@ const getTasksForTable = (tasks) => {
 
     });
   }
-
+  
   // context.setState({
   //     selectedRowKeys:
   // })
@@ -69,6 +69,24 @@ const getRowSelection = (tasks, context) => {
           });
         },
       },
+      {
+        key: 'undo-all-selections',
+        text: 'Undo all selections',
+        onSelect: () => {
+            console.log("on click undo");
+            let counter = 0;
+            const selectedRows =  []
+            tasks.map((task, index) => {
+            if (task.completed) {
+                selectedRows.push(index)
+            }
+        })
+            context.setState({
+                selectedRowKeys: selectedRows
+            })
+            
+        }
+      }
     ],
   };
 
