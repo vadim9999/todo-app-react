@@ -1,5 +1,5 @@
-import styled, { keyframes } from 'styled-components'
-import {connect} from "react-redux"
+import styled, { keyframes } from 'styled-components';
+import { connect } from 'react-redux';
 
 const rotateBlock = keyframes`
     0%{
@@ -11,7 +11,7 @@ const rotateBlock = keyframes`
     100%{
         transform: rotateY(0deg)
     }
-`
+`;
 
 const rotateBlock1 = keyframes`
     0%{
@@ -23,41 +23,33 @@ const rotateBlock1 = keyframes`
     100%{
         transform: rotateY(0deg)
     }
-`
+`;
 
-const mapStateToProps = (state) =>{
-    return{
-        currentPage: state.currentPage
-    }
-}
+const mapStateToProps = (state) => ({
+  currentPage: state.currentPage,
+});
 let currentPageTmp = -1;
 let toggle = 0;
 
-const ConnectedBlockAnimation = styled.div.attrs((props)=>({
+const ConnectedBlockAnimation = styled.div.attrs((props) => ({
 
 }))`
-    /* animation-name: ${props =>{
-        console.log("props");
-        if (props.currentPageTmp !== currentPageTmp){
-            currentPageTmp =props.currentPage
-            toggle++
-            console.log("currentPage",props.currentPage);
-            if(toggle %2 === 0){
-                return rotateBlock
-                
-            }else {
-                
-                return rotateBlock1
-            }
-            
-        }
-        
-        
-    }};
+    /* animation-name: ${(props) => {
+    console.log('props');
+    if (props.currentPageTmp !== currentPageTmp) {
+      currentPageTmp = props.currentPage;
+      toggle++;
+      console.log('currentPage', props.currentPage);
+      if (toggle % 2 === 0) {
+        return rotateBlock;
+      }
+      return rotateBlock1;
+    }
+  }};
     animation-duration:1s;
     animation-iteration-count:1; */
     
-`
+`;
 
-const BlockAnimation = connect(mapStateToProps)(ConnectedBlockAnimation)
-export default BlockAnimation
+const BlockAnimation = connect(mapStateToProps)(ConnectedBlockAnimation);
+export default BlockAnimation;

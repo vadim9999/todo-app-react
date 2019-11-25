@@ -1,43 +1,41 @@
-import axios from "axios";
+import axios from 'axios';
 
 const createTask = (payload) => {
-    console.log("Saga__createTask_payload");
-    const {login_id, name, completed, date} = payload;
-    console.log(payload);
-    console.log(typeof date);
-    console.log(date);
-    
-    // console.log(date.toISOString() );
-    // console.log("back to normal");
-    
-    // console.log(moment(date.toISOString()).format("dddd, MMMM Do YYYY, h:mm:ss a"));
-    
-   return axios.post('http://localhost:1234/tasks/create', {
-        login_id,
-        completed,
-        name: name,
-        date: date
-      })
-}
+  console.log('Saga__createTask_payload');
+  const {
+    login_id, name, completed, date,
+  } = payload;
+  console.log(payload);
+  console.log(typeof date);
+  console.log(date);
 
-const getTasks = (login_id)=>{
+  // console.log(date.toISOString() );
+  // console.log("back to normal");
 
-    return axios.get(`http://localhost:1234/tasks/all_tasks_by_id/${login_id}`)
-}
+  // console.log(moment(date.toISOString()).format("dddd, MMMM Do YYYY, h:mm:ss a"));
 
-const updateTask = ({_id, name,date, completed}) => {
-    return axios.put(`http://localhost:1234/tasks/${_id}/update`,{
-        name, date, completed
-    })
-}
+  return axios.post('http://localhost:1234/tasks/create', {
+    login_id,
+    completed,
+    name,
+    date,
+  });
+};
 
-function deleteTask({task_id}){
+const getTasks = (login_id) => axios.get(`http://localhost:1234/tasks/all_tasks_by_id/${login_id}`);
 
-    return axios.delete(`http://localhost:1234/tasks/${task_id}/delete`)
+const updateTask = ({
+  _id, name, date, completed,
+}) => axios.put(`http://localhost:1234/tasks/${_id}/update`, {
+  name, date, completed,
+});
+
+function deleteTask({ task_id }) {
+  return axios.delete(`http://localhost:1234/tasks/${task_id}/delete`);
 }
 export {
-    createTask, 
-    getTasks,
-    updateTask, 
-    deleteTask
-}
+  createTask,
+  getTasks,
+  updateTask,
+  deleteTask,
+};

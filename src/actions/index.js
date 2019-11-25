@@ -1,4 +1,4 @@
-import { ADD_TASK, FOUND_WORD } from "../constants/action-types";
+import { ADD_TASK, FOUND_WORD } from '../constants/action-types';
 
 
 // export function addArticle(payload){
@@ -7,30 +7,24 @@ import { ADD_TASK, FOUND_WORD } from "../constants/action-types";
 
 
 export function addTask(payload) {
-  console.log("Call Function in actions");
+  console.log('Call Function in actions');
   console.log(payload);
 
-  return { type: ADD_TASK, payload }
+  return { type: ADD_TASK, payload };
 }
 
 export function addFoundWord(payload) {
-  console.log("Found word");
+  console.log('Found word');
   console.log(payload);
 
-  return { type: FOUND_WORD, payload }
+  return { type: FOUND_WORD, payload };
 }
 
-export const getTasks = payload => {
-  return {type: "GET_TASKS", payload}
-}
+export const getTasks = (payload) => ({ type: 'GET_TASKS', payload });
 
-export const deleteTaskById = payload => {
-  return {type: "DELETE_TASK", payload}
-}
+export const deleteTaskById = (payload) => ({ type: 'DELETE_TASK', payload });
 
-export const updateTaskById = payload => {
-  return {type: "UPDATE_TASK", payload}
-}
+export const updateTaskById = (payload) => ({ type: 'UPDATE_TASK', payload });
 // export function getData() {
 //     return function(dispatch) {
 //       return fetch("https://jsonplaceholder.typicode.com/posts")
@@ -45,32 +39,24 @@ export const updateTaskById = payload => {
 //   }
 
 
-export const sortTasksByGrowthDate = payload => {
-  return{
-    type: "SORT_TASKS_BY_GROWTH_DATE", payload
-  }
-}
+export const sortTasksByGrowthDate = (payload) => ({
+  type: 'SORT_TASKS_BY_GROWTH_DATE', payload,
+});
 
-export const sortTasksByDecreaseDate = payload =>{
-  return {
-    type: "SORT_TASKS_BY_DECREASE_DATE", 
-    payload
-  }
-}
+export const sortTasksByDecreaseDate = (payload) => ({
+  type: 'SORT_TASKS_BY_DECREASE_DATE',
+  payload,
+});
 
-export const addCurrentPage = payload =>{
-  return {
-    type: "ADD_CURRENT_PAGE",
-    payload
-  }
-}
+export const addCurrentPage = (payload) => ({
+  type: 'ADD_CURRENT_PAGE',
+  payload,
+});
 
-export const addSelectedRowKeys = payload =>{
-  return{
-    type: "ADD_SELECTED_ROW_KEYS",
-    payload
-  }
-}
+export const addSelectedRowKeys = (payload) => ({
+  type: 'ADD_SELECTED_ROW_KEYS',
+  payload,
+});
 // export function saveTask(){
 //   return { type: "SAVE_TASK"}
 // }

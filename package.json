@@ -23,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest --watch",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint" : "eslint --fix ./src/"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,6 +42,12 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^6.7.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^24.8.0",
     "redux-saga": "^1.0.5",
     "redux-thunk": "^2.3.0"

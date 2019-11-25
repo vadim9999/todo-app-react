@@ -1,98 +1,90 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { BrowserRouter, Route, Switch, Link, withRouter, Redirect } from "react-router-dom"
-import { connect } from "react-redux"
-import { authenticate } from "./actions/user"
-import Login from "./components/Login/Login"
-import Signup from "./components/Signup/Signup"
-import TodoList from "./components/TodoList/TodoList"
-import Cookies from 'universal-cookie'
-import {Layout, Button} from 'antd'
+import {
+  BrowserRouter, Route, Switch, Link, withRouter, Redirect,
+} from 'react-router-dom';
+import { connect } from 'react-redux';
+import Cookies from 'universal-cookie';
+import { Layout, Button } from 'antd';
+import { authenticate } from './actions/user';
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
+import TodoList from './components/TodoList/TodoList';
 
 
-import "./Router.css"
+import './Router.css';
 // const mapDispatchToProps = (dispatch) =>{
 //     return {
 //         a
 //     }
 // }
-const { Header, Footer, Content} = Layout;
-const mapStateToProps = (state) => {
-    return {
-        user_id: state.user._id
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        authenticate: (cookie) => dispatch(authenticate(cookie))
-    }
-}
+const { Header, Footer, Content } = Layout;
+const mapStateToProps = (state) => ({
+  user_id: state.user._id,
+});
+const mapDispatchToProps = (dispatch) => ({
+  authenticate: (cookie) => dispatch(authenticate(cookie)),
+});
 class ConnectedRouter extends React.Component {
-
-    componentDidMount() {
-        const cookies = new Cookies();
-        const cookie = cookies.get("user")
-        console.log(cookies.get("user"));
-        if (cookie != undefined && cookie != "undefined") {
-            this.props.authenticate(cookie)
-        }
-
-
+  componentDidMount() {
+    const cookies = new Cookies();
+    const cookie = cookies.get('user');
+    console.log(cookies.get('user'));
+    if (cookie != undefined && cookie != 'undefined') {
+      this.props.authenticate(cookie);
     }
-    render() {
-        return (
-            <BrowserRouter>
-            <Layout>
-            <Header>
-                {/* <div class="header-block"> */}
-               
-                    
+  }
 
-                   
-               
-                    {/* <AuthButton /> */}
+  render() {
+    return (
+      <BrowserRouter>
+        <Layout>
+          <Header>
+            {/* <div class="header-block"> */}
 
-                    {
+
+            {/* <AuthButton /> */}
+
+            {
                         this.props.user_id != undefined ? (
-                                    <div className="header-block-btns">
-                                    <Link to="/todolist"><Button type="primary">Todolist</Button></Link>
-                                    <Link to="/signout"><Button type="primary">SignOut</Button></Link>
-                                    </div>
+                          <div className="header-block-btns">
+                            <Link to="/todolist"><Button type="primary">Todolist</Button></Link>
+                            <Link to="/signout"><Button type="primary">SignOut</Button></Link>
+                          </div>
                         ) : (
-                               <div>
+                          <div>
 
-                               
-                                        <Link to="/"><Button type="primary">Login</Button></Link>
-                                        <a> or</a>
-                                        <Link to="/signup" ><Button type="primary">Signup</Button></Link>
-                                        </div>
-                            )
+
+                            <Link to="/"><Button type="primary">Login</Button></Link>
+                            <a> or</a>
+                            <Link to="/signup"><Button type="primary">Signup</Button></Link>
+                          </div>
+                        )
 
 
                     }
-                    
-                {/* </div> */}
-                </Header>
-                <Content style={{display:'flex' , justifyContent:"center", alignItems: "center", }} >
 
-                
-                <Switch>
-                    <Route path="/" exact component={Login} />
-                    <Route path="/signup" exact component={Signup} />
+            {/* </div> */}
+          </Header>
+          <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-                    <Route path="/todolist" component={TodoList} />
-                    {/* <Route path="sign" */}
-                </Switch>
-                </Content>
-                <Footer style={{display:'flex', justifyContent:'center'}}>
-                    <p >2019</p>
-                </Footer>
-                </Layout>
-            </BrowserRouter>
-        )
 
-    }
+            <Switch>
+              <Route path="/" exact component={Login} />
+              <Route path="/signup" exact component={Signup} />
+
+              <Route path="/todolist" component={TodoList} />
+              {/* <Route path="sign" */}
+            </Switch>
+          </Content>
+          <Footer style={{ display: 'flex', justifyContent: 'center' }}>
+            <p>2019</p>
+          </Footer>
+        </Layout>
+      </BrowserRouter>
+    );
+  }
 }
 
 // const fakeAuth = {
@@ -132,13 +124,13 @@ class ConnectedRouter extends React.Component {
 //     console.log("this is private router");
 
 //     return (
-//         <Route 
+//         <Route
 //         {...rest}
 //         render={props => fakeAuth.isAuthenticated ? (
 //             <Component {...props} />
 
 //         ): (
-//             <Redirect 
+//             <Redirect
 //             to={{pathname: "/",
 //             state: {from: props.location}
 //             }}
@@ -149,5 +141,5 @@ class ConnectedRouter extends React.Component {
 //     )
 // }
 
-const Router = connect(mapStateToProps, mapDispatchToProps)(ConnectedRouter)
-export default Router
+const Router = connect(mapStateToProps, mapDispatchToProps)(ConnectedRouter);
+export default Router;

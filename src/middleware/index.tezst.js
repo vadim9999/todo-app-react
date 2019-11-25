@@ -1,5 +1,4 @@
 
-test('first test', () =>{
-    console.log("Hi!");
-    
-})
+test('first test', () => {
+  console.log('Hi!');
+});

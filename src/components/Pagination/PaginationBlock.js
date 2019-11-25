@@ -1,4 +1,4 @@
-import styled,{keyframes} from 'styled-components'
+import styled, { keyframes } from 'styled-components';
 
 export const PaginationBlock = styled.div`
     /* border: 2px solid green; */
@@ -6,7 +6,7 @@ export const PaginationBlock = styled.div`
     background: linear-gradient(45deg, #a02a2a, rgb(75, 11, 11));
     border-radius: 5px;
     display:flex;
-`
+`;
 
 export const Item = styled.a`
     color: green;
@@ -19,4 +19,4 @@ export const Item = styled.a`
         background-color: black;
         cursor:pointer
     }
-`
+`;
