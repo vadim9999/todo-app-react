@@ -8,17 +8,21 @@ import { authorizate } from '../../actions/user';
 // import "./Login.css"
 
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state:any) => ({
   user_id: state.user._id,
 });
-const mapDispatchToProps = (dispatch) => ({
-  authorizate: (data) => dispatch(authorizate(data)),
+
+const mapDispatchToProps = (dispatch:any) => ({
+  authorizate: (data:any) => dispatch(authorizate(data)),
 
 });
 
-class ConnectedLogin extends Component {
-  constructor() {
-    super();
+interface LoginProps {
+
+}
+class ConnectedLogin extends Component<> {
+  constructor(props:any) {
+    super(props);
     this.state = {
       email: '',
       password: '',
@@ -27,7 +31,7 @@ class ConnectedLogin extends Component {
     this.login = this.login.bind(this);
   }
 
-  login(e) {
+  login(e:any) {
     e.preventDefault();
     console.log('Authenticate');
     const { email, password } = this.state;

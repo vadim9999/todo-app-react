@@ -10,12 +10,12 @@ import './InputItem.css';
 //         addTask: task => dispatch(addTask(task))
 //     }
 // }
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state:any) => ({
   user_id: state.user._id
 });
 
 class ConnectedInputItem extends Component {
-  constructor(props) {
+  constructor(props:any) {
     super(props);
     this.state = {
       name: ''

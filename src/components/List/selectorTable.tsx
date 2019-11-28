@@ -1,6 +1,8 @@
 import moment from 'moment';
 
-const getTasksForTable = (tasks) => {
+import {TasksTypes} from '../Interfaces';
+
+const getTasksForTable = (tasks:TasksTypes[]) => {
   console.log('getTasks for table');
 
   const data = [];
@@ -24,7 +26,7 @@ const getTasksForTable = (tasks) => {
 };
 
 
-const getColumns = (columnsTable, context) => {
+const getColumns = (columnsTable:{editable:boolean, dataIndex:string; title:string}[], context:any) => {
   const columns = columnsTable.map((col) => {
     if (!col.editable) {
       return col;
@@ -32,7 +34,7 @@ const getColumns = (columnsTable, context) => {
 
     return {
       ...col,
-      onCell: (record) => ({
+      onCell: (record:object) => ({
         record,
         editable: col.editable,
         dataIndex: col.dataIndex,
@@ -46,7 +48,7 @@ const getColumns = (columnsTable, context) => {
 };
 
 
-const getRowSelection = (tasks, context) => {
+const getRowSelection = (tasks:TasksTypes[], context:any) => {
   console.log(tasks);
 
   const { selectedRowKeys } = context.state;
@@ -75,7 +77,7 @@ const getRowSelection = (tasks, context) => {
         onSelect: () => {
           console.log('on click undo');
           const counter = 0;
-          const selectedRows = [];
+          const selectedRows:any = [];
           tasks.map((task, index) => {
             if (task.completed) {
               selectedRows.push(index);

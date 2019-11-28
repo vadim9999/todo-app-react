@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
-import InputItem from '../InputItem/InputItem';
+// import InputItem from '../InputItem/InputItem';
 import List from '../List/List';
 // import ConnectedLogin from './Login/Login';
 import { getTasks, addSelectedRowKeys } from '../../actions/index';

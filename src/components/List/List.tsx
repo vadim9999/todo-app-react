@@ -17,7 +17,7 @@ import './List.css';
 
 import { EditableCell, EditableRow } from '../EditableCell/EditableCell';
 
-function mapStateToProps(state) {
+function mapStateToProps(state:any) {
   return {
     tasks: state.tasks,
     filteredTasks: state.filteredTasks,
@@ -28,27 +28,52 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  sortTasksByGrowthDate: (tasks) => dispatch(sortTasksByGrowthDate(tasks)),
-  sortTasksByDecreaseDate: (tasks) => dispatch(sortTasksByDecreaseDate(tasks)),
-  getTasks: (user_id) => dispatch(getTasks(user_id)),
-  deleteTaskById: (task_id) => dispatch(deleteTaskById(task_id)),
-  updateTaskById: (task_id) => dispatch(updateTaskById(task_id)),
-  addTask: (data) => dispatch(addTask(data)),
+const mapDispatchToProps = (dispatch:any) => ({
+  sortTasksByGrowthDate: (tasks:any) => dispatch(sortTasksByGrowthDate(tasks)),
+  sortTasksByDecreaseDate: (tasks:any) => dispatch(sortTasksByDecreaseDate(tasks)),
+  getTasks: (user_id:any) => dispatch(getTasks(user_id)),
+  deleteTaskById: (task_id:any) => dispatch(deleteTaskById(task_id)),
+  updateTaskById: (task_id:any) => dispatch(updateTaskById(task_id)),
+  addTask: (data:any) => dispatch(addTask(data)),
 });
 
 const EditableFormRow = Form.create()(EditableRow);
 
-class ConnectedList extends Component {
-  constructor() {
-    super();
+interface ListProps {
+  tasks: {completed:boolean, _id:string}[];
+  selectedRows:string[];
+  filteredTasks:object[];
+  date:any;
+  currentPage:any;
+  user_id:string;
+
+  updateTaskById: any;
+  deleteTaskById: any;
+  addTask: any;
+}
+
+interface ListState {
+  isFiltered?: boolean;
+  isSorted?:boolean;
+  filterOption?: number;
+  filterOptionName?: string;
+  sortOption?: number;
+  sortOptionName?: string;
+  selectedRowKeys?: any;
+  toggle?: number;
+  loading?:boolean;
+  currentPage?: number;
+
+}
+class ConnectedList extends Component<ListProps,ListState> {
+  constructor(props:any) {
+    super(props);
 
     this.state = {
       isFiltered: false,
       isSorted: false,
       filterOption: 0,
       filterOptionName: 'Display uncompleted tasks',
-      isSorted: false,
       sortOption: 0,
       sortOptionName: 'Sort by growth date',
       selectedRowKeys: [],
@@ -94,7 +119,7 @@ class ConnectedList extends Component {
 
       const rowKeys = changedRowKeys.concat(keysNotFounded);
 
-      rowKeys.map((item) => {
+      rowKeys.map((item:any) => {
         this.props.updateTaskById({
           ...tasks[item],
           // name: row.name,
@@ -112,7 +137,7 @@ class ConnectedList extends Component {
       }, 1000);
     }
 
-    onSelectChange = (selectedRowKeys) => {
+    onSelectChange = (selectedRowKeys:number[]):void => {
       console.log('selectedRowKeys changed: ', selectedRowKeys);
       // const lastIndex = selectedRowKeys.length - 1;
 
@@ -149,7 +174,7 @@ class ConnectedList extends Component {
         title: 'Action',
         dataIndex: '',
 
-        render: (text, record) => (this.props.tasks.length >= 1 ? (
+        render: (text:string, record:{_id:string}) => (this.props.tasks.length >= 1 ? (
 
 
           <Popconfirm
@@ -167,10 +192,10 @@ class ConnectedList extends Component {
       },
     ]
 
-    getSelectedRowKeys(tasks) {
+    getSelectedRowKeys = (tasks:{completed:boolean}[]) :void =>{
       console.log('call selectedRowKeys');
       // const {selectedRows} = this.props;
-      const selectedRows = [];
+      const selectedRows :number[] = [];
       tasks.map((task, index) => {
         if (task.completed) {
           selectedRows.push(index);
@@ -188,7 +213,7 @@ class ConnectedList extends Component {
       }
     }
 
-    componentWillReceiveProps(newProps) {
+    componentWillReceiveProps = (newProps:any) => {
       console.log('component will receive props');
 
       if (this.props != newProps && newProps.tasks != undefined) {
@@ -196,14 +221,14 @@ class ConnectedList extends Component {
       }
     }
 
-    handleSave = (row) => {
+    handleSave = (row:{_id:string, name:string}):void => {
       console.log(row);
       const { tasks } = this.props;
       const index = tasks.findIndex((item) => row._id === item._id);
       const item = tasks[index];
       console.log('item', item);
 
-      const founded = this.state.selectedRowKeys.find((item) => {
+      const founded = this.state.selectedRowKeys.find((item:any) => {
         console.log(item);
         console.log(index);
 
@@ -238,7 +263,7 @@ class ConnectedList extends Component {
     }
 
 
-    getComponents = () => {
+    getComponents = ():object => {
       const components = {
         body: {
           row: EditableFormRow,
@@ -249,7 +274,7 @@ class ConnectedList extends Component {
       return components;
     }
 
-    getPagination = (tasks) => {
+    getPagination = (tasks:object[]) => {
       let counter = 0;
       tasks.map((elem, index) => {
         // console.log(index);
@@ -267,14 +292,10 @@ class ConnectedList extends Component {
       return counter;
     }
 
-    handleAdd = (e) => {
-      const { name } = this.state;
+    handleAdd = (e:any) => {
       e.preventDefault();
       console.log('clicked');
       const date = moment().toISOString();
-      const login = 'miron2311';
-      const completed = true;
-
 
       this.props.addTask({
         login_id: this.props.user_id, completed: false, name: 'New task', date,
@@ -286,13 +307,11 @@ class ConnectedList extends Component {
       });
     }
 
-    handleTableChange = (pagination) => {
+    handleTableChange = (pagination:{current:number}) => {
       this.setState({
         currentPage: pagination.current,
       });
       console.log(pagination.current);
-
-
       console.log('change table');
     }
 
@@ -300,7 +319,7 @@ class ConnectedList extends Component {
       let { tasks } = this.props;
 
       const { selectedRowKeys, loading } = this.state;
-      const sortedKeys = selectedRowKeys.sort((a, b) => (a < b));
+      const sortedKeys = selectedRowKeys.sort((a:number, b:number) => (a < b));
       let equalRowKeys = false;
 
 
@@ -330,8 +349,9 @@ class ConnectedList extends Component {
             rowSelection={getRowSelection(tasks, this)}
             dataSource={getTasksForTable(tasks)}
             columns={getColumns(this.columns, this)}
-            pagination={{ current: this.state.currentPage }}
             onChange={this.handleTableChange}
+            pagination={{ current: this.state.currentPage }}
+            
           />
 
           {/* <div className="btn-block">
