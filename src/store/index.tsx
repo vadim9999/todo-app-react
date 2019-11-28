@@ -7,7 +7,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 const initialiseSagaMiddleware = createSagaMiddleware();
 
-
 // const store = createStore(rootReducer,
 //     storeEnhancers(
 //         applyMiddleware(forbiddenWordsMiddleware, thunk)
@@ -16,9 +15,9 @@ const initialiseSagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
   rootReducer,
-    composeWithDevTools(
-      applyMiddleware(forbiddenWordsMiddleware, initialiseSagaMiddleware),
-    )
+  composeWithDevTools(
+    applyMiddleware(forbiddenWordsMiddleware, initialiseSagaMiddleware)
+  )
 );
 
 initialiseSagaMiddleware.run(apiSaga);

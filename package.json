@@ -35,7 +35,7 @@
     "lint:ts": "tslint -c tslint.json --fix src/*.tsx, src/**/*.tsx",
     "check-types": "tsc",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "format": "prettier --write ./src/*.tsx ./src/components/**/*.tsx"
+    "format": "prettier --write ./src/*.tsx ./src/**/*.tsx"
   },
   "eslintConfig": {
     "extends": "react-app"

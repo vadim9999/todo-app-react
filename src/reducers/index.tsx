@@ -2,15 +2,14 @@ const initialState = {
   user: {},
   tasks: [],
   currentPage: 0,
-  selectedRowKeys: [],
+  selectedRowKeys: []
 };
 
-function rootReducer(state = initialState, action:any) {
+function rootReducer(state = initialState, action: any) {
   // console.error("Reducer");
   // console.log(action);
   // console.log("State");
   // console.log(state);
-
 
   switch (action.type) {
     // case types.ADD_TASK:
@@ -21,7 +20,6 @@ function rootReducer(state = initialState, action:any) {
     case 'ADD_TASK_SUCCESS':
       return { ...state, tasks: state.tasks.concat(action.payload) };
 
-
     case 'DATA_REQUESTED':
       // console.log("Reducers data requested");
       return state;
@@ -30,26 +28,25 @@ function rootReducer(state = initialState, action:any) {
       return {
         ...state,
         tasks: action.payload.data,
-        selectedRowKeys: [...action.payload.selectedRowKeys],
+        selectedRowKeys: [...action.payload.selectedRowKeys]
       };
 
     case 'ADD_USER_SUCCESS':
-
       return {
         ...state,
-        user: action.payload,
+        user: action.payload
       };
 
     case 'AUTHENTICATE_SUCCESS':
       return {
         ...state,
-        user: action.payload,
+        user: action.payload
       };
 
     case 'AUTHORIZATE_SUCCESS':
       return {
         ...state,
-        user: action.payload,
+        user: action.payload
       };
 
     case 'SORT_TASKS_BY_GROWTH_DATE':
@@ -59,19 +56,18 @@ function rootReducer(state = initialState, action:any) {
     case 'SORT_TASKS_BY_DECREASE_DATE':
       return {
         ...state,
-        tasks: [...action.payload],
+        tasks: [...action.payload]
       };
 
     case 'ADD_CURRENT_PAGE':
       return {
         ...state,
-        currentPage: action.payload,
+        currentPage: action.payload
       };
     case 'ADD_SELECTED_ROW_KEYS':
       return {
         ...state,
-        selectedRowKeys: [...action.payload],
-
+        selectedRowKeys: [...action.payload]
       };
     default:
       return state;

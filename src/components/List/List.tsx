@@ -15,7 +15,7 @@ import {
 // import 'antd/dist/antd.css'
 import { onClickFilter, onSort } from './selector';
 import { getTasksForTable, getColumns, getRowSelection } from './selectorTable';
-
+import { TasksTypes } from '../Interfaces';
 import './List.css';
 
 import { EditableCell, EditableRow } from '../EditableCell/EditableCell';
@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 const EditableFormRow = Form.create()(EditableRow);
 
 interface ListProps {
-  tasks: { completed: boolean; _id: string }[];
+  tasks: TasksTypes[];
   selectedRows: string[];
   filteredTasks: object[];
   date: any;
@@ -315,7 +315,7 @@ class ConnectedList extends Component<ListProps, ListState> {
   };
 
   render() {
-    let { tasks }:any = this.props;
+    let { tasks } = this.props;
 
     const { selectedRowKeys, loading } = this.state;
     const sortedKeys = selectedRowKeys.sort((a: number, b: number) => a < b);
