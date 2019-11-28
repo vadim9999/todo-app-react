@@ -1,5 +1,3 @@
-import * as types from '../constants/action-types';
-
 const initialState = {
   user: {},
   tasks: [],
@@ -7,7 +5,7 @@ const initialState = {
   selectedRowKeys: [],
 };
 
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState, action:any) {
   // console.error("Reducer");
   // console.log(action);
   // console.log("State");

@@ -1,12 +1,11 @@
-import {
-  takeLatest, takeEvery, call, put,
+import { call, put,
 } from 'redux-saga/effects';
 import {
   createTask, getTasks, updateTask, deleteTask,
 } from '../task-requests/task-requests';
 
 
-export default function* allTaskWorkers(action) {
+export default function* allTaskWorkers(action:any) {
   switch (action.type) {
     case 'ADD_TASK':
       yield taskWorker({
@@ -38,7 +37,7 @@ export default function* allTaskWorkers(action) {
   }
 }
 
-function* taskWorkerGetTasks({ requestFunction, action, callback }) {
+function* taskWorkerGetTasks({ requestFunction, action, callback }:any) {
   yield console.log('********TAsk worker');
   const { type, payload } = action;
   try {
@@ -51,7 +50,7 @@ function* taskWorkerGetTasks({ requestFunction, action, callback }) {
       // const selectedRowKeys = yield data.filter(task => task.completed)
 
       const selectedRows = yield [];
-      yield data.map((task, index) => {
+      yield data.map((task:any, index:number) => {
         if (task.completed) {
           selectedRows.push(index);
         }
@@ -67,20 +66,20 @@ function* taskWorkerGetTasks({ requestFunction, action, callback }) {
   }
 }
 
-function* taskWorkerUpdateTask({ payload }) {
+function* taskWorkerUpdateTask({ payload }:any) {
   yield console.log('callback');
   yield call(updateTask, payload);
   yield put({ type: 'UPDATE_TASK_SUCCESS' });
   yield put({ type: 'GET_TASKS', payload: payload.login_id });
 }
 
-function* taskWorkerDeleteTask({ payload }) {
+function* taskWorkerDeleteTask({ payload }:any) {
   yield call(deleteTask, payload);
   yield put({ type: 'DELETE_TASK_SUCCESS' });
   yield put({ type: 'GET_TASKS', payload: payload.login_id });
 }
 
-function* taskWorker({ requestFunction, action, callback }) {
+function* taskWorker({ requestFunction, action, callback }:any) {
   yield console.log('********TAsk worker');
   const { type, payload } = action;
   try {

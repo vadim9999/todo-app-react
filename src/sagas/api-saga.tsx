@@ -1,5 +1,5 @@
-import { takeLatest, takeEvery } from 'redux-saga/effects';
-import { ADD_TASK, FOUND_WORD } from '../constants/action-types';
+import { takeLatest } from 'redux-saga/effects';
+
 
 import allUserWorkers from './user-saga/user-saga';
 import allTaskWorkers from './task-saga/task-saga';

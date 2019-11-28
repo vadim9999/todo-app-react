@@ -1,32 +1,25 @@
 import Cookies from 'universal-cookie';
-import { ADD_TASK } from '../constants/action-types';
-import { FOUND_WORD, addFoundWord } from '../actions/index';
 
 
-export function forbiddenWordsMiddleware({ dispatch }) {
-  return function (next) {
-    return function (action) {
+export function forbiddenWordsMiddleware({ dispatch:any }) {
+  return function (next:any) {
+    return function (action:any) {
       switch (action.type) {
         case 'SORT_TASKS_BY_GROWTH_DATE':
-          console.log('__Middleware_sortTasks');
-          console.log('Before sorting', action.payload);
           const tasks = [...action.payload];
-          console.log('New created object with array', tasks);
-
+          
           // const tasks = action.payload;
           tasks.sort((task1, task2) => {
             if (task1.date > task2.date) return 1;
             return -1;
           });
-
           action.payload = tasks;
-          console.log('After sorting', tasks);
+
 
           break;
         case 'SORT_TASKS_BY_DECREASE_DATE':
-          console.log('Middleware _ decrease date');
           const tasks1 = [...action.payload];
-          console.log('New created object with array', tasks1);
+          
           // const tasks = action.payload;
           tasks1.sort((task1, task2) => {
             if (task1.date < task2.date) return 1;

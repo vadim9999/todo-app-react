@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects';
 import { addUser, authenticate, authorizate } from '../user-requests/user-requests';
 
-export default function* allUserWorkers(action) {
+export default function* allUserWorkers(action:any) {
   switch (action.type) {
     case 'ADD_USER':
       yield userWorker(addUser, action);
@@ -19,7 +19,7 @@ export default function* allUserWorkers(action) {
   }
 }
 
-function* authenticateUserWorker(requestFunction, { type, payload }) {
+function* authenticateUserWorker(requestFunction:any, { type, payload }:any) {
   try {
     const { data } = yield call(requestFunction, payload);
     yield put({ type: `${type}_SUCCESS`, payload: data });
@@ -28,7 +28,7 @@ function* authenticateUserWorker(requestFunction, { type, payload }) {
   }
 }
 
-function* userWorker(requestFunction, { type, payload }) {
+function* userWorker(requestFunction:any, { type, payload }:any) {
   try {
     const result = yield call(requestFunction, payload);
     yield console.log('_________________Result of add user');
