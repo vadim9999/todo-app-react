@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-import {TasksTypes} from '../Interfaces';
+import { TasksTypes } from '../Interfaces';
 
-const getTasksForTable = (tasks:TasksTypes[]) => {
+const getTasksForTable = (tasks: TasksTypes[]) => {
   console.log('getTasks for table');
 
   const data = [];
@@ -12,8 +12,7 @@ const getTasksForTable = (tasks:TasksTypes[]) => {
       ...tasks[i],
       key: i,
 
-      date: moment(tasks[i].date).format('HH:mm:ss, DD.MM.YYYY'),
-
+      date: moment(tasks[i].date).format('HH:mm:ss, DD.MM.YYYY')
     });
   }
 
@@ -25,30 +24,31 @@ const getTasksForTable = (tasks:TasksTypes[]) => {
   return data;
 };
 
-
-const getColumns = (columnsTable:{editable:boolean, dataIndex:string; title:string}[], context:any) => {
-  const columns = columnsTable.map((col) => {
+const getColumns = (
+  columnsTable: { editable: boolean; dataIndex: string; title: string }[],
+  context: any
+) => {
+  const columns = columnsTable.map(col => {
     if (!col.editable) {
       return col;
     }
 
     return {
       ...col,
-      onCell: (record:object) => ({
+      onCell: (record: object) => ({
         record,
         editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
-        handleSave: context.handleSave,
-      }),
+        handleSave: context.handleSave
+      })
     };
   });
 
   return columns;
 };
 
-
-const getRowSelection = (tasks:TasksTypes[], context:any) => {
+const getRowSelection = (tasks: TasksTypes[], context: any) => {
   console.log(tasks);
 
   const { selectedRowKeys } = context.state;
@@ -64,12 +64,15 @@ const getRowSelection = (tasks:TasksTypes[], context:any) => {
         onSelect: () => {
           console.log('This is on select');
 
-          context.setState({
-            selectedRowKeys: [...Array(tasks.length).keys()],
-          }, () => {
-            console.log('after render', context.state.selectedRowKeys);
-          });
-        },
+          context.setState(
+            {
+              selectedRowKeys: [...Array(tasks.length).keys()]
+            },
+            () => {
+              console.log('after render', context.state.selectedRowKeys);
+            }
+          );
+        }
       },
       {
         key: 'undo-all-selections',
@@ -77,25 +80,21 @@ const getRowSelection = (tasks:TasksTypes[], context:any) => {
         onSelect: () => {
           console.log('on click undo');
           const counter = 0;
-          const selectedRows:any = [];
+          const selectedRows: any = [];
           tasks.map((task, index) => {
             if (task.completed) {
               selectedRows.push(index);
             }
           });
           context.setState({
-            selectedRowKeys: selectedRows,
+            selectedRowKeys: selectedRows
           });
-        },
-      },
-    ],
+        }
+      }
+    ]
   };
 
   return rowSelection;
 };
 
-export {
-  getTasksForTable,
-  getColumns,
-  getRowSelection,
-};
+export { getTasksForTable, getColumns, getRowSelection };

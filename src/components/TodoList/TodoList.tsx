@@ -10,41 +10,50 @@ import { getTasks, addSelectedRowKeys } from '../../actions/index';
 // function mapStateToProps(state){
 //     return { tasks: state.tasks }
 // }
+import { TasksTypes } from '../Interfaces';
 
 const { Content } = Layout;
-const mapDispatchToProps = (dispatch) => ({
-  getTasks: (login_id) => dispatch(getTasks(login_id)),
-  addSelectedRowKeys: (keys) => dispatch(addSelectedRowKeys(keys)),
+const mapDispatchToProps = (dispatch: any) => ({
+  getTasks: (login_id: string) => dispatch(getTasks(login_id)),
+  addSelectedRowKeys: (keys: number[]) => dispatch(addSelectedRowKeys(keys))
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
   user_id: state.user._id,
   tasks: state.tasks,
-  selectedRowKeys: state.selectedRowKeys,
+  selectedRowKeys: state.selectedRowKeys
 });
 
-class ConnectedTodoList extends Component {
-  constructor(props) {
+interface TodoListProps {
+  user_id: string;
+  tasks: TasksTypes[];
+  selectedRowKeys: any;
+
+  getTasks: any;
+  addSelectedRowKeys: any;
+}
+
+interface TodoListState {}
+
+class ConnectedTodoList extends Component<TodoListProps, TodoListState> {
+  constructor(props: any) {
     super(props);
   }
 
   componentDidMount() {
-    const { getTasks, user_id, addSelectedRowKeys } = this.props;
+    const { getTasks, user_id } = this.props;
     if (user_id != undefined) {
       getTasks(user_id);
-
 
       // addSelectedRowKeys([2])
     }
   }
 
   render() {
-    if (this.props.user_id === undefined) return (<Redirect to="/" />);
+    if (this.props.user_id === undefined) return <Redirect to="/" />;
 
     return (
       <Content>
-
-
         {/* <div className="todoListMain"> */}
         <List />
         {/* <InputItem /> */}
@@ -54,5 +63,8 @@ class ConnectedTodoList extends Component {
     );
   }
 }
-const TodoList = connect(mapStateToProps, mapDispatchToProps)(ConnectedTodoList);
+const TodoList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConnectedTodoList);
 export default TodoList;

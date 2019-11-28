@@ -1,53 +1,56 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  Input, Tooltip, Icon, Button, Form, Row, Col,
-} from 'antd';
+import { Input, Tooltip, Icon, Button, Form, Row, Col } from 'antd';
 import { authorizate } from '../../actions/user';
 // import "./Login.css"
 
-
-const mapStateToProps = (state:any) => ({
-  user_id: state.user._id,
+const mapStateToProps = (state: any) => ({
+  user_id: state.user._id
 });
 
-const mapDispatchToProps = (dispatch:any) => ({
-  authorizate: (data:any) => dispatch(authorizate(data)),
-
+const mapDispatchToProps = (dispatch: any) => ({
+  authorizate: (data: any) => dispatch(authorizate(data))
 });
 
 interface LoginProps {
-
+  user_id: string;
+  authorizate: any;
 }
-class ConnectedLogin extends Component<> {
-  constructor(props:any) {
+
+interface LoginState {
+  email?: string;
+  password?: string;
+}
+
+class ConnectedLogin extends Component<LoginProps, LoginState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       email: '',
-      password: '',
+      password: ''
     };
     this.onHandleChange = this.onHandleChange.bind(this);
     this.login = this.login.bind(this);
   }
 
-  login(e:any) {
+  login(e: any) {
     e.preventDefault();
     console.log('Authenticate');
     const { email, password } = this.state;
     this.props.authorizate({
-      email, password,
+      email,
+      password
     });
     this.setState({
       email: '',
-      password: '',
-
+      password: ''
     });
   }
 
-  onHandleChange(e) {
+  onHandleChange(e: any) {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
@@ -57,10 +60,7 @@ class ConnectedLogin extends Component<> {
     if (this.props.user_id) return <Redirect to="/todolist" />;
 
     return (
-
       <div>
-
-
         <Row type="flex" justify="center">
           <Col>
             <Form onSubmit={this.login}>
@@ -71,12 +71,17 @@ class ConnectedLogin extends Component<> {
                   onChange={this.onHandleChange}
                   value={this.state.email}
                   name="email"
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  suffix={(
+                  prefix={
+                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
+                  suffix={
                     <Tooltip title="Extra information">
-                      <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
+                      <Icon
+                        type="info-circle"
+                        style={{ color: 'rgba(0,0,0,.45)' }}
+                      />
                     </Tooltip>
-                          )}
+                  }
                 />
               </Form.Item>
               <Form.Item>
@@ -87,18 +92,20 @@ class ConnectedLogin extends Component<> {
                   value={this.state.password}
                   placeholder="Input password"
                 />
-
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">Log in</Button>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                >
+                  Log in
+                </Button>
               </Form.Item>
             </Form>
           </Col>
-
         </Row>
       </div>
-
-
     );
   }
 }

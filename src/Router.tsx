@@ -22,7 +22,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  authenticate: (cookie:any) => dispatch(authenticate(cookie))
+  authenticate: (cookie: any) => dispatch(authenticate(cookie))
 });
 
 interface RouterProps {

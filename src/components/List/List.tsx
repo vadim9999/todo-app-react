@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Table, Popconfirm, Form, Input, Button } from 'antd';
 import {
-  Table, Popconfirm, Form, Input, Button,
-} from 'antd';
-import {
-  sortTasksByGrowthDate, sortTasksByDecreaseDate, getTasks, deleteTaskById, updateTaskById, addTask,
+  sortTasksByGrowthDate,
+  sortTasksByDecreaseDate,
+  getTasks,
+  deleteTaskById,
+  updateTaskById,
+  addTask
 } from '../../actions';
 // import BlockAnimation  from "./BlockAnimation.js"
 // import CustomPagination from '../Pagination/Pagination'
@@ -17,35 +20,36 @@ import './List.css';
 
 import { EditableCell, EditableRow } from '../EditableCell/EditableCell';
 
-function mapStateToProps(state:any) {
+function mapStateToProps(state: any) {
   return {
     tasks: state.tasks,
     filteredTasks: state.filteredTasks,
     date: state.date,
     currentPage: state.currentPage,
     selectedRows: state.selectedRowKeys,
-    user_id: state.user._id,
+    user_id: state.user._id
   };
 }
 
-const mapDispatchToProps = (dispatch:any) => ({
-  sortTasksByGrowthDate: (tasks:any) => dispatch(sortTasksByGrowthDate(tasks)),
-  sortTasksByDecreaseDate: (tasks:any) => dispatch(sortTasksByDecreaseDate(tasks)),
-  getTasks: (user_id:any) => dispatch(getTasks(user_id)),
-  deleteTaskById: (task_id:any) => dispatch(deleteTaskById(task_id)),
-  updateTaskById: (task_id:any) => dispatch(updateTaskById(task_id)),
-  addTask: (data:any) => dispatch(addTask(data)),
+const mapDispatchToProps = (dispatch: any) => ({
+  sortTasksByGrowthDate: (tasks: any) => dispatch(sortTasksByGrowthDate(tasks)),
+  sortTasksByDecreaseDate: (tasks: any) =>
+    dispatch(sortTasksByDecreaseDate(tasks)),
+  getTasks: (user_id: any) => dispatch(getTasks(user_id)),
+  deleteTaskById: (task_id: any) => dispatch(deleteTaskById(task_id)),
+  updateTaskById: (task_id: any) => dispatch(updateTaskById(task_id)),
+  addTask: (data: any) => dispatch(addTask(data))
 });
 
 const EditableFormRow = Form.create()(EditableRow);
 
 interface ListProps {
-  tasks: {completed:boolean, _id:string}[];
-  selectedRows:string[];
-  filteredTasks:object[];
-  date:any;
-  currentPage:any;
-  user_id:string;
+  tasks: { completed: boolean; _id: string }[];
+  selectedRows: string[];
+  filteredTasks: object[];
+  date: any;
+  currentPage: any;
+  user_id: string;
 
   updateTaskById: any;
   deleteTaskById: any;
@@ -54,19 +58,18 @@ interface ListProps {
 
 interface ListState {
   isFiltered?: boolean;
-  isSorted?:boolean;
+  isSorted?: boolean;
   filterOption?: number;
   filterOptionName?: string;
   sortOption?: number;
   sortOptionName?: string;
   selectedRowKeys?: any;
   toggle?: number;
-  loading?:boolean;
+  loading?: boolean;
   currentPage?: number;
-
 }
-class ConnectedList extends Component<ListProps,ListState> {
-  constructor(props:any) {
+class ConnectedList extends Component<ListProps, ListState> {
+  constructor(props: any) {
     super(props);
 
     this.state = {
@@ -79,282 +82,288 @@ class ConnectedList extends Component<ListProps,ListState> {
       selectedRowKeys: [],
       toggle: 0,
       loading: false,
-      currentPage: 1,
-
+      currentPage: 1
     };
 
     this.onSelectChange = this.onSelectChange.bind(this);
   }
 
-    start = () => {
-      const { tasks, selectedRows } = this.props;
-      const { selectedRowKeys } = this.state;
+  start = () => {
+    const { tasks, selectedRows } = this.props;
+    const { selectedRowKeys } = this.state;
 
-      this.setState({
-        loading: true,
-      });
+    this.setState({
+      loading: true
+    });
 
+    const keysNotFounded = [];
+    const changedRowKeys = [...selectedRowKeys];
+    console.log('keys before', changedRowKeys);
 
-      const keysNotFounded = [];
-      const changedRowKeys = [...selectedRowKeys];
-      console.log('keys before', changedRowKeys);
-
-      for (let i = 0; i < selectedRows.length; i++) {
-        let founded = false;
-        for (let j = 0; j < changedRowKeys.length; j++) {
-          if (selectedRows[i] === changedRowKeys[j]) {
-            changedRowKeys.splice(j, 1);
-            founded = true;
-            break;
-          }
-        }
-
-
-        if (!founded) {
-          keysNotFounded.push(selectedRows[i]);
+    for (let i = 0; i < selectedRows.length; i++) {
+      let founded = false;
+      for (let j = 0; j < changedRowKeys.length; j++) {
+        if (selectedRows[i] === changedRowKeys[j]) {
+          changedRowKeys.splice(j, 1);
+          founded = true;
+          break;
         }
       }
 
-      // changedRowKeys[...keysNotFounded]
-
-      const rowKeys = changedRowKeys.concat(keysNotFounded);
-
-      rowKeys.map((item:any) => {
-        this.props.updateTaskById({
-          ...tasks[item],
-          // name: row.name,
-          completed: !tasks[item].completed,
-          login_id: this.props.user_id,
-          date: moment().toISOString(),
-        });
-      });
-
-
-      setTimeout(() => {
-        this.setState({
-          loading: false,
-        });
-      }, 1000);
+      if (!founded) {
+        keysNotFounded.push(selectedRows[i]);
+      }
     }
 
-    onSelectChange = (selectedRowKeys:number[]):void => {
-      console.log('selectedRowKeys changed: ', selectedRowKeys);
-      // const lastIndex = selectedRowKeys.length - 1;
+    // changedRowKeys[...keysNotFounded]
 
-      // const lastItem = selectedRowKeys[lastIndex];
+    const rowKeys = changedRowKeys.concat(keysNotFounded);
 
-      // const task = this.props.tasks[lastItem]
+    rowKeys.map((item: any) => {
+      this.props.updateTaskById({
+        ...tasks[item],
+        // name: row.name,
+        completed: !tasks[item].completed,
+        login_id: this.props.user_id,
+        date: moment().toISOString()
+      });
+    });
 
-      // this.props.updateTaskById({
-      //     ...task,
-      //     name: task.name,
-      //     completed: !task.completed,
-      //     login_id: this.props.user_id,
-      //     date: moment().toISOString()
-      // })
-
+    setTimeout(() => {
       this.setState({
-        selectedRowKeys,
+        loading: false
       });
-    }
+    }, 1000);
+  };
 
+  onSelectChange = (selectedRowKeys: number[]): void => {
+    console.log('selectedRowKeys changed: ', selectedRowKeys);
+    // const lastIndex = selectedRowKeys.length - 1;
 
-    columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        width: '30%',
-        editable: true,
-      },
-      {
-        title: 'Date',
-        dataIndex: 'date',
-      },
-      {
-        title: 'Action',
-        dataIndex: '',
+    // const lastItem = selectedRowKeys[lastIndex];
 
-        render: (text:string, record:{_id:string}) => (this.props.tasks.length >= 1 ? (
+    // const task = this.props.tasks[lastItem]
 
+    // this.props.updateTaskById({
+    //     ...task,
+    //     name: task.name,
+    //     completed: !task.completed,
+    //     login_id: this.props.user_id,
+    //     date: moment().toISOString()
+    // })
 
+    this.setState({
+      selectedRowKeys
+    });
+  };
+
+  columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      width: '30%',
+      editable: true
+    },
+    {
+      title: 'Date',
+      dataIndex: 'date'
+    },
+    {
+      title: 'Action',
+      dataIndex: '',
+
+      render: (text: string, record: { _id: string }) =>
+        this.props.tasks.length >= 1 ? (
           <Popconfirm
             title="Sure to delete?"
             onConfirm={() => {
-              this.props.deleteTaskById({ task_id: record._id, login_id: this.props.user_id });
+              this.props.deleteTaskById({
+                task_id: record._id,
+                login_id: this.props.user_id
+              });
               console.log('record', record);
             }}
           >
             <a> Delete </a>
           </Popconfirm>
+        ) : null
+    }
+  ];
 
-
-        ) : null),
-      },
-    ]
-
-    getSelectedRowKeys = (tasks:{completed:boolean}[]) :void =>{
-      console.log('call selectedRowKeys');
-      // const {selectedRows} = this.props;
-      const selectedRows :number[] = [];
-      tasks.map((task, index) => {
-        if (task.completed) {
-          selectedRows.push(index);
-        }
-      });
-      // const selectedKeys = tasks.filter(task => task.completed)
-
-      console.log('selected Keys', selectedRows);
-
-      if (tasks != undefined && tasks.length > 0 && this.state.toggle === 0) {
-        this.setState({
-          selectedRowKeys: [...selectedRows],
-          toggle: 1,
-        });
+  getSelectedRowKeys = (tasks: { completed: boolean }[]): void => {
+    console.log('call selectedRowKeys');
+    // const {selectedRows} = this.props;
+    const selectedRows: number[] = [];
+    tasks.map((task, index) => {
+      if (task.completed) {
+        selectedRows.push(index);
       }
-    }
+    });
+    // const selectedKeys = tasks.filter(task => task.completed)
 
-    componentWillReceiveProps = (newProps:any) => {
-      console.log('component will receive props');
+    console.log('selected Keys', selectedRows);
 
-      if (this.props != newProps && newProps.tasks != undefined) {
-        this.getSelectedRowKeys(newProps.tasks);
-      }
-    }
-
-    handleSave = (row:{_id:string, name:string}):void => {
-      console.log(row);
-      const { tasks } = this.props;
-      const index = tasks.findIndex((item) => row._id === item._id);
-      const item = tasks[index];
-      console.log('item', item);
-
-      const founded = this.state.selectedRowKeys.find((item:any) => {
-        console.log(item);
-        console.log(index);
-
-
-        return item === index;
-      });
-      console.log('founded', founded);
-
-      // this.state.selectedRowKeys.find
-
-      this.props.updateTaskById({
-        ...item,
-        name: row.name,
-        completed: ((founded !== undefined)),
-        login_id: this.props.user_id,
-        date: moment().toISOString(),
-      });
-
-      // this.props.deleteTaskById({ task_id: row.key, login_id: this.props.user_id })
-
-      // const newData = [...this.props.tasks];
-      // const index = newData.findIndex(item => row.key === item.key);
-      // const item = newData[index];
-      // newData.splice(index, 1, {
-      //     ...item,
-      //     ...row,
-      // })
-
-      // this.setState({
-
-      // })
-    }
-
-
-    getComponents = ():object => {
-      const components = {
-        body: {
-          row: EditableFormRow,
-          cell: EditableCell,
-        },
-      };
-
-      return components;
-    }
-
-    getPagination = (tasks:object[]) => {
-      let counter = 0;
-      tasks.map((elem, index) => {
-        // console.log(index);
-        if (index % 10 === 0) {
-          console.log('Index', index);
-          counter++;
-          console.log('counter', counter);
-
-          // return(<Item onClick= {this.onClick} key = {elem["_id"]} id={counter++}>{counter}</Item>)
-        }
-      });
-
-      console.log(counter);
-
-      return counter;
-    }
-
-    handleAdd = (e:any) => {
-      e.preventDefault();
-      console.log('clicked');
-      const date = moment().toISOString();
-
-      this.props.addTask({
-        login_id: this.props.user_id, completed: false, name: 'New task', date,
-      });
-
-      const page = this.getPagination(this.props.tasks);
+    if (tasks != undefined && tasks.length > 0 && this.state.toggle === 0) {
       this.setState({
-        currentPage: page,
+        selectedRowKeys: [...selectedRows],
+        toggle: 1
       });
     }
+  };
 
-    handleTableChange = (pagination:{current:number}) => {
-      this.setState({
-        currentPage: pagination.current,
-      });
-      console.log(pagination.current);
-      console.log('change table');
+  componentWillReceiveProps = (newProps: any) => {
+    console.log('component will receive props');
+
+    if (this.props != newProps && newProps.tasks != undefined) {
+      this.getSelectedRowKeys(newProps.tasks);
+    }
+  };
+
+  handleSave = (row: { _id: string; name: string }): void => {
+    console.log(row);
+    const { tasks } = this.props;
+    const index = tasks.findIndex(item => row._id === item._id);
+    const item = tasks[index];
+    console.log('item', item);
+
+    const founded = this.state.selectedRowKeys.find((item: any) => {
+      console.log(item);
+      console.log(index);
+
+      return item === index;
+    });
+    console.log('founded', founded);
+
+    // this.state.selectedRowKeys.find
+
+    this.props.updateTaskById({
+      ...item,
+      name: row.name,
+      completed: founded !== undefined,
+      login_id: this.props.user_id,
+      date: moment().toISOString()
+    });
+
+    // this.props.deleteTaskById({ task_id: row.key, login_id: this.props.user_id })
+
+    // const newData = [...this.props.tasks];
+    // const index = newData.findIndex(item => row.key === item.key);
+    // const item = newData[index];
+    // newData.splice(index, 1, {
+    //     ...item,
+    //     ...row,
+    // })
+
+    // this.setState({
+
+    // })
+  };
+
+  getComponents = (): object => {
+    const components = {
+      body: {
+        row: EditableFormRow,
+        cell: EditableCell
+      }
+    };
+
+    return components;
+  };
+
+  getPagination = (tasks: object[]) => {
+    let counter = 0;
+    tasks.map((elem, index) => {
+      // console.log(index);
+      if (index % 10 === 0) {
+        console.log('Index', index);
+        counter++;
+        console.log('counter', counter);
+
+        // return(<Item onClick= {this.onClick} key = {elem["_id"]} id={counter++}>{counter}</Item>)
+      }
+    });
+
+    console.log(counter);
+
+    return counter;
+  };
+
+  handleAdd = (e: any) => {
+    e.preventDefault();
+    console.log('clicked');
+    const date = moment().toISOString();
+
+    this.props.addTask({
+      login_id: this.props.user_id,
+      completed: false,
+      name: 'New task',
+      date
+    });
+
+    const page = this.getPagination(this.props.tasks);
+    this.setState({
+      currentPage: page
+    });
+  };
+
+  handleTableChange = (pagination: { current: number }) => {
+    this.setState({
+      currentPage: pagination.current
+    });
+    console.log(pagination.current);
+    console.log('change table');
+  };
+
+  render() {
+    let { tasks }:any = this.props;
+
+    const { selectedRowKeys, loading } = this.state;
+    const sortedKeys = selectedRowKeys.sort((a: number, b: number) => a < b);
+    let equalRowKeys = false;
+
+    if (
+      JSON.stringify(sortedKeys) === JSON.stringify(this.props.selectedRows)
+    ) {
+      equalRowKeys = true;
+    }
+    // const hasSelected = selectedRowKeys.length > 0;
+    const { getComponents } = this;
+
+    if (this.state.isFiltered) {
+      console.log('call checking conditions');
+      if (this.state.filterOption === 1) {
+        tasks = tasks.filter(task => !task.completed);
+      } else {
+        tasks = tasks.filter(task => task.completed);
+      }
     }
 
-    render() {
-      let { tasks } = this.props;
+    return (
+      <div>
+        <Button
+          type="primary"
+          onClick={this.start}
+          disabled={equalRowKeys}
+          loading={loading}
+        >
+          Save
+        </Button>
+        <Button onClick={this.handleAdd} type="primary">
+          {' '}
+          Add a row
+        </Button>
+        <Table
+          components={getComponents()}
+          rowClassName={() => 'editable-row'}
+          bordered
+          rowSelection={getRowSelection(tasks, this)}
+          dataSource={getTasksForTable(tasks)}
+          columns={getColumns(this.columns, this)}
+          onChange={this.handleTableChange}
+          pagination={{ current: this.state.currentPage }}
+        />
 
-      const { selectedRowKeys, loading } = this.state;
-      const sortedKeys = selectedRowKeys.sort((a:number, b:number) => (a < b));
-      let equalRowKeys = false;
-
-
-      if (JSON.stringify(sortedKeys) === JSON.stringify(this.props.selectedRows)) {
-        equalRowKeys = true;
-      }
-      // const hasSelected = selectedRowKeys.length > 0;
-      const { getComponents } = this;
-
-      if (this.state.isFiltered) {
-        console.log('call checking conditions');
-        if (this.state.filterOption === 1) {
-          tasks = tasks.filter((task) => !task.completed);
-        } else {
-          tasks = tasks.filter((task) => task.completed);
-        }
-      }
-
-      return (
-        <div>
-          <Button type="primary" onClick={this.start} disabled={equalRowKeys} loading={loading}>Save</Button>
-          <Button onClick={this.handleAdd} type="primary"> Add a row</Button>
-          <Table
-            components={getComponents()}
-            rowClassName={() => 'editable-row'}
-            bordered
-            rowSelection={getRowSelection(tasks, this)}
-            dataSource={getTasksForTable(tasks)}
-            columns={getColumns(this.columns, this)}
-            onChange={this.handleTableChange}
-            pagination={{ current: this.state.currentPage }}
-            
-          />
-
-          {/* <div className="btn-block">
+        {/* <div className="btn-block">
                     <button onClick={this.onClickFilter} >{this.state.filterOptionName}</button>
                     <button onClick={this.onSort}>{this.state.sortOptionName}</button>
 
@@ -366,10 +375,9 @@ class ConnectedList extends Component<ListProps,ListState> {
                     </ul>
                 </BlockAnimation>
                 <CustomPagination /> */}
-
-        </div>
-      );
-    }
+      </div>
+    );
+  }
 }
 
 const List = connect(mapStateToProps, mapDispatchToProps)(ConnectedList);

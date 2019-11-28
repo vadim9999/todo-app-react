@@ -8,13 +8,13 @@ import './Signup.css';
 
 function mapDispatchToProps(dispatch) {
   return {
-    addUser: (data) => dispatch(addUser(data)),
-    getTasks: (login_id) => dispatch(getTasks(login_id)),
+    addUser: data => dispatch(addUser(data)),
+    getTasks: login_id => dispatch(getTasks(login_id))
   };
 }
 
-const mapStateToProps = (state) => ({
-  user_id: state.user._id,
+const mapStateToProps = state => ({
+  user_id: state.user._id
 });
 class ConnectedLogin extends Component {
   constructor() {
@@ -23,7 +23,7 @@ class ConnectedLogin extends Component {
       name: '',
       email: '',
       password: '',
-      redirect: false,
+      redirect: false
     };
     // this.onHandleChangePassword = this.onHandleChangePassword.bind(this)
     // this.onHandleChangeName = this.onHandleChangeName.bind(this)
@@ -37,12 +37,14 @@ class ConnectedLogin extends Component {
     console.log('ddd');
     // this.props.getTasks("5d7e4f0d4048013bee00a823")
     this.props.addUser({
-      name, email, password,
+      name,
+      email,
+      password
     });
 
     if (this.props.user_id != undefined) {
       this.setState({
-        redirect: true,
+        redirect: true
       });
     }
     // console.log(cookies.get('myCat'));
@@ -52,12 +54,11 @@ class ConnectedLogin extends Component {
     console.log('This is componentDidMount');
   }
 
-
   onHandleChange(e) {
     console.log(e.target.name);
 
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
   // onHandleChangeEmail(e) {
@@ -72,22 +73,35 @@ class ConnectedLogin extends Component {
     console.log('This is SignUp');
 
     console.log(this.state.email);
-    const {
-      name, email, password, redirect,
-    } = this.state;
-    if (redirect || this.props.user_id != undefined) return (<Redirect to="/todolist" />);
+    const { name, email, password, redirect } = this.state;
+    if (redirect || this.props.user_id != undefined)
+      return <Redirect to="/todolist" />;
     return (
       <div className="signup-block">
         <form className="signup-form" onSubmit={this.onSubmit}>
           <label>Name:</label>
-          <input onChange={this.onHandleChange} value={name} type="text" name="name" />
+          <input
+            onChange={this.onHandleChange}
+            value={name}
+            type="text"
+            name="name"
+          />
           <label>Email:</label>
-          <input onChange={this.onHandleChange} value={email} type="email" name="email" />
+          <input
+            onChange={this.onHandleChange}
+            value={email}
+            type="email"
+            name="email"
+          />
           <label>Password:</label>
-          <input onChange={this.onHandleChange} value={password} type="password" name="password" />
+          <input
+            onChange={this.onHandleChange}
+            value={password}
+            type="password"
+            name="password"
+          />
           <button type="submit">Save</button>
         </form>
-
       </div>
     );
   }
