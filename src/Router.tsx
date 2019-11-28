@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {
-  BrowserRouter, Route, Switch, Link, withRouter, Redirect,
+  BrowserRouter, Route, Switch, Link, withRouter, Redirect
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
@@ -12,7 +12,6 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import TodoList from './components/TodoList/TodoList';
 
-
 import './Router.css';
 // const mapDispatchToProps = (dispatch) =>{
 //     return {
@@ -20,13 +19,22 @@ import './Router.css';
 //     }
 // }
 const { Header, Footer, Content } = Layout;
+
 const mapStateToProps = (state) => ({
-  user_id: state.user._id,
+  user_id: state.user._id
 });
+
 const mapDispatchToProps = (dispatch) => ({
-  authenticate: (cookie) => dispatch(authenticate(cookie)),
+  authenticate: (cookie) => dispatch(authenticate(cookie))
 });
-class ConnectedRouter extends React.Component {
+
+interface RouterProps {
+  authenticate: any;
+  user_id: string;
+}
+
+class ConnectedRouter extends React.Component<RouterProps, {}> {
+
   componentDidMount() {
     const cookies = new Cookies();
     const cookie = cookies.get('user');
@@ -43,25 +51,22 @@ class ConnectedRouter extends React.Component {
           <Header>
             {/* <div class="header-block"> */}
 
-
             {/* <AuthButton /> */}
 
             {
                         this.props.user_id != undefined ? (
-                          <div className="header-block-btns">
-                            <Link to="/todolist"><Button type="primary">Todolist</Button></Link>
-                            <Link to="/signout"><Button type="primary">SignOut</Button></Link>
+                          <div className='header-block-btns'>
+                            <Link to='/todolist'><Button type='primary'>Todolist</Button></Link>
+                            <Link to='/signout'><Button type='primary'>SignOut</Button></Link>
                           </div>
                         ) : (
                           <div>
 
-
-                            <Link to="/"><Button type="primary">Login</Button></Link>
+                            <Link to='/'><Button type='primary'>Login</Button></Link>
                             <a> or</a>
-                            <Link to="/signup"><Button type="primary">Signup</Button></Link>
+                            <Link to='/signup'><Button type='primary'>Signup</Button></Link>
                           </div>
                         )
-
 
                     }
 
@@ -69,12 +74,11 @@ class ConnectedRouter extends React.Component {
           </Header>
           <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-
             <Switch>
-              <Route path="/" exact component={Login} />
-              <Route path="/signup" exact component={Signup} />
+              <Route path='/' exact component={Login} />
+              <Route path='/signup' exact component={Signup} />
 
-              <Route path="/todolist" component={TodoList} />
+              <Route path='/todolist' component={TodoList} />
               {/* <Route path="sign" */}
             </Switch>
           </Content>
@@ -116,7 +120,6 @@ class ConnectedRouter extends React.Component {
 //         </p>
 //     )
 // }
-
 
 //     )
 
