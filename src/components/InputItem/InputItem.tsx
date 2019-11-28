@@ -11,14 +11,14 @@ import './InputItem.css';
 //     }
 // }
 const mapStateToProps = (state) => ({
-  user_id: state.user._id,
+  user_id: state.user._id
 });
 
 class ConnectedInputItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      name: ''
       // toggle:
     };
 
@@ -29,10 +29,9 @@ class ConnectedInputItem extends Component {
   onHandleInput(e) {
     const name = e.target.value;
     this.setState({
-      name,
+      name
     });
   }
-
 
   onAddTask(e) {
     const { name } = this.state;
@@ -43,21 +42,21 @@ class ConnectedInputItem extends Component {
     const completed = true;
 
     this.setState({
-      name: '',
+      name: ''
     });
     this.props.addTask({
-      login_id: this.props.user_id, completed: false, name, date,
+      login_id: this.props.user_id, completed: false, name, date
     });
   }
 
   render() {
     return (
-      <div className="input-item-block">
-        <div className="header">
+      <div className='input-item-block'>
+        <div className='header'>
           <form onSubmit={this.onAddTask}>
-            <input className="input-task" value={this.state.name} type="text" onChange={this.onHandleInput} />
+            <input className='input-task' value={this.state.name} type='text' onChange={this.onHandleInput} />
 
-            <button className="add-btn " type="submit"> Add Task </button>
+            <button className='add-btn ' type='submit'> Add Task </button>
 
           </form>
         </div>

@@ -1,25 +1,35 @@
 import React, { Component } from 'react';
 
 import {
-  Table, Popconfirm, Form, Input,
+ Form, Input,
 } from 'antd';
 
 import './styled.css';
 
 const EditableContext = React.createContext();
 
-console.log(EditableContext);
 
 
-const EditableRow = ({ form, index, ...props }) => (
+
+const EditableRow = ({ form , index, ...props }:any) => {
+  
+  return (
   <EditableContext.Provider value={form}>
     <tr {...props} />
   </EditableContext.Provider>
 );
+  }
 
-class EditableCell extends React.Component {
-  constructor() {
-    super();
+interface EditableCellState {
+  editing?:boolean;
+  
+}
+
+class EditableCell extends React.Component<{},EditableCellState> {
+  form: any;
+  input:any;
+  constructor(props:any) {
+    super(props);
 
     this.state = {
       editing: false,
@@ -40,10 +50,10 @@ class EditableCell extends React.Component {
       });
     }
 
-    save = (e) => {
-      const { record, handleSave } = this.props;
+    save = (e:any) => {
+      const { record, handleSave }:any = this.props;
 
-      this.form.validateFields((error, value) => {
+      this.form.validateFields((error: { [x: string]: any; }, value: any) => {
         if (error && error[e.currentTarget.id]) {
           return;
         }
@@ -52,11 +62,11 @@ class EditableCell extends React.Component {
       });
     }
 
-    renderCell = (form) => {
+    renderCell = (form:any) => {
       this.form = form;
       const {
         children, dataIndex, record, title,
-      } = this.props;
+      }:any = this.props;
 
       const { editing } = this.state;
       return editing ? (
@@ -85,7 +95,7 @@ class EditableCell extends React.Component {
     render() {
       const {
         editable, dataIndex, title, record, index, handleSave, children, ...restProps
-      } = this.props;
+      }:any = this.props;
 
       // console.log('editable', editable);
       // console.log("props of editablecell", this.props);

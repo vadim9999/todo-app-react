@@ -1,10 +1,13 @@
 {
 	"extends": [
-		"tslint-immutable"
+		"tslint-immutable",
+		"tslint-config-prettier"
 	],
 	"linterOptions":{
 		"exclude":[
 			"src/*.css",
+			"src/**/*.css",
+			"src/**/**/*.css",
 			"src/*.html"
 		]
 	},
@@ -31,23 +34,8 @@
 		],
 		"no-internal-module": true,
 		"no-var-requires": false,
-		"typedef-whitespace": [
-			true,
-			{
-				"call-signature": "nospace",
-				"index-signature": "nospace",
-				"parameter": "nospace",
-				"property-declaration": "nospace",
-				"variable-declaration": "nospace"
-			},
-			{
-				"call-signature": "space",
-				"index-signature": "space",
-				"parameter": "space",
-				"property-declaration": "space",
-				"variable-declaration": "space"
-			}
-		],
+		
+	
 		"ban": false,
 		"curly": false,
 		"forin": true,
@@ -85,27 +73,11 @@
 			"allow-null-check"
 		],
 		"eofline": false,
-		"indent": [
-			true,
-			"tabs"
-		],
-		"max-line-length": [
-			true,
-			250
-		],
+	
 		"no-require-imports": false,
-		"no-trailing-whitespace": true,
 		"object-literal-sort-keys": false,
-		"trailing-comma": [
-			true,
-			{
-				"multiline": "never",
-				"singleline": "never"
-			}
-		],
-		"align": [
-			true
-		],
+		
+		
 		"class-name": true,
 		"comment-format": [
 			true,
@@ -115,40 +87,15 @@
 			false
 		],
 		"jsdoc-format": true,
-		"no-consecutive-blank-lines": [
-			true
-		],
 		"no-parameter-properties": false,
-		"one-line": [
-			true,
-			"check-open-brace",
-			"check-catch",
-			"check-else",
-			"check-finally",
-			"check-whitespace"
-		],
-		"quotemark": [
-			true,
-			"single",
-			"avoid-escape"
-		],
-		"semicolon": [
-			true,
-			"always"
-		],
+		
+	
+	
 		"variable-name": [
 			false,
 			"check-format",
 			"allow-leading-underscore",
 			"ban-keywords"
-		],
-		"whitespace": [
-			true,
-			"check-branch",
-			"check-decl",
-			"check-operator",
-			"check-separator",
-			"check-type"
 		]
 	}
 }

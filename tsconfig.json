@@ -10,6 +10,7 @@
 		"moduleResolution": "node",
 		// Process & infer types from .js files.
 		"allowJs": true,
+		"sourceMap": true,
 		// Don't emit; allow Babel to transform files.
 		"noEmit": true,
 		// Enable strictest settings like strictNullChecks & noImplicitAny.

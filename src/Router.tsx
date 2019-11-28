@@ -1,9 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-import {
-  BrowserRouter, Route, Switch, Link, withRouter, Redirect
-} from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { Layout, Button } from 'antd';
@@ -20,12 +17,12 @@ import './Router.css';
 // }
 const { Header, Footer, Content } = Layout;
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
   user_id: state.user._id
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  authenticate: (cookie) => dispatch(authenticate(cookie))
+const mapDispatchToProps = (dispatch: any) => ({
+  authenticate: (cookie:any) => dispatch(authenticate(cookie))
 });
 
 interface RouterProps {
@@ -34,12 +31,11 @@ interface RouterProps {
 }
 
 class ConnectedRouter extends React.Component<RouterProps, {}> {
-
   componentDidMount() {
     const cookies = new Cookies();
     const cookie = cookies.get('user');
     console.log(cookies.get('user'));
-    if (cookie != undefined && cookie != 'undefined') {
+    if (cookie !== undefined && cookie !== 'undefined') {
       this.props.authenticate(cookie);
     }
   }
@@ -53,32 +49,41 @@ class ConnectedRouter extends React.Component<RouterProps, {}> {
 
             {/* <AuthButton /> */}
 
-            {
-                        this.props.user_id != undefined ? (
-                          <div className='header-block-btns'>
-                            <Link to='/todolist'><Button type='primary'>Todolist</Button></Link>
-                            <Link to='/signout'><Button type='primary'>SignOut</Button></Link>
-                          </div>
-                        ) : (
-                          <div>
-
-                            <Link to='/'><Button type='primary'>Login</Button></Link>
-                            <a> or</a>
-                            <Link to='/signup'><Button type='primary'>Signup</Button></Link>
-                          </div>
-                        )
-
-                    }
+            {this.props.user_id != undefined ? (
+              <div className="header-block-btns">
+                <Link to="/todolist">
+                  <Button type="primary">Todolist</Button>
+                </Link>
+                <Link to="/signout">
+                  <Button type="primary">SignOut</Button>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link to="/">
+                  <Button type="primary">Login</Button>
+                </Link>
+                <a> or</a>
+                <Link to="/signup">
+                  <Button type="primary">Signup</Button>
+                </Link>
+              </div>
+            )}
 
             {/* </div> */}
           </Header>
-          <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
+          <Content
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
             <Switch>
-              <Route path='/' exact component={Login} />
-              <Route path='/signup' exact component={Signup} />
+              <Route path="/" exact component={Login} />
+              <Route path="/signup" exact component={Signup} />
 
-              <Route path='/todolist' component={TodoList} />
+              <Route path="/todolist" component={TodoList} />
               {/* <Route path="sign" */}
             </Switch>
           </Content>

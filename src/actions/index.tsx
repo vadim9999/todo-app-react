@@ -6,25 +6,25 @@ import { ADD_TASK, FOUND_WORD } from '../constants/action-types';
 // }
 
 
-export function addTask(payload) {
+export function addTask(payload:any) {
   console.log('Call Function in actions');
   console.log(payload);
 
   return { type: ADD_TASK, payload };
 }
 
-export function addFoundWord(payload) {
+export function addFoundWord(payload:any) {
   console.log('Found word');
   console.log(payload);
 
   return { type: FOUND_WORD, payload };
 }
 
-export const getTasks = (payload) => ({ type: 'GET_TASKS', payload });
+export const getTasks = (payload:any) => ({ type: 'GET_TASKS', payload });
 
-export const deleteTaskById = (payload) => ({ type: 'DELETE_TASK', payload });
+export const deleteTaskById = (payload:any) => ({ type: 'DELETE_TASK', payload });
 
-export const updateTaskById = (payload) => ({ type: 'UPDATE_TASK', payload });
+export const updateTaskById = (payload:any) => ({ type: 'UPDATE_TASK', payload });
 // export function getData() {
 //     return function(dispatch) {
 //       return fetch("https://jsonplaceholder.typicode.com/posts")
@@ -39,21 +39,21 @@ export const updateTaskById = (payload) => ({ type: 'UPDATE_TASK', payload });
 //   }
 
 
-export const sortTasksByGrowthDate = (payload) => ({
+export const sortTasksByGrowthDate = (payload:any) => ({
   type: 'SORT_TASKS_BY_GROWTH_DATE', payload,
 });
 
-export const sortTasksByDecreaseDate = (payload) => ({
+export const sortTasksByDecreaseDate = (payload:any) => ({
   type: 'SORT_TASKS_BY_DECREASE_DATE',
   payload,
 });
 
-export const addCurrentPage = (payload) => ({
+export const addCurrentPage = (payload:any) => ({
   type: 'ADD_CURRENT_PAGE',
   payload,
 });
 
-export const addSelectedRowKeys = (payload) => ({
+export const addSelectedRowKeys = (payload:any) => ({
   type: 'ADD_SELECTED_ROW_KEYS',
   payload,
 });
