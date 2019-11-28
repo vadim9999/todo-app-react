@@ -47,7 +47,7 @@ class ConnectedTodoList extends Component {
 
         {/* <div className="todoListMain"> */}
         <List />
-        <InputItem />
+        {/* <InputItem /> */}
         {/* <ConnectedLogin /> */}
         {/* </div> */}
       </Content>
