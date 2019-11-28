@@ -30,8 +30,6 @@ class EditableCell extends React.Component<{}, EditableCellState> {
   }
 
   toggleEdit = () => {
-    console.log('toggle edit');
-
     const editing = !this.state.editing;
 
     this.setState(

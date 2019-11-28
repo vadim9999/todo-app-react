@@ -3,8 +3,6 @@ import moment from 'moment';
 import { TasksTypes } from '../Interfaces';
 
 const getTasksForTable = (tasks: TasksTypes[]) => {
-  console.log('getTasks for table');
-
   const data = [];
 
   for (let i = 0; i < tasks.length; i++) {
@@ -49,7 +47,6 @@ const getColumns = (
 };
 
 const getRowSelection = (tasks: TasksTypes[], context: any) => {
-  console.log(tasks);
 
   const { selectedRowKeys } = context.state;
 
@@ -62,8 +59,6 @@ const getRowSelection = (tasks: TasksTypes[], context: any) => {
         key: 'all-data',
         text: 'Select All Data',
         onSelect: () => {
-          console.log('This is on select');
-
           context.setState(
             {
               selectedRowKeys: [...Array(tasks.length).keys()]
@@ -78,7 +73,6 @@ const getRowSelection = (tasks: TasksTypes[], context: any) => {
         key: 'undo-all-selections',
         text: 'Undo all selections',
         onSelect: () => {
-          console.log('on click undo');
           const counter = 0;
           const selectedRows: any = [];
           tasks.map((task, index) => {

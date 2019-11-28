@@ -98,7 +98,6 @@ class ConnectedList extends Component<ListProps, ListState> {
 
     const keysNotFounded = [];
     const changedRowKeys = [...selectedRowKeys];
-    console.log('keys before', changedRowKeys);
 
     for (let i = 0; i < selectedRows.length; i++) {
       let founded = false;
@@ -137,7 +136,6 @@ class ConnectedList extends Component<ListProps, ListState> {
   };
 
   onSelectChange = (selectedRowKeys: number[]): void => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     // const lastIndex = selectedRowKeys.length - 1;
 
     // const lastItem = selectedRowKeys[lastIndex];
@@ -181,7 +179,6 @@ class ConnectedList extends Component<ListProps, ListState> {
                 task_id: record._id,
                 login_id: this.props.user_id
               });
-              console.log('record', record);
             }}
           >
             <a> Delete </a>
@@ -191,8 +188,6 @@ class ConnectedList extends Component<ListProps, ListState> {
   ];
 
   getSelectedRowKeys = (tasks: { completed: boolean }[]): void => {
-    console.log('call selectedRowKeys');
-    // const {selectedRows} = this.props;
     const selectedRows: number[] = [];
     tasks.map((task, index) => {
       if (task.completed) {
@@ -200,8 +195,6 @@ class ConnectedList extends Component<ListProps, ListState> {
       }
     });
     // const selectedKeys = tasks.filter(task => task.completed)
-
-    console.log('selected Keys', selectedRows);
 
     if (tasks != undefined && tasks.length > 0 && this.state.toggle === 0) {
       this.setState({
@@ -212,7 +205,6 @@ class ConnectedList extends Component<ListProps, ListState> {
   };
 
   componentWillReceiveProps = (newProps: any) => {
-    console.log('component will receive props');
 
     if (this.props != newProps && newProps.tasks != undefined) {
       this.getSelectedRowKeys(newProps.tasks);
@@ -220,19 +212,16 @@ class ConnectedList extends Component<ListProps, ListState> {
   };
 
   handleSave = (row: { _id: string; name: string }): void => {
-    console.log(row);
+ 
     const { tasks } = this.props;
     const index = tasks.findIndex(item => row._id === item._id);
     const item = tasks[index];
-    console.log('item', item);
-
+ 
     const founded = this.state.selectedRowKeys.find((item: any) => {
-      console.log(item);
-      console.log(index);
 
       return item === index;
     });
-    console.log('founded', founded);
+
 
     // this.state.selectedRowKeys.find
 
@@ -275,22 +264,18 @@ class ConnectedList extends Component<ListProps, ListState> {
     tasks.map((elem, index) => {
       // console.log(index);
       if (index % 10 === 0) {
-        console.log('Index', index);
         counter++;
-        console.log('counter', counter);
 
         // return(<Item onClick= {this.onClick} key = {elem["_id"]} id={counter++}>{counter}</Item>)
       }
     });
 
-    console.log(counter);
 
     return counter;
   };
 
   handleAdd = (e: any) => {
     e.preventDefault();
-    console.log('clicked');
     const date = moment().toISOString();
 
     this.props.addTask({
@@ -310,8 +295,6 @@ class ConnectedList extends Component<ListProps, ListState> {
     this.setState({
       currentPage: pagination.current
     });
-    console.log(pagination.current);
-    console.log('change table');
   };
 
   render() {
@@ -330,7 +313,6 @@ class ConnectedList extends Component<ListProps, ListState> {
     const { getComponents } = this;
 
     if (this.state.isFiltered) {
-      console.log('call checking conditions');
       if (this.state.filterOption === 1) {
         tasks = tasks.filter(task => !task.completed);
       } else {

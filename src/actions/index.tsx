@@ -5,16 +5,10 @@ import { ADD_TASK, FOUND_WORD } from '../constants/action-types';
 // }
 
 export function addTask(payload: any) {
-  console.log('Call Function in actions');
-  console.log(payload);
-
   return { type: ADD_TASK, payload };
 }
 
 export function addFoundWord(payload: any) {
-  console.log('Found word');
-  console.log(payload);
-
   return { type: FOUND_WORD, payload };
 }
 

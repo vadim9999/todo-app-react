@@ -34,7 +34,6 @@ class ConnectedRouter extends React.Component<RouterProps, {}> {
   componentDidMount() {
     const cookies = new Cookies();
     const cookie = cookies.get('user');
-    console.log(cookies.get('user'));
     if (cookie !== undefined && cookie !== 'undefined') {
       this.props.authenticate(cookie);
     }
