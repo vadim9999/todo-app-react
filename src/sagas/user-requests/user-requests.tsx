@@ -10,7 +10,7 @@ let URL = origin !== undefined && hostname !== 'localhost' ?  origin : defaultSe
 
 const addUser = (data:any) => axios.post(`${URL}/user/create_user`, data);
 
-const authenticate = (cookie:any) => axios.get(`${URL}/current`, {
+const authenticate = (cookie:any) => axios.get(`${URL}/user/current`, {
   headers: {
     'x-access-token': cookie,
   },
