@@ -1,10 +1,13 @@
 import axios from 'axios';
 
-const defaultServerURL = 'http://localhost:1234'
 
-const {origin, hostname} = window.location;
 
-let URL = origin !== undefined && hostname !== 'localhost' ?  origin : defaultServerURL
+const {origin, hostname, port} = window.location;
+
+const defaultServerURL = `http://localhost:${port}`
+
+
+let URL = origin !== undefined && hostname !== 'localhost' ?  origin : port === '8080'?'http://localhost:1234':defaultServerURL
 
 // const USER_URL = 'http://localhost:1234/user';
 

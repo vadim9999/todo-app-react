@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 // console.log("window",window);
-const defaultServerURL = 'http://localhost:1234'
+const {origin, hostname, port} = window.location;
 
-const {origin, hostname} = window.location;
+const defaultServerURL = `http://localhost:${port}`
 
-let URL = origin !== undefined && hostname !== 'localhost' ?  origin : defaultServerURL
+let URL = origin !== undefined && hostname !== 'localhost' ?  origin : port === '8080'?'http://localhost:1234':defaultServerURL
 
 const createTask = (payload:any) => {
 
