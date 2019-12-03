@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Table, Popconfirm, Form} from 'antd';
+import { Table, Popconfirm, Form } from 'antd';
 import {
   sortTasksByGrowthDate,
   sortTasksByDecreaseDate,
@@ -20,7 +20,7 @@ import { TasksTypes } from '../Interfaces';
 // import './List.css';
 import { TableBlock } from './TableBlock';
 import { EditableCell, EditableRow } from '../EditableCell/EditableCell';
-import ButtonBlock from '../ButtonBlock/ButtonBlock'
+import ButtonBlock from '../ButtonBlock/ButtonBlock';
 // import Example from './Example'
 
 interface ListProps {
@@ -31,15 +31,15 @@ interface ListProps {
   date: any;
   currentPage: any;
   user_id: string;
-  currentSelectedRowKeys: number[]
+  currentSelectedRowKeys: number[];
 
   updateTaskById: any;
   deleteTaskById: any;
-  addCurrentSelectedRowKeys:any;
-  addCurrentPage:any;
+  addCurrentSelectedRowKeys: any;
+  addCurrentPage: any;
 }
 
-const mapStateToProps = (state: ListProps)=> {
+const mapStateToProps = (state: ListProps) => {
   return {
     tasks: state.tasks,
     filteredTasks: state.filteredTasks,
@@ -49,7 +49,7 @@ const mapStateToProps = (state: ListProps)=> {
     user_id: state.user._id,
     currentSelectedRowKeys: state.currentSelectedRowKeys
   };
-}
+};
 
 const mapDispatchToProps = (dispatch: any) => ({
   sortTasksByGrowthDate: (tasks: any) => dispatch(sortTasksByGrowthDate(tasks)),
@@ -58,8 +58,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   getTasks: (user_id: any) => dispatch(getTasks(user_id)),
   deleteTaskById: (task_id: any) => dispatch(deleteTaskById(task_id)),
   updateTaskById: (task_id: any) => dispatch(updateTaskById(task_id)),
-  addCurrentSelectedRowKeys: (data:number[]) => dispatch(addCurrentSelectedRowKeys(data)),
-  addCurrentPage: (page:number) => dispatch(addCurrentPage(page))
+  addCurrentSelectedRowKeys: (data: number[]) =>
+    dispatch(addCurrentSelectedRowKeys(data)),
+  addCurrentPage: (page: number) => dispatch(addCurrentPage(page))
 });
 
 const EditableFormRow = Form.create()(EditableRow);
@@ -72,24 +73,10 @@ interface ListState {
   sortOption?: number;
   sortOptionName?: string;
   toggle?: number;
-
 }
 class ConnectedList extends Component<ListProps, ListState> {
-  constructor(props: any) {
-    super(props);
 
-    this.state = {
-      isFiltered: false,
-      isSorted: false,
-      filterOption: 0,
-      filterOptionName: 'Display uncompleted tasks',
-      sortOption: 0,
-      sortOptionName: 'Sort by growth date',
-      toggle: 0,
-    };
-  }
-
-  columns:object[] = [
+  columns: object[] = [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -120,6 +107,19 @@ class ConnectedList extends Component<ListProps, ListState> {
         ) : null
     }
   ];
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      isFiltered: false,
+      isSorted: false,
+      filterOption: 0,
+      filterOptionName: 'Display uncompleted tasks',
+      sortOption: 0,
+      sortOptionName: 'Sort by growth date',
+      toggle: 0
+    };
+  }
 
   getSelectedRowKeys = (tasks: { completed: boolean }[]): void => {
     const selectedRowKeys: number[] = [];
@@ -131,7 +131,7 @@ class ConnectedList extends Component<ListProps, ListState> {
     // const selectedKeys = tasks.filter(task => task.completed)
 
     if (tasks != undefined && tasks.length > 0 && this.state.toggle === 0) {
-      this.props.addCurrentSelectedRowKeys([...selectedRowKeys])
+      this.props.addCurrentSelectedRowKeys([...selectedRowKeys]);
       this.setState({
         toggle: 1
       });
@@ -188,8 +188,8 @@ class ConnectedList extends Component<ListProps, ListState> {
     return components;
   };
 
-  handleTableChange = (pagination: { current: number }):void => {
-    this.props.addCurrentPage(pagination.current)
+  handleTableChange = (pagination: { current: number }): void => {
+    this.props.addCurrentPage(pagination.current);
   };
 
   render() {
@@ -208,7 +208,7 @@ class ConnectedList extends Component<ListProps, ListState> {
     return (
       <div>
         {/* <Example /> */}
-        
+
         <ButtonBlock />
 
         <TableBlock>

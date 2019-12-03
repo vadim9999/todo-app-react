@@ -3,7 +3,7 @@ const initialState = {
   tasks: [],
   currentPage: 1,
   selectedRowKeys: [],
-  currentSelectedRowKeys:[]
+  currentSelectedRowKeys: []
 };
 
 function rootReducer(state = initialState, action: any) {
@@ -70,12 +70,12 @@ function rootReducer(state = initialState, action: any) {
         ...state,
         currentSelectedRowKeys: [...action.payload]
       };
-    
+
     case 'ADD_SELECTED_ROW_KEYS':
       return {
         ...state,
         selectedRowKeys: [...action.payload]
-      }
+      };
     default:
       return state;
   }

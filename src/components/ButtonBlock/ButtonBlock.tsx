@@ -1,53 +1,54 @@
-import React from 'react'
+import React from 'react';
 import { ButtonGroup, StyledButton } from './ButtonGroup';
-import {Button} from 'antd'
-import moment from 'moment'
-import {connect} from 'react-redux'
-import {TasksTypes} from '../Interfaces'
-import {updateTaskById, addTask, addCurrentPage} from '../../actions'
+import { Button } from 'antd';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { TasksTypes } from '../Interfaces';
+import { updateTaskById, addTask, addCurrentPage } from '../../actions';
 
 interface ButtonBlockProps {
   tasks: TasksTypes[];
-  selectedRowKeys: number[],
-  currentSelectedRowKeys: number[]
-  user?:any;
+  selectedRowKeys: number[];
+  currentSelectedRowKeys: number[];
+  user?: any;
   user_id: string;
 
-  updateTaskById:any;
+  updateTaskById: any;
   addTask: any;
-  addCurrentPage:any;
-
+  addCurrentPage: any;
 }
 
 interface ButtonBlockState {
-  loading:boolean;
+  loading: boolean;
 }
 
-const mapDispatchToProps = (dispatch:any) =>{
-
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    updateTaskById: (id:string) => dispatch(updateTaskById(id)),
-    addTask: (task:TasksTypes) => dispatch(addTask(task)),
-    addCurrentPage: (page:number) => dispatch(addCurrentPage(page))
-  }
-}
+    updateTaskById: (id: string) => dispatch(updateTaskById(id)),
+    addTask: (task: TasksTypes) => dispatch(addTask(task)),
+    addCurrentPage: (page: number) => dispatch(addCurrentPage(page))
+  };
+};
 
-const mapStateToProps = (state: ButtonBlockProps) =>{
+const mapStateToProps = (state: ButtonBlockProps) => {
   return {
     selectedRowKeys: state.selectedRowKeys,
     currentSelectedRowKeys: state.currentSelectedRowKeys,
     tasks: state.tasks,
-    user_id:state.user._id
-  }
-}
+    user_id: state.user._id
+  };
+};
 
-class ConnectedButtonBlock extends React.Component<ButtonBlockProps, ButtonBlockState>{
-  constructor(props:any){
-    super(props)
-    
+class ConnectedButtonBlock extends React.Component<
+  ButtonBlockProps,
+  ButtonBlockState
+> {
+  constructor(props: any) {
+    super(props);
+
     this.state = {
-      loading:false,
-    }
+      loading: false
+    };
   }
 
   getPagination = (tasks: object[]) => {
@@ -65,10 +66,7 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps, ButtonBlock
   };
 
   start = () => {
-    const { tasks, 
-      selectedRowKeys, 
-      currentSelectedRowKeys
-     } = this.props;
+    const { tasks, selectedRowKeys, currentSelectedRowKeys } = this.props;
 
     this.setState({
       loading: true
@@ -113,10 +111,9 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps, ButtonBlock
     }, 1000);
   };
 
-
   handleAdd = (e: any) => {
     e.preventDefault();
-    const {tasks} = this.props;
+    const { tasks } = this.props;
 
     const date = moment().toISOString();
 
@@ -128,13 +125,12 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps, ButtonBlock
     });
 
     const page = this.getPagination(tasks);
-    this.props.addCurrentPage(page)
+    this.props.addCurrentPage(page);
   };
 
-  render(){
-
+  render() {
     // const { currentSelectedRowKeys } = this.props;
-    const {loading} = this.state;
+    const { loading } = this.state;
 
     // const sortedKeys = selectedRowKeys.sort((a: number, b: number) => a < b);
     // let equalRowKeys = false;
@@ -147,25 +143,28 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps, ButtonBlock
 
     return (
       <ButtonGroup>
-          <StyledButton>
-            <Button
-              type="primary"
-              onClick={this.start}
-              // disabled={equalRowKeys}
-              loading={loading}
-            >
-              Save
-            </Button>
-          </StyledButton>
-          <StyledButton>
-            <Button onClick={this.handleAdd} type="primary">
-              Add a row
-            </Button>
-          </StyledButton>
-        </ButtonGroup>
-    )
+        <StyledButton>
+          <Button
+            type="primary"
+            onClick={this.start}
+            // disabled={equalRowKeys}
+            loading={loading}
+          >
+            Save
+          </Button>
+        </StyledButton>
+        <StyledButton>
+          <Button onClick={this.handleAdd} type="primary">
+            Add a row
+          </Button>
+        </StyledButton>
+      </ButtonGroup>
+    );
   }
 }
 
-const ButtonBlock = connect(mapStateToProps, mapDispatchToProps)(ConnectedButtonBlock)
-export default ButtonBlock
+const ButtonBlock = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConnectedButtonBlock);
+export default ButtonBlock;

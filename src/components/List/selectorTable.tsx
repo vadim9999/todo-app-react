@@ -47,7 +47,6 @@ const getColumns = (
 };
 
 const onSelectChange = (selectedRowKeys: number[]): void => {
-
   // const lastIndex = selectedRowKeys.length - 1;
 
   // const lastItem = selectedRowKeys[lastIndex];
@@ -61,22 +60,24 @@ const onSelectChange = (selectedRowKeys: number[]): void => {
   //     login_id: this.props.user_id,
   //     date: moment().toISOString()
   // })
-  this.props.addCurrentSelectedRowKeys([...selectedRowKeys])
+  this.props.addCurrentSelectedRowKeys([...selectedRowKeys]);
   // this.setState({
   //   selectedRowKeys
   // });
 };
 
-const getRowSelection = ({tasks,currentSelectedRowKeys, addCurrentSelectedRowKeys}:any):any => {
-
+const getRowSelection = ({
+  tasks,
+  currentSelectedRowKeys,
+  addCurrentSelectedRowKeys
+}: any): any => {
   const onSelectChange = (selectedRowKeys: number[]): void => {
-
     // const lastIndex = selectedRowKeys.length - 1;
-  
+
     // const lastItem = selectedRowKeys[lastIndex];
-  
+
     // const task = this.props.tasks[lastItem]
-  
+
     // this.props.updateTaskById({
     //     ...task,
     //     name: task.name,
@@ -84,14 +85,14 @@ const getRowSelection = ({tasks,currentSelectedRowKeys, addCurrentSelectedRowKey
     //     login_id: this.props.user_id,
     //     date: moment().toISOString()
     // })
-    addCurrentSelectedRowKeys([...selectedRowKeys])
+    addCurrentSelectedRowKeys([...selectedRowKeys]);
     // this.setState({
     //   selectedRowKeys
     // });
   };
-  
+
   const rowSelection = {
-    selectedRowKeys:currentSelectedRowKeys,
+    selectedRowKeys: currentSelectedRowKeys,
     onChange: onSelectChange,
     hideDefaultSelections: true,
     selections: [
@@ -99,7 +100,7 @@ const getRowSelection = ({tasks,currentSelectedRowKeys, addCurrentSelectedRowKey
         key: 'all-data',
         text: 'Select All Data',
         onSelect: () => {
-          addCurrentSelectedRowKeys([...Array(tasks.length).keys()])
+          addCurrentSelectedRowKeys([...Array(tasks.length).keys()]);
           // context.setState(
           //   {
           //     selectedRowKeys: [...Array(tasks.length).keys()]
@@ -121,7 +122,7 @@ const getRowSelection = ({tasks,currentSelectedRowKeys, addCurrentSelectedRowKey
               selectedRows.push(index);
             }
           });
-          addCurrentSelectedRowKeys([...selectedRows])
+          addCurrentSelectedRowKeys([...selectedRows]);
           // context.setState({
           //   selectedRowKeys: selectedRows
           // });

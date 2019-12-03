@@ -33,10 +33,10 @@
     "test": "jest --watch",
     "eject": "react-scripts eject",
     "lint": "eslint --fix ./src/",
-    "lint:ts": "tslint -c tslint.json --fix src/*.tsx, src/**/*.tsx",
+    "lint:ts": "tslint -c tslint.json --fix ./src/**/**/**/*.tsx",
     "check-types": "tsc",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "format": "prettier --write ./src/*.tsx ./src/**/*.tsx ./src/components/**/*.tsx"
+    "format": "prettier --write ./src/**/**/**/*.tsx"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -51,10 +51,10 @@ export const addCurrentPage = (payload: any) => ({
   payload
 });
 
-export const addSelectedRowKeys = (payload:any) =>({
-  type:'ADD_SELECTED_ROW_KEYS',
+export const addSelectedRowKeys = (payload: any) => ({
+  type: 'ADD_SELECTED_ROW_KEYS',
   payload
-})
+});
 export const addCurrentSelectedRowKeys = (payload: any) => ({
   type: 'ADD_CURRENT_SELECTED_ROW_KEYS',
   payload
