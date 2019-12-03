@@ -16,7 +16,7 @@ import {
 import { onClickFilter, onSort } from './selector';
 import { getTasksForTable, getColumns, getRowSelection } from './selectorTable';
 import { TasksTypes } from '../Interfaces';
-import './List.css';
+// import './List.css';
 
 import { EditableCell, EditableRow } from '../EditableCell/EditableCell';
 
