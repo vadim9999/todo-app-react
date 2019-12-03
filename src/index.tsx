@@ -10,8 +10,6 @@ import 'antd/dist/antd.css';
 
 const rootElement = document.getElementById('root');
 
-
-
 // const RouterApp  = () => <App />
 
 // const RouteApp = withRouter(App)
@@ -22,8 +20,7 @@ ReactDOM.render(
   rootElement
 );
 
-
-// const RApp = 
+// const RApp =
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

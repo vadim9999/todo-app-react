@@ -30,7 +30,7 @@ interface TodoListProps {
   selectedRowKeys: any;
 
   getTasks: any;
-  addSelectedRowKeys: any;
+  // addSelectedRowKeys: any;
 }
 
 interface TodoListState {}
@@ -55,13 +55,12 @@ class ConnectedTodoList extends Component<TodoListProps, TodoListState> {
     return (
       <Content>
         {/* <div className="todoListMain"> */}
-        <Row type="flex" justify="center" >
-          <Col style={{width:'50%'}}>
+        <Row type="flex" justify="center">
+          <Col style={{ width: '50%' }}>
             <List />
           </Col>
-          
         </Row>
-        
+
         {/* <InputItem /> */}
         {/* <ConnectedLogin /> */}
         {/* </div> */}

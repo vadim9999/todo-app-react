@@ -2,7 +2,8 @@ const initialState = {
   user: {},
   tasks: [],
   currentPage: 0,
-  selectedRowKeys: []
+  selectedRowKeys: [],
+  currentSelectedRowKeys:[]
 };
 
 function rootReducer(state = initialState, action: any) {
@@ -64,11 +65,17 @@ function rootReducer(state = initialState, action: any) {
         ...state,
         currentPage: action.payload
       };
+    case 'ADD_CURRENT_SELECTED_ROW_KEYS':
+      return {
+        ...state,
+        currentSelectedRowKeys: [...action.payload]
+      };
+    
     case 'ADD_SELECTED_ROW_KEYS':
       return {
         ...state,
         selectedRowKeys: [...action.payload]
-      };
+      }
     default:
       return state;
   }
