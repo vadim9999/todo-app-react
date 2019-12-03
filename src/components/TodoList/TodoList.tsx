@@ -56,7 +56,7 @@ class ConnectedTodoList extends Component<TodoListProps, TodoListState> {
       <Content>
         {/* <div className="todoListMain"> */}
         <Row type="flex" justify="center" >
-          <Col>
+          <Col style={{width:'50%'}}>
             <List />
           </Col>
           
