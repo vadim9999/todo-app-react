@@ -17,8 +17,10 @@ import { onClickFilter, onSort } from './selector';
 import { getTasksForTable, getColumns, getRowSelection } from './selectorTable';
 import { TasksTypes } from '../Interfaces';
 // import './List.css';
-
+import {TableBlock} from './TableBlock'
 import { EditableCell, EditableRow } from '../EditableCell/EditableCell';
+import {ButtonGroup, StyledButton } from './ButtonGroup'
+
 
 function mapStateToProps(state: any) {
   return {
@@ -322,7 +324,9 @@ class ConnectedList extends Component<ListProps, ListState> {
 
     return (
       <div>
-        <Button
+        
+          <ButtonGroup>
+            <StyledButton> <Button
           type="primary"
           onClick={this.start}
           disabled={equalRowKeys}
@@ -330,10 +334,19 @@ class ConnectedList extends Component<ListProps, ListState> {
         >
           Save
         </Button>
+        </StyledButton>
+        <StyledButton>
         <Button onClick={this.handleAdd} type="primary">
           {' '}
           Add a row
         </Button>
+        </StyledButton>
+          </ButtonGroup>
+        
+       
+
+        
+        <TableBlock>
         <Table
           components={getComponents()}
           rowClassName={() => 'editable-row'}
@@ -343,7 +356,11 @@ class ConnectedList extends Component<ListProps, ListState> {
           columns={getColumns(this.columns, this)}
           onChange={this.handleTableChange}
           pagination={{ current: this.state.currentPage }}
+
+          
         />
+        </TableBlock>
+       
 
         {/* <div className="btn-block">
                     <button onClick={this.onClickFilter} >{this.state.filterOptionName}</button>
