@@ -41,8 +41,6 @@ const mapStateToProps = (state: ButtonBlockProps) =>{
   }
 }
 
-
-
 class ConnectedButtonBlock extends React.Component<ButtonBlockProps, ButtonBlockState>{
   constructor(props:any){
     super(props)
@@ -70,9 +68,7 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps, ButtonBlock
     const { tasks, 
       selectedRowKeys, 
       currentSelectedRowKeys
-      
      } = this.props;
-
 
     this.setState({
       loading: true
@@ -133,9 +129,6 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps, ButtonBlock
 
     const page = this.getPagination(tasks);
     this.props.addCurrentPage(page)
-    // this.setState({
-    //   currentPage: page
-    // });
   };
 
   render(){

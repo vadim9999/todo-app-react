@@ -23,7 +23,7 @@ const getTasksForTable = (tasks: TasksTypes[]) => {
 };
 
 const getColumns = (
-  columnsTable: { editable: boolean; dataIndex: string; title: string }[],
+  columnsTable: { editable?: boolean; dataIndex?: string; title?: string }[],
   context: any
 ) => {
   const columns = columnsTable.map(col => {
@@ -67,7 +67,7 @@ const onSelectChange = (selectedRowKeys: number[]): void => {
   // });
 };
 
-const getRowSelection = ({tasks,currentSelectedRowKeys, addCurrentSelectedRowKeys}:any) => {
+const getRowSelection = ({tasks,currentSelectedRowKeys, addCurrentSelectedRowKeys}:any):any => {
 
   const onSelectChange = (selectedRowKeys: number[]): void => {
 

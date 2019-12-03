@@ -8,7 +8,6 @@ import {
   getTasks,
   deleteTaskById,
   updateTaskById,
-  addTask,
   addCurrentSelectedRowKeys,
   addCurrentPage
 } from '../../actions';
@@ -36,7 +35,6 @@ interface ListProps {
 
   updateTaskById: any;
   deleteTaskById: any;
-  addTask: any;
   addCurrentSelectedRowKeys:any;
   addCurrentPage:any;
 }
@@ -60,7 +58,6 @@ const mapDispatchToProps = (dispatch: any) => ({
   getTasks: (user_id: any) => dispatch(getTasks(user_id)),
   deleteTaskById: (task_id: any) => dispatch(deleteTaskById(task_id)),
   updateTaskById: (task_id: any) => dispatch(updateTaskById(task_id)),
-  addTask: (data: any) => dispatch(addTask(data)),
   addCurrentSelectedRowKeys: (data:number[]) => dispatch(addCurrentSelectedRowKeys(data)),
   addCurrentPage: (page:number) => dispatch(addCurrentPage(page))
 });
@@ -74,11 +71,7 @@ interface ListState {
   filterOptionName?: string;
   sortOption?: number;
   sortOptionName?: string;
-  selectedRowKeys?: any;
   toggle?: number;
-  loading?: boolean;
-  currentPage?: number;
-  
 
 }
 class ConnectedList extends Component<ListProps, ListState> {
@@ -92,18 +85,11 @@ class ConnectedList extends Component<ListProps, ListState> {
       filterOptionName: 'Display uncompleted tasks',
       sortOption: 0,
       sortOptionName: 'Sort by growth date',
-      selectedRowKeys: [],
       toggle: 0,
-      loading: false,
-      currentPage: 1
     };
-
-
   }
 
-  
-
-  columns = [
+  columns:object[] = [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -199,21 +185,15 @@ class ConnectedList extends Component<ListProps, ListState> {
         cell: EditableCell
       }
     };
-
     return components;
   };
 
-  handleTableChange = (pagination: { current: number }) => {
+  handleTableChange = (pagination: { current: number }):void => {
     this.props.addCurrentPage(pagination.current)
-    // this.setState({
-    //   currentPage: pagination.current
-    // });
   };
 
   render() {
-    let { tasks } = this.props;
-
-    
+    let { tasks, currentPage } = this.props;
     // const hasSelected = selectedRowKeys.length > 0;
     const { getComponents } = this;
 
@@ -230,7 +210,7 @@ class ConnectedList extends Component<ListProps, ListState> {
         {/* <Example /> */}
         
         <ButtonBlock />
-        
+
         <TableBlock>
           <Table
             components={getComponents()}
@@ -240,7 +220,7 @@ class ConnectedList extends Component<ListProps, ListState> {
             dataSource={getTasksForTable(tasks)}
             columns={getColumns(this.columns, this)}
             onChange={this.handleTableChange}
-            pagination={{ current: this.props.currentPage }}
+            pagination={{ current: currentPage }}
           />
         </TableBlock>
 
