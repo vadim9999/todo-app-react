@@ -1,7 +1,7 @@
 const initialState = {
   user: {},
   tasks: [],
-  currentPage: 0,
+  currentPage: 1,
   selectedRowKeys: [],
   currentSelectedRowKeys:[]
 };

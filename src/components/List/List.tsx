@@ -9,7 +9,8 @@ import {
   deleteTaskById,
   updateTaskById,
   addTask,
-  addCurrentSelectedRowKeys
+  addCurrentSelectedRowKeys,
+  addCurrentPage
 } from '../../actions';
 // import BlockAnimation  from "./BlockAnimation.js"
 // import CustomPagination from '../Pagination/Pagination'
@@ -20,16 +21,33 @@ import { TasksTypes } from '../Interfaces';
 // import './List.css';
 import { TableBlock } from './TableBlock';
 import { EditableCell, EditableRow } from '../EditableCell/EditableCell';
-
+import ButtonBlock from '../ButtonBlock/ButtonBlock'
 // import Example from './Example'
 
-function mapStateToProps(state: any) {
+interface ListProps {
+  user: any;
+  tasks: TasksTypes[];
+  selectedRowKeys: number[];
+  filteredTasks: object[];
+  date: any;
+  currentPage: any;
+  user_id: string;
+  currentSelectedRowKeys: number[]
+
+  updateTaskById: any;
+  deleteTaskById: any;
+  addTask: any;
+  addCurrentSelectedRowKeys:any;
+  addCurrentPage:any;
+}
+
+const mapStateToProps = (state: ListProps)=> {
   return {
     tasks: state.tasks,
     filteredTasks: state.filteredTasks,
     date: state.date,
     currentPage: state.currentPage,
-    selectedRows: state.selectedRowKeys,
+    selectedRowKeys: state.selectedRowKeys,
     user_id: state.user._id,
     currentSelectedRowKeys: state.currentSelectedRowKeys
   };
@@ -43,25 +61,11 @@ const mapDispatchToProps = (dispatch: any) => ({
   deleteTaskById: (task_id: any) => dispatch(deleteTaskById(task_id)),
   updateTaskById: (task_id: any) => dispatch(updateTaskById(task_id)),
   addTask: (data: any) => dispatch(addTask(data)),
-  addCurrentSelectedRowKeys: (data:number[]) => dispatch(addCurrentSelectedRowKeys(data))
+  addCurrentSelectedRowKeys: (data:number[]) => dispatch(addCurrentSelectedRowKeys(data)),
+  addCurrentPage: (page:number) => dispatch(addCurrentPage(page))
 });
 
 const EditableFormRow = Form.create()(EditableRow);
-
-interface ListProps {
-  tasks: TasksTypes[];
-  selectedRows: string[];
-  filteredTasks: object[];
-  date: any;
-  currentPage: any;
-  user_id: string;
-  currentSelectedRowKeys: number[]
-
-  updateTaskById: any;
-  deleteTaskById: any;
-  addTask: any;
-  addCurrentSelectedRowKeys:any;
-}
 
 interface ListState {
   isFiltered?: boolean;
@@ -132,16 +136,16 @@ class ConnectedList extends Component<ListProps, ListState> {
   ];
 
   getSelectedRowKeys = (tasks: { completed: boolean }[]): void => {
-    const selectedRows: number[] = [];
+    const selectedRowKeys: number[] = [];
     tasks.map((task, index) => {
       if (task.completed) {
-        selectedRows.push(index);
+        selectedRowKeys.push(index);
       }
     });
     // const selectedKeys = tasks.filter(task => task.completed)
 
     if (tasks != undefined && tasks.length > 0 && this.state.toggle === 0) {
-      this.props.addCurrentSelectedRowKeys([...selectedRows])
+      this.props.addCurrentSelectedRowKeys([...selectedRowKeys])
       this.setState({
         toggle: 1
       });
@@ -199,26 +203,11 @@ class ConnectedList extends Component<ListProps, ListState> {
     return components;
   };
 
-  getPagination = (tasks: object[]) => {
-    let counter = 0;
-    tasks.map((elem, index) => {
-      // console.log(index);
-      if (index % 10 === 0) {
-        counter++;
-
-        // return(<Item onClick= {this.onClick} key = {elem["_id"]} id={counter++}>{counter}</Item>)
-      }
-    });
-
-    return counter;
-  };
-
-  
-
   handleTableChange = (pagination: { current: number }) => {
-    this.setState({
-      currentPage: pagination.current
-    });
+    this.props.addCurrentPage(pagination.current)
+    // this.setState({
+    //   currentPage: pagination.current
+    // });
   };
 
   render() {
@@ -240,7 +229,8 @@ class ConnectedList extends Component<ListProps, ListState> {
       <div>
         {/* <Example /> */}
         
-
+        <ButtonBlock />
+        
         <TableBlock>
           <Table
             components={getComponents()}
@@ -250,7 +240,7 @@ class ConnectedList extends Component<ListProps, ListState> {
             dataSource={getTasksForTable(tasks)}
             columns={getColumns(this.columns, this)}
             onChange={this.handleTableChange}
-            pagination={{ current: this.state.currentPage }}
+            pagination={{ current: this.props.currentPage }}
           />
         </TableBlock>
 

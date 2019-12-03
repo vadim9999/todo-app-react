@@ -4,39 +4,87 @@ import {Button} from 'antd'
 import moment from 'moment'
 import {connect} from 'react-redux'
 import {TasksTypes} from '../Interfaces'
-
-const mapStateToProps = (state:{selectedRowKeys:string[], tasks: object[]}) =>{
-  return {
-    selectedRows: state.selectedRowKeys,
-    tasks: state.tasks
-  }
-}
+import {updateTaskById, addTask, addCurrentPage} from '../../actions'
 
 interface ButtonBlockProps {
   tasks: TasksTypes[];
-  selectedRows: number[]
+  selectedRowKeys: number[],
+  currentSelectedRowKeys: number[]
+  user?:any;
+  user_id: string;
+
+  updateTaskById:any;
+  addTask: any;
+  addCurrentPage:any;
+
 }
 
-class ConnectedButtonBlock extends React.Component<ButtonBlockProps,{}>{
+interface ButtonBlockState {
+  loading:boolean;
+}
+
+const mapDispatchToProps = (dispatch:any) =>{
+
+  return {
+    updateTaskById: (id:string) => dispatch(updateTaskById(id)),
+    addTask: (task:TasksTypes) => dispatch(addTask(task)),
+    addCurrentPage: (page:number) => dispatch(addCurrentPage(page))
+  }
+}
+
+const mapStateToProps = (state: ButtonBlockProps) =>{
+  return {
+    selectedRowKeys: state.selectedRowKeys,
+    currentSelectedRowKeys: state.currentSelectedRowKeys,
+    tasks: state.tasks,
+    user_id:state.user._id
+  }
+}
+
+
+
+class ConnectedButtonBlock extends React.Component<ButtonBlockProps, ButtonBlockState>{
   constructor(props:any){
     super(props)
+    
+    this.state = {
+      loading:false,
+    }
   }
 
+  getPagination = (tasks: object[]) => {
+    let counter = 0;
+    tasks.map((elem, index) => {
+      // console.log(index);
+      if (index % 10 === 0) {
+        counter++;
+
+        // return(<Item onClick= {this.onClick} key = {elem["_id"]} id={counter++}>{counter}</Item>)
+      }
+    });
+
+    return counter;
+  };
+
   start = () => {
-    const { tasks, selectedRows } = this.props;
-    const { selectedRowKeys } = this.state;
+    const { tasks, 
+      selectedRowKeys, 
+      currentSelectedRowKeys
+      
+     } = this.props;
+
 
     this.setState({
       loading: true
     });
 
     const keysNotFounded = [];
-    const changedRowKeys = [...selectedRowKeys];
+    const changedRowKeys = [...currentSelectedRowKeys];
 
-    for (let i = 0; i < selectedRows.length; i++) {
+    for (let i = 0; i < selectedRowKeys.length; i++) {
       let founded = false;
       for (let j = 0; j < changedRowKeys.length; j++) {
-        if (selectedRows[i] === changedRowKeys[j]) {
+        if (selectedRowKeys[i] === changedRowKeys[j]) {
           changedRowKeys.splice(j, 1);
           founded = true;
           break;
@@ -44,7 +92,7 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps,{}>{
       }
 
       if (!founded) {
-        keysNotFounded.push(selectedRows[i]);
+        keysNotFounded.push(selectedRowKeys[i]);
       }
     }
 
@@ -72,6 +120,8 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps,{}>{
 
   handleAdd = (e: any) => {
     e.preventDefault();
+    const {tasks} = this.props;
+
     const date = moment().toISOString();
 
     this.props.addTask({
@@ -81,23 +131,26 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps,{}>{
       date
     });
 
-    const page = this.getPagination(this.props.tasks);
-    this.setState({
-      currentPage: page
-    });
+    const page = this.getPagination(tasks);
+    this.props.addCurrentPage(page)
+    // this.setState({
+    //   currentPage: page
+    // });
   };
 
   render(){
 
-    const { selectedRowKeys, loading } = this.state;
-    const sortedKeys = selectedRowKeys.sort((a: number, b: number) => a < b);
-    let equalRowKeys = false;
+    // const { currentSelectedRowKeys } = this.props;
+    const {loading} = this.state;
 
-    if (
-      JSON.stringify(sortedKeys) === JSON.stringify(this.props.selectedRows)
-    ) {
-      equalRowKeys = true;
-    }
+    // const sortedKeys = selectedRowKeys.sort((a: number, b: number) => a < b);
+    // let equalRowKeys = false;
+
+    // if (
+    //   JSON.stringify(sortedKeys) === JSON.stringify(selectedRowKeys)
+    // ) {
+    //   equalRowKeys = true;
+    // }
 
     return (
       <ButtonGroup>
@@ -105,7 +158,7 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps,{}>{
             <Button
               type="primary"
               onClick={this.start}
-              disabled={equalRowKeys}
+              // disabled={equalRowKeys}
               loading={loading}
             >
               Save
@@ -121,5 +174,5 @@ class ConnectedButtonBlock extends React.Component<ButtonBlockProps,{}>{
   }
 }
 
-const ButtonBlock = connect(mapStateToProps)(ConnectedButtonBlock)
+const ButtonBlock = connect(mapStateToProps, mapDispatchToProps)(ConnectedButtonBlock)
 export default ButtonBlock
