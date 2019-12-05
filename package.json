@@ -13,6 +13,7 @@
     "@types/styled-components": "^4.4.0",
     "antd": "^3.25.2",
     "axios": "^0.19.0",
+    "enzyme": "^3.10.0",
     "font-awesome": "^4.7.0",
     "moment": "^2.24.0",
     "prettier": "^1.19.1",
@@ -21,8 +22,11 @@
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.1.1",
+    "react-test-renderer": "^16.12.0",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
+    "redux-mock-store": "^1.5.3",
+    "sinon": "^7.5.0",
     "styled-components": "^4.4.1",
     "universal-cookie": "^4.0.2"
   },
@@ -30,13 +34,17 @@
     "bundle": "webpack",
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch":"jest --watch",
     "eject": "react-scripts eject",
     "lint": "eslint --fix ./src/",
     "lint:ts": "tslint -c tslint.json --fix ./src/**/**/**/*.tsx",
     "check-types": "tsc",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "format": "prettier --write ./src/**/**/**/*.tsx"
+    "format": "prettier --write ./src/**/**/**/*.tsx",
+    "snapshot:fix":"jest -- -u ./src/",
+    "test:coverage":"jest -- --coverage ./src/"
+    
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -64,6 +72,7 @@
     "@typescript-eslint/parser": "^2.9.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^6.7.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
