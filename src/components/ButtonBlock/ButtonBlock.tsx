@@ -51,19 +51,7 @@ class ConnectedButtonBlock extends React.Component<
     };
   }
 
-  getPagination = (tasks: object[]) => {
-    let counter = 0;
-    tasks.map((elem, index) => {
-      // console.log(index);
-      if (index % 10 === 0) {
-        counter++;
-
-        // return(<Item onClick= {this.onClick} key = {elem["_id"]} id={counter++}>{counter}</Item>)
-      }
-    });
-
-    return counter;
-  };
+  
 
   start = () => {
     const { tasks, selectedRowKeys, currentSelectedRowKeys } = this.props;
@@ -111,22 +99,7 @@ class ConnectedButtonBlock extends React.Component<
     }, 1000);
   };
 
-  handleAdd = (e: any) => {
-    e.preventDefault();
-    const { tasks } = this.props;
-
-    const date = moment().toISOString();
-
-    this.props.addTask({
-      login_id: this.props.user_id,
-      completed: false,
-      name: 'New task',
-      date
-    });
-
-    const page = this.getPagination(tasks);
-    this.props.addCurrentPage(page);
-  };
+ 
 
   render() {
     // const { currentSelectedRowKeys } = this.props;
@@ -154,9 +127,7 @@ class ConnectedButtonBlock extends React.Component<
           </Button>
         </StyledButton>
         <StyledButton>
-          <Button onClick={this.handleAdd} type="primary">
-            Add a row
-          </Button>
+          
         </StyledButton>
       </ButtonGroup>
     );

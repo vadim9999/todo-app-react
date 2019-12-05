@@ -43,7 +43,7 @@
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "format": "prettier --write ./src/**/**/**/*.tsx",
     "snapshot:fix":"jest -- -u ./src/",
-    "test:coverage":"jest -- --coverage ./src/"
+    "test:coverage":"jest -- --coverage ./src"
     
   },
   "eslintConfig": {

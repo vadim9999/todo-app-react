@@ -1,0 +1,66 @@
+import React from 'react'
+
+import Enzyme, {mount} from 'enzyme'
+import configureStore from 'redux-mock-store'
+import Adapter from 'enzyme-adapter-react-16'
+import {Provider} from 'react-redux'
+import ButtonAddTask,{ConnectedButtonAddTask} from './ButtonAddTask'
+import {addTask, addCurrentPage} from '../../actions'
+Enzyme.configure({adapter: new Adapter()})
+
+describe('Testing ButtonAddTask', () =>{
+  const initialState = {
+      tasks: [],
+      user: {
+        _id:''
+      }
+
+  }
+
+  const mockStore = configureStore()
+
+  let store, wrapper;
+
+  beforeEach(() =>{
+    store = mockStore(initialState)
+
+    wrapper = mount(
+      <Provider store={store}>
+        <ButtonAddTask />
+      </Provider>
+    )
+  }) 
+
+  it('check on render button', () =>{
+    expect(wrapper.find(ButtonAddTask).length).toEqual(1)
+  })
+
+  it('check disptaching addTask',() =>{
+    let action 
+    store.dispatch(addTask({
+      login_id: '134',
+      completed: false,
+      name: 'New task',
+      date: '134:33'
+    }))
+
+    action = store.getActions()
+
+    expect(action[0].type).toBe('ADD_TASK')
+
+  })
+
+  it('check dispatching addCurrentPage', ()=>{
+    let action
+
+    store.dispatch(addCurrentPage(1))
+
+    action = store.getActions()
+
+    expect(action[0].type).toBe('ADD_CURRENT_PAGE')
+  })
+
+  it('check props matches with initState', ()=>{
+    expect(wrapper.find(ConnectedButtonAddTask).prop('tasks')).toEqual(initialState.tasks)
+  })
+})
