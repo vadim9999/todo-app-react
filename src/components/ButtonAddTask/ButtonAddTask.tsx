@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {addTask, addCurrentPage} from '../../actions'
 
 import {TasksTypes} from '../Interfaces'
-
+import {getPagination} from './selector'
 interface ButtonAddTaskProps {
   tasks: TasksTypes[];
   user_id: string;
@@ -31,20 +31,6 @@ const mapDispatchToProps = (dispatch:any) =>{
 
 export class ConnectedButtonAddTask extends React.Component<ButtonAddTaskProps,{}>{
 
-  getPagination = (tasks: object[]) => {
-    let counter = 0;
-    tasks.map((elem, index) => {
-      // console.log(index);
-      if (index % 10 === 0) {
-        counter++;
-
-        // return(<Item onClick= {this.onClick} key = {elem["_id"]} id={counter++}>{counter}</Item>)
-      }
-    });
-
-    return counter;
-  };
-
   handleAdd = (e: any) => {
     e.preventDefault();
     const { tasks } = this.props;
@@ -58,7 +44,7 @@ export class ConnectedButtonAddTask extends React.Component<ButtonAddTaskProps,{
       date
     });
 
-    const page = this.getPagination(tasks);
+    const page = getPagination(tasks);
     this.props.addCurrentPage(page);
   };
 
