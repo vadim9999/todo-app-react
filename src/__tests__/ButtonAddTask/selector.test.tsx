@@ -1,5 +1,5 @@
-import {getPagination} from './selector'
-import {TasksTypes} from '../Interfaces'
+import {getPagination} from '../../components/ButtonAddTask/selector'
+import {TasksTypes} from '../../components/Interfaces'
 
 describe('testing getPagination',()=>{
   it('checks on returning count of pages from 2 tasks', ()=>{
