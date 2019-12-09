@@ -43,29 +43,29 @@ describe('Login', () =>{
       </Provider>)
   })
   
-  // it('test', ()=>{
-  //   const my = wrapper.find(ConnectedLogin).prop('user_id')
-  //   console.log(my)
+  it('test', ()=>{
+    const my = wrapper.find(ConnectedLogin).prop('user_id')
+    console.log(my)
      
-  //   expect (wrapper.find(ConnectedLogin).length).toEqual(1)
-  //   expect(wrapper.find(ConnectedLogin).prop('user_id')).toEqual(initialState.user._id)
-  // })
+    expect (wrapper.find(ConnectedLogin).length).toEqual(1)
+    expect(wrapper.find(ConnectedLogin).prop('user_id')).toEqual(initialState.user._id)
+  })
 
-  // it('check action on dispatchin', () =>{
-  //   let action 
-  //   store.dispatch(authorizate({
-  //     email:'3434',
-  //     password:'3434'
-  //   }))
+  it('check action on dispatchin', () =>{
+    let action 
+    store.dispatch(authorizate({
+      email:'3434',
+      password:'3434'
+    }))
 
-  //   action = store.getActions()
+    action = store.getActions()
 
-  //   console.log(action);
+    console.log(action);
 
-  //   expect(action[0].type).toBe("AUTHORIZATE")
+    expect(action[0].type).toBe("AUTHORIZATE")
 
    
-  // })
+  })
 
   it('testing form on submit',()=>{
     const InputField = wrapper.find(Form)
@@ -79,11 +79,6 @@ describe('Login', () =>{
     // console.log(my);
     
   })
-  // it('onEqua',()=>{
-  //  const p=  container.find(Login).props()
-  //  console.log(p);
-   
-  // })
   // it('calls',() =>{
   //     console.log(container.prop('user'));
       

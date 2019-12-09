@@ -1,13 +1,16 @@
 import React from 'react'
-import Enzyme, {mount} from 'enzyme'
+import Enzyme, {mount, shallow} from 'enzyme'
 import configureStore from 'redux-mock-store'
 import Adapter from 'enzyme-adapter-react-16'
 import {Provider} from 'react-redux'
 import ButtonSave, {ConnectedButtonSave} from '../../components/ButtonSave/ButtonSave'
-import {updateTaskById} from '../../actions'
+import {updateTaskById, addCurrentSelectedRowKeys, addSelectedRowKeys} from '../../actions'
 import renderer from 'react-test-renderer'
-
+import {createStore} from 'redux'
 import {Button} from 'antd'
+import { unmountComponentAtNode } from 'react-dom'
+import rootReducer from '../../reducers'
+
 Enzyme.configure({adapter: new Adapter()})
 
 describe('Testing ButtonSave', ()=>{
@@ -20,13 +23,13 @@ describe('Testing ButtonSave', ()=>{
     selectedRowKeys: [],
     currentSelectedRowKeys: []
   }
-  const mockStore = configureStore()
+  // const mockStore = configureStore()
 
   let store:any, wrapper:any;
 
   beforeEach(()=>{
-    store = mockStore(initialState)
-
+    // store = mockStore(initialState)
+    store = createStore(rootReducer,initialState)
     wrapper = mount(
       <Provider store ={store}>
         <ButtonSave />
@@ -34,31 +37,65 @@ describe('Testing ButtonSave', ()=>{
     )
   })
 
-  it('checks on render button',()=>{
-    expect(wrapper.find(ButtonSave).length).toEqual(1)
-  })
+  // afterEach(()=>{
+  //   wrapper.unmount()
+  //   wrapper = null
+  // })
+  // it('checks on render button',()=>{
+  //   expect(wrapper.find(ButtonSave).length).toEqual(1)
+  // })
 
-  it('checks dispatching updateTaskById', () =>{
-    let action
-    store.dispatch(updateTaskById({
-      name:'newtask',
-      // name: row.name,
-      completed: true,
-      login_id: '1234',
-      date: '12:22'
-    }))
+  // it('checks dispatching updateTaskById', () =>{
+  //   let action
+  //   store.dispatch(updateTaskById({
+  //     name:'newtask',
+  //     // name: row.name,
+  //     completed: true,
+  //     login_id: '1234',
+  //     date: '12:22'
+  //   }))
 
-    action = store.getActions()
-
-    expect(action[0].type).toBe('UPDATE_TASK')
-  })
-
-  it('checks on click button',()=>{
-    const button = wrapper.find(Button)
-    const result = button.prop('onClick')()
-    expect(result).toEqual(undefined)
+  //   // console.log(store.getState());
     
+  //   // action = store.getActions()
+
+  //   // expect(action[0].type).toBe('UPDATE_TASK')
+  // })
+
+  it('checks on click button without tasks',()=>{  
+    const button = wrapper.find(Button)
+    
+    button.simulate('click')
+
   })
+
+  it('checks on click when app has three tasks', ()=>{
+    const button = wrapper.find(Button)
+
+    store.dispatch({type:"GET_TASKS_SUCCESS", payload:{
+      data:[
+      {name:'task1',
+      completed: true},
+    {name:'task2',
+    completed: false},
+    {name:'task2',
+    completed: false}
+    ],
+    selectedRowKeys: [0]
+  }}
+  )
+
+    store.dispatch(addCurrentSelectedRowKeys([1,2]))
+    
+    // console.log(store);
+    
+    // wrapper.setProps({cord:"22"})
+    
+    wrapper.update()
+    // jest.useFakeTimers()
+    button.simulate('click')
+  })
+
   describe('checks match initialState in props', ()=>{
     it('selectedRowKeys', ()=>{
       expect(wrapper.find(ConnectedButtonSave).prop('selectedRowKeys')).toEqual(initialState.selectedRowKeys)
@@ -75,6 +112,22 @@ describe('Testing ButtonSave', ()=>{
     it('user_id', ()=>{
       expect(wrapper.find(ConnectedButtonSave).prop('user_id')).toEqual(initialState.user._id)
     })
+    // it('updateTaskById', ()=>{
+    //   expect(wrapper.find(ConnectedButtonSave).prop('updateTaskById')({
+    //     name:'newtask',
+    //     // name: row.name,
+    //     completed: true,
+    //     login_id: '1234',
+    //     date: '12:22'
+    //   }))
+    //   .toEqual(store.dispatch(updateTaskById({
+    //     name:'newtask',
+    //     // name: row.name,
+    //     completed: true,
+    //     login_id: '1234',
+    //     date: '12:22'
+    //   })))
+    // })
   })
   
   

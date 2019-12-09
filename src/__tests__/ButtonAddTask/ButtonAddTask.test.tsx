@@ -80,31 +80,6 @@ describe('Testing ButtonAddTask', () =>{
     expect(result).toBe(undefined)
   })
 
-  it('check reducers',() =>{
-    let state = rootReducer({
-      user: {},
-      tasks: [],
-      currentPage: 1,
-      selectedRowKeys: [],
-      currentSelectedRowKeys: []
-    }
-    ,{type:"ADD_TASK_SUCCESS", payload:{
-      _id:'23'
-    }})
-
-    expect(state).toEqual(
-      {
-        user: {},
-        tasks: [{_id:'23'}],
-        currentPage: 1,
-        selectedRowKeys: [],
-        currentSelectedRowKeys: []
-      }
-      
-      
-      )
-  })
-
   describe('check snapshot',()=>{
     it('snapshot',()=>{
       const renderedValue = renderer.create(<ConnectedButtonAddTask {...initialState} />).toJSON()

@@ -5,6 +5,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { TasksTypes } from '../Interfaces';
 import { updateTaskById } from '../../actions';
+import {getKeys} from './selector'
 
 interface ButtonSaveProps {
   tasks: TasksTypes[];
@@ -15,6 +16,7 @@ interface ButtonSaveProps {
 
   updateTaskById: any;
 }
+
 
 interface ButtonSaveState {
   loading: boolean;
@@ -44,6 +46,10 @@ export class ConnectedButtonSave extends React.Component<ButtonSaveProps, Button
     };
   }
 
+  // componentDidMount =() =>{
+  //   console.log("componentDidMount props= ", this.props);
+    
+  // }
   start = () => {
     const { tasks, selectedRowKeys, currentSelectedRowKeys } = this.props;
 
@@ -51,28 +57,8 @@ export class ConnectedButtonSave extends React.Component<ButtonSaveProps, Button
       loading: true
     });
 
-    const keysNotFounded = [];
-    const changedRowKeys = [...currentSelectedRowKeys];
-
-    for (let i = 0; i < selectedRowKeys.length; i++) {
-      let founded = false;
-      for (let j = 0; j < changedRowKeys.length; j++) {
-        if (selectedRowKeys[i] === changedRowKeys[j]) {
-          changedRowKeys.splice(j, 1);
-          founded = true;
-          break;
-        }
-      }
-
-      if (!founded) {
-        keysNotFounded.push(selectedRowKeys[i]);
-      }
-    }
-
-    // changedRowKeys[...keysNotFounded]
-
-    const rowKeys = changedRowKeys.concat(keysNotFounded);
-
+    const rowKeys = getKeys(selectedRowKeys, currentSelectedRowKeys)
+    
     rowKeys.map((item: any) => {
       this.props.updateTaskById({
         ...tasks[item],
@@ -92,6 +78,8 @@ export class ConnectedButtonSave extends React.Component<ButtonSaveProps, Button
 
   render() {
     const { loading } = this.state;
+    // console.log("******render ", this.props);
+    
     return (
       <Button
         type="primary"
