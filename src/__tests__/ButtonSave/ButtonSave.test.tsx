@@ -13,7 +13,7 @@ import rootReducer from '../../reducers'
 
 Enzyme.configure({adapter: new Adapter()})
 
-describe('Testing ButtonSave', ()=>{
+describe('Testing ButtonSave after authorization', ()=>{
   const initialState = {
     user: {
       _id:'1234'

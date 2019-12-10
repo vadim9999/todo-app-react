@@ -59,6 +59,8 @@ export class ConnectedLogin extends Component<LoginProps, LoginState> {
   }
 
   onHandleChange(e: any) {
+    console.log("On change input*****",e.target.value);
+    
     this.setState({
       [e.target.name]: e.target.value
     });
