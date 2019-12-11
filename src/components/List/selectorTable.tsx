@@ -4,15 +4,18 @@ import { TasksTypes } from '../Interfaces';
 
 const getTasksForTable = (tasks: TasksTypes[]) => {
   const data = [];
-
-  for (let i = 0; i < tasks.length; i++) {
-    data.push({
-      ...tasks[i],
-      key: i,
-
-      date: moment(tasks[i].date).format('HH:mm:ss, DD.MM.YYYY')
-    });
+  if(tasks !== undefined){
+    for (let i = 0; i < tasks.length; i++) {
+      data.push({
+        ...tasks[i],
+        key: i,
+  
+        date: moment(tasks[i].date).format('HH:mm:ss, DD.MM.YYYY')
+      });
+    }
   }
+
+  
 
   // context.setState({
   //     selectedRowKeys:
@@ -127,7 +130,7 @@ const getRowSelection = ({
         onSelect: () => {
           const counter = 0;
           const selectedRows: any = [];
-          tasks.map((task, index) => {
+          tasks.forEach((task, index) => {
             if (task.completed) {
               selectedRows.push(index);
             }

@@ -11,10 +11,7 @@ import {
   addCurrentSelectedRowKeys,
   addCurrentPage
 } from '../../actions';
-// import BlockAnimation  from "./BlockAnimation.js"
-// import CustomPagination from '../Pagination/Pagination'
-// import 'antd/dist/antd.css'
-import { onClickFilter, onSort } from './selector';
+// import { onClickFilter, onSort } from './selector';
 import { getTasksForTable, getColumns, getRowSelection, getSelectedRowKeysFromTasks } from './selectorTable';
 import { TasksTypes } from '../Interfaces';
 // import './List.css';
@@ -52,10 +49,10 @@ const mapStateToProps = (state: ListProps) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  sortTasksByGrowthDate: (tasks: any) => dispatch(sortTasksByGrowthDate(tasks)),
-  sortTasksByDecreaseDate: (tasks: any) =>
-    dispatch(sortTasksByDecreaseDate(tasks)),
-  getTasks: (user_id: any) => dispatch(getTasks(user_id)),
+  // sortTasksByGrowthDate: (tasks: any) => dispatch(sortTasksByGrowthDate(tasks)),
+  // sortTasksByDecreaseDate: (tasks: any) =>
+  //   dispatch(sortTasksByDecreaseDate(tasks)),
+ 
   deleteTaskById: (task_id: any) => dispatch(deleteTaskById(task_id)),
   updateTaskById: (task_id: any) => dispatch(updateTaskById(task_id)),
   addCurrentSelectedRowKeys: (data: number[]) =>
@@ -141,7 +138,6 @@ export class ConnectedList extends Component<ListProps, ListState> {
   // }
 
   UNSAFE_componentWillReceiveProps = (newProps: any) => {
-    console.log("component will receive props");
     if (this.props != newProps && newProps.tasks != undefined) {
       this.getSelectedRowKeys(newProps.tasks);
     }
@@ -186,13 +182,13 @@ export class ConnectedList extends Component<ListProps, ListState> {
     // const hasSelected = selectedRowKeys.length > 0;
     const { getComponents } = this;
 
-    if (this.state.isFiltered) {
-      if (this.state.filterOption === 1) {
-        tasks = tasks.filter(task => !task.completed);
-      } else {
-        tasks = tasks.filter(task => task.completed);
-      }
-    }
+    // if (this.state.isFiltered) {
+    //   if (this.state.filterOption === 1) {
+    //     tasks = tasks.filter(task => !task.completed);
+    //   } else {
+    //     tasks = tasks.filter(task => task.completed);
+    //   }
+    // }
     // const my = {
     //   components: getComponents(),
     //   bordered: true

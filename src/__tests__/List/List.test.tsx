@@ -4,8 +4,9 @@ import Adapter from 'enzyme-adapter-react-16'
 import Enzyme,{mount} from 'enzyme'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
-
+import {Table, Popconfirm} from 'antd'
 import rootReducer from '../../reducers'
+import {addCurrentPage} from '../../actions/index'
 
 Enzyme.configure({adapter: new Adapter})
 
@@ -20,11 +21,14 @@ describe('testing component List when user in authenticated', ()=>{
     currentSelectedRowKeys: []
   }
   const tasks = [
-    {name:'task1',
+    {_id:'1',
+      name:'task1',
     completed: true},
-  {name:'task2',
+  {_id:'2',
+    name:'task2',
   completed: false},
-  {name:'task2',
+  {_id:'3',
+    name:'task2',
   completed: true}
   ]
 
@@ -38,6 +42,7 @@ describe('testing component List when user in authenticated', ()=>{
         <List />
       </Provider>
     )
+    
   })
 
   it('checks on rendering component', () =>{
@@ -53,7 +58,7 @@ describe('testing component List when user in authenticated', ()=>{
     expect(ListComponent.prop('currentSelectedRowKeys')).toEqual(initialState.currentSelectedRowKeys)
   })
 
-  it('testing component willReveiveProps', ()=>{
+  it('testing component willReceiveProps', ()=>{
     store.dispatch({
       type:'GET_TASKS_SUCCESS',
       payload:{
@@ -66,7 +71,57 @@ describe('testing component List when user in authenticated', ()=>{
     expect(wrapper.find(ConnectedList).prop('currentSelectedRowKeys')).toEqual([0,2])
   })
 
-  it('testing function getSelectedRowKeysFromTasks',()=>{
-    
+  it('testing willReceiveProps when tasks are undefined',()=>{
+    store.dispatch({
+      type:'GET_TASKS_SUCCESS',
+      payload: {
+        data:undefined,
+        selectedRowKeys:[]
+      }
+    })
+
+    wrapper.update()
+
+    expect(wrapper.find(ConnectedList).prop('tasks')).toEqual(undefined)
   })
+  it('testing dispatch on addCurrentPage',()=>{
+    store.dispatch(addCurrentPage(2))
+    wrapper.update()
+    expect(wrapper.find(ConnectedList).prop('currentPage')).toEqual(2)
+  })
+  
+  it('testing onChange Table',()=>{
+    wrapper.find(Table).prop('onChange')({current:2})
+    wrapper.update()
+    const listProps = wrapper.find(ConnectedList).prop('currentPage')
+    expect(listProps).toEqual(2)
+  })
+  it('testing handleSave',()=>{
+    store.dispatch({
+      type:'GET_TASKS_SUCCESS',
+      payload:{
+        data: tasks,
+        selectedRowKeys:[0,2]
+      }
+    })
+
+    wrapper.update()
+    wrapper.find(ConnectedList).instance().handleSave({
+      _id:'2',
+      name:'changedTaskName'})
+  })
+    // wrapper.update()
+
+    it('testing row on delete',()=>{
+    store.dispatch({
+      type:'GET_TASKS_SUCCESS',
+      payload:{
+        data: tasks,
+        selectedRowKeys:[0,2]
+      }
+    })
+    wrapper.update()
+    const popconfirmProps = wrapper.find(Popconfirm).at(1).props()
+    popconfirmProps.onConfirm()
+    })
 })
