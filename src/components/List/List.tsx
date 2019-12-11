@@ -72,38 +72,6 @@ interface ListState {
   toggle?: number;
 }
 export class ConnectedList extends Component<ListProps, ListState> {
-
-  columns: object[] = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      width: '30%',
-      editable: true
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date'
-    },
-    {
-      title: 'Action',
-      dataIndex: '',
-
-      render: (text: string, record: { _id: string }) =>
-        this.props.tasks.length >= 1 ? (
-          <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => {
-              this.props.deleteTaskById({
-                task_id: record._id,
-                login_id: this.props.user_id
-              });
-            }}
-          >
-            <a> Delete </a>
-          </Popconfirm>
-        ) : null
-    }
-  ];
   constructor(props: any) {
     super(props);
 
@@ -118,6 +86,27 @@ export class ConnectedList extends Component<ListProps, ListState> {
     };
   }
 
+  deleteTask = (text: string, record: { _id: string }) =>{
+    const {tasks, user_id} = this.props;
+
+    const deleteTaskOnConfirm = () =>{
+      this.props.deleteTaskById({
+        task_id: record._id,
+        login_id: user_id
+      });
+    }
+
+    return tasks.length >= 1 ? (
+      <Popconfirm
+        title="Sure to delete?"
+        onConfirm={deleteTaskOnConfirm}
+      >
+        <a> Delete </a>
+      </Popconfirm>
+    ) : null
+  }
+
+  
   getSelectedRowKeys = (tasks: TasksTypes[]): void => {
     if (tasks != undefined && tasks.length > 0 && this.state.toggle === 0) {
       const selectedRowKeys: number[] = getSelectedRowKeysFromTasks(tasks);
@@ -180,7 +169,7 @@ export class ConnectedList extends Component<ListProps, ListState> {
   render() {
     let { tasks, currentPage } = this.props;
     // const hasSelected = selectedRowKeys.length > 0;
-    const { getComponents } = this;
+    const { getComponents, deleteTask, handleSave } = this;
 
     // if (this.state.isFiltered) {
     //   if (this.state.filterOption === 1) {
@@ -193,29 +182,28 @@ export class ConnectedList extends Component<ListProps, ListState> {
     //   components: getComponents(),
     //   bordered: true
     // }
+    const getStyles = () =>(
+      `border: 1px solid #d9d9d9;
+      border-adius: 4px;
+      padding: 4px 11px;`
+    )
+    
+    const tableProps = {
+      components: getComponents(),
+      rowClassName: getStyles,
+      onChange: this.handleTableChange, //@TODOfix this
+      pagination: {current:currentPage},
+      bordered:true,
+      rowSelection: getRowSelection(this.props),
+      dataSource: getTasksForTable(tasks), 
+      columns:getColumns({deleteTask,handleSave})
+    }
     return (
       <div>
-        {/* <Example /> */}
-
         <ButtonBlock />
-
+        
         <TableBlock>
-          <Table
-            // {...my}
-            components={getComponents()}
-            rowClassName={() =>
-              `border: 1px solid #d9d9d9;
-            border-adius: 4px;
-            padding: 4px 11px;`
-
-            }
-            bordered
-            rowSelection={getRowSelection(this.props)}
-            dataSource={getTasksForTable(tasks)}
-            columns={getColumns(this.columns, this)}
-            onChange={this.handleTableChange}
-            pagination={{ current: currentPage }}
-          />
+          <Table {...tableProps}/>
         </TableBlock>
 
         {/* <div className="btn-block">
