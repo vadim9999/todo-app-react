@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Table, Popconfirm, Form } from 'antd';
 import {
-  sortTasksByGrowthDate,
-  sortTasksByDecreaseDate,
-  getTasks,
   deleteTaskById,
   updateTaskById,
   addCurrentSelectedRowKeys,
@@ -21,7 +18,6 @@ import ButtonBlock from '../ButtonBlock/ButtonBlock';
 // import Example from './Example'
 
 interface ListProps {
-  user: any;
   tasks: TasksTypes[];
   selectedRowKeys: number[];
   filteredTasks: object[];
@@ -36,7 +32,11 @@ interface ListProps {
   addCurrentPage: any;
 }
 
-const mapStateToProps = (state: ListProps) => {
+interface StateProps extends ListProps {
+  user: any;
+}
+
+const mapStateToProps = (state: StateProps) => {
   return {
     tasks: state.tasks,
     filteredTasks: state.filteredTasks,
@@ -63,12 +63,12 @@ const mapDispatchToProps = (dispatch: any) => ({
 const EditableFormRow = Form.create()(EditableRow);
 
 interface ListState {
-  isFiltered?: boolean;
-  isSorted?: boolean;
-  filterOption?: number;
-  filterOptionName?: string;
-  sortOption?: number;
-  sortOptionName?: string;
+  // isFiltered?: boolean;
+  // isSorted?: boolean;
+  // filterOption?: number;
+  // filterOptionName?: string;
+  // sortOption?: number;
+  // sortOptionName?: string;
   toggle?: number;
 }
 export class ConnectedList extends Component<ListProps, ListState> {
@@ -108,12 +108,12 @@ export class ConnectedList extends Component<ListProps, ListState> {
     super(props);
 
     this.state = {
-      isFiltered: false,
-      isSorted: false,
-      filterOption: 0,
-      filterOptionName: 'Display uncompleted tasks',
-      sortOption: 0,
-      sortOptionName: 'Sort by growth date',
+      // isFiltered: false,
+      // isSorted: false,
+      // filterOption: 0,
+      // filterOptionName: 'Display uncompleted tasks',
+      // sortOption: 0,
+      // sortOptionName: 'Sort by growth date',
       toggle: 0
     };
   }

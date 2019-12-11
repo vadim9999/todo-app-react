@@ -7,6 +7,7 @@ import {Provider} from 'react-redux'
 import {Table, Popconfirm} from 'antd'
 import rootReducer from '../../reducers'
 import {addCurrentPage} from '../../actions/index'
+import renderer from 'react-test-renderer'
 
 Enzyme.configure({adapter: new Adapter})
 
@@ -124,4 +125,17 @@ describe('testing component List when user in authenticated', ()=>{
     const popconfirmProps = wrapper.find(Popconfirm).at(1).props()
     popconfirmProps.onConfirm()
     })
+
+    
 })
+
+// describe('snapshot List',()=>{
+//   it('checking snapshot', ()=>{
+//     const renderedValue = renderer.create(
+    
+//       <ConnectedList />
+      
+//       ).toJSON()
+//     expect(renderedValue).toMatchSnapshot()
+//   })
+// })

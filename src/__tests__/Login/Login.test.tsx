@@ -1,15 +1,14 @@
 import React from 'react'
-import Enzyme, { mount, shallow } from 'enzyme';
-import sinon from 'sinon'
+import Enzyme, { mount } from 'enzyme';
 import Login, { ConnectedLogin } from '../../components/Login/Login'
-import configureStore from 'redux-mock-store'
+
 import Adapter from 'enzyme-adapter-react-16'
 import { Provider } from 'react-redux'
 import { Form, Input } from 'antd'
-import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { createStore } from 'redux'
 import renderer from 'react-test-renderer'
-import { authorizate, addUser } from '../../actions/user'
+
 import rootReducer from '../../reducers/index'
 Enzyme.configure({ adapter: new Adapter() })
 

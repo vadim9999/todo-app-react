@@ -6,7 +6,7 @@ export const initialState = {
   currentSelectedRowKeys: []
 };
 
-function rootReducer(state = initialState, action: any) {
+function rootReducer(state = initialState, action: any) :any {
   // console.error("Reducer");
   // console.log(action);
   // console.log("State");
