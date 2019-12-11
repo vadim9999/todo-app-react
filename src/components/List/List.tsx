@@ -15,7 +15,7 @@ import {
 // import CustomPagination from '../Pagination/Pagination'
 // import 'antd/dist/antd.css'
 import { onClickFilter, onSort } from './selector';
-import { getTasksForTable, getColumns, getRowSelection } from './selectorTable';
+import { getTasksForTable, getColumns, getRowSelection, getSelectedRowKeysFromTasks } from './selectorTable';
 import { TasksTypes } from '../Interfaces';
 // import './List.css';
 import { TableBlock } from './TableBlock';
@@ -74,7 +74,7 @@ interface ListState {
   sortOptionName?: string;
   toggle?: number;
 }
-class ConnectedList extends Component<ListProps, ListState> {
+export class ConnectedList extends Component<ListProps, ListState> {
 
   columns: object[] = [
     {
@@ -121,16 +121,9 @@ class ConnectedList extends Component<ListProps, ListState> {
     };
   }
 
-  getSelectedRowKeys = (tasks: { completed: boolean }[]): void => {
-    const selectedRowKeys: number[] = [];
-    tasks.map((task, index) => {
-      if (task.completed) {
-        selectedRowKeys.push(index);
-      }
-    });
-    // const selectedKeys = tasks.filter(task => task.completed)
-
+  getSelectedRowKeys = (tasks: TasksTypes[]): void => {
     if (tasks != undefined && tasks.length > 0 && this.state.toggle === 0) {
+      const selectedRowKeys: number[] = getSelectedRowKeysFromTasks(tasks);
       this.props.addCurrentSelectedRowKeys([...selectedRowKeys]);
       this.setState({
         toggle: 1
@@ -138,7 +131,17 @@ class ConnectedList extends Component<ListProps, ListState> {
     }
   };
 
-  componentWillReceiveProps = (newProps: any) => {
+  // shouldComponentUpdate = (newProps:any) =>{
+  //   console.log("call shouldComponentUpdate");
+
+  //   if (this.props != newProps && newProps.tasks != undefined) {
+  //     this.getSelectedRowKeys(newProps.tasks);
+  //   }
+  //   return true;
+  // }
+
+  UNSAFE_componentWillReceiveProps = (newProps: any) => {
+    console.log("component will receive props");
     if (this.props != newProps && newProps.tasks != undefined) {
       this.getSelectedRowKeys(newProps.tasks);
     }
@@ -162,20 +165,6 @@ class ConnectedList extends Component<ListProps, ListState> {
       login_id: this.props.user_id,
       date: moment().toISOString()
     });
-
-    // this.props.deleteTaskById({ task_id: row.key, login_id: this.props.user_id })
-
-    // const newData = [...this.props.tasks];
-    // const index = newData.findIndex(item => row.key === item.key);
-    // const item = newData[index];
-    // newData.splice(index, 1, {
-    //     ...item,
-    //     ...row,
-    // })
-
-    // this.setState({
-
-    // })
   };
 
   getComponents = (): object => {
@@ -204,7 +193,10 @@ class ConnectedList extends Component<ListProps, ListState> {
         tasks = tasks.filter(task => task.completed);
       }
     }
-
+    // const my = {
+    //   components: getComponents(),
+    //   bordered: true
+    // }
     return (
       <div>
         {/* <Example /> */}
@@ -213,8 +205,14 @@ class ConnectedList extends Component<ListProps, ListState> {
 
         <TableBlock>
           <Table
+            // {...my}
             components={getComponents()}
-            rowClassName={() => 'editable-row'}
+            rowClassName={() =>
+              `border: 1px solid #d9d9d9;
+            border-adius: 4px;
+            padding: 4px 11px;`
+
+            }
             bordered
             rowSelection={getRowSelection(this.props)}
             dataSource={getTasksForTable(tasks)}

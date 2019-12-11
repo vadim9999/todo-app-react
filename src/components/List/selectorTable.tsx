@@ -22,6 +22,16 @@ const getTasksForTable = (tasks: TasksTypes[]) => {
   return data;
 };
 
+const getSelectedRowKeysFromTasks = (tasks: TasksTypes[]) => {
+  const selectedRowKeys: number[] = [];
+  tasks.forEach((task, index) => {
+    if (task.completed) {
+      selectedRowKeys.push(index);
+    }
+  });
+  return selectedRowKeys;
+}
+
 const getColumns = (
   columnsTable: { editable?: boolean; dataIndex?: string; title?: string }[],
   context: any
@@ -134,4 +144,4 @@ const getRowSelection = ({
   return rowSelection;
 };
 
-export { getTasksForTable, getColumns, getRowSelection };
+export { getTasksForTable, getColumns, getRowSelection, getSelectedRowKeysFromTasks};

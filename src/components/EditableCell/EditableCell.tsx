@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import { Form, Input } from 'antd';
 
-import './styled.css';
+import {editableCellValueWrap} from './styled.js';
+
 
 const EditableContext = React.createContext();
 
@@ -81,8 +82,8 @@ class EditableCell extends React.Component<{}, EditableCellState> {
       </Form.Item>
     ) : (
       <div
-        className="editable-cell-value-wrap"
-        style={{ paddingRight: 24 }}
+        
+        style={{ paddingRight: 24, ...editableCellValueWrap }}
         onClick={this.toggleEdit}
       >
         {children}

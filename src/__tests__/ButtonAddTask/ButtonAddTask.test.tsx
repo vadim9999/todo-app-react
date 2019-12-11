@@ -7,7 +7,6 @@ import {Provider} from 'react-redux'
 import ButtonAddTask,{ConnectedButtonAddTask} from '../../components/ButtonAddTask/ButtonAddTask'
 import {addTask, addCurrentPage} from '../../actions'
 import renderer from 'react-test-renderer'
-import rootReducer from '../../reducers/index'
 import {Button} from 'antd'
 
 Enzyme.configure({adapter: new Adapter()})
@@ -51,12 +50,8 @@ describe('Testing ButtonAddTask', () =>{
       date: '134:33'
     }))
 
-    // store.dispatch(addCurrentPage(1))
-
     action = store.getActions()
-
     expect(action[0].type).toBe('ADD_TASK')
-    // expect(action[0].type).toBe('ADD_CURRENT_PAGE')
   })
 
   it('check dispatching addCurrentPage', ()=>{
