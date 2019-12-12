@@ -76,7 +76,7 @@ const getColumns = ({
     else
       return {
         ...col,
-        onCell: cell
+        onCell: (record:any) => cell(record,col)
       };
   });
 

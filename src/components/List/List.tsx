@@ -11,11 +11,12 @@ import {
 // import { onClickFilter, onSort } from './selector';
 import { getTasksForTable, getColumns, getRowSelection, getSelectedRowKeysFromTasks } from './selectorTable';
 import { TasksTypes } from '../Interfaces';
-// import './List.css';
+import './List.css';
 import { TableBlock } from './TableBlock';
 import { EditableCell, EditableRow } from '../EditableCell/EditableCell';
 import ButtonBlock from '../ButtonBlock/ButtonBlock';
 // import Example from './Example'
+
 
 interface ListProps {
   tasks: TasksTypes[];
@@ -152,16 +153,14 @@ export class ConnectedList extends Component<ListProps, ListState> {
     });
   };
 
-  getComponents = (): object => {
-    const components = {
+ 
+  components = {
       body: {
         row: EditableFormRow,
         cell: EditableCell
       }
     };
-    return components;
-  };
-
+    
   handleTableChange = (pagination: { current: number }): void => {
     this.props.addCurrentPage(pagination.current);
   };
@@ -182,17 +181,17 @@ export class ConnectedList extends Component<ListProps, ListState> {
     //   components: getComponents(),
     //   bordered: true
     // }
-    const getStyles = () =>(
-      `border: 1px solid #d9d9d9;
-      border-adius: 4px;
-      padding: 4px 11px;`
-    )
+    // const getStyles = () =>(
+    //   `border: 1px solid #d9d9d9;
+    //   border-radius: 4px;
+    //   padding: 4px 11px;`
+    // )
     
     const tableProps = {
-      components: getComponents(),
-      rowClassName: getStyles,
+      components: this.components,
       onChange: this.handleTableChange, //@TODOfix this
       pagination: {current:currentPage},
+      rowClassName: () => 'editable-row',
       bordered:true,
       rowSelection: getRowSelection(this.props),
       dataSource: getTasksForTable(tasks), 
@@ -201,9 +200,10 @@ export class ConnectedList extends Component<ListProps, ListState> {
     return (
       <div>
         <ButtonBlock />
-        
         <TableBlock>
-          <Table {...tableProps}/>
+          <Table
+          {...tableProps}
+          />
         </TableBlock>
 
         {/* <div className="btn-block">
