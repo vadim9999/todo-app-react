@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import { Form, Input } from 'antd';
 
-import './styled.css';
+import {EditableCellValueWrap} from './styled.js';
+// import '../List/List.css'
+
 
 const EditableContext = React.createContext();
 
@@ -57,6 +59,7 @@ class EditableCell extends React.Component<{}, EditableCellState> {
   };
 
   renderCell = (form: any) => {
+    
     this.form = form;
     const { children, dataIndex, record, title }: any = this.props;
 
@@ -80,17 +83,18 @@ class EditableCell extends React.Component<{}, EditableCellState> {
         )}
       </Form.Item>
     ) : (
-      <div
-        className="editable-cell-value-wrap"
-        style={{ paddingRight: 24 }}
-        onClick={this.toggleEdit}
+      <EditableCellValueWrap
+      
+      style={{ paddingRight: 24, }}
+      onClick={this.toggleEdit}
       >
         {children}
-      </div>
+      </EditableCellValueWrap>
     );
   };
 
   render() {
+    
     const {
       editable,
       dataIndex,

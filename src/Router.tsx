@@ -8,7 +8,7 @@ import { authenticate } from './actions/user';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import TodoList from './components/TodoList/TodoList';
-import {withRouter} from 'react-router'
+import { withRouter } from 'react-router';
 // import {withRouter} from 'react-router'
 
 import './Router.css';
@@ -30,13 +30,13 @@ const mapDispatchToProps = (dispatch: any) => ({
 interface RouterProps {
   authenticate: any;
   user_id: string;
-  location?:any;
+  location?: any;
 }
 
 class ConnectedRouter extends React.Component<RouterProps, {}> {
   componentDidMount() {
     console.log(window.location.origin);
-    
+
     const cookies = new Cookies();
     const cookie = cookies.get('user');
     if (cookie !== undefined && cookie !== 'undefined') {
@@ -45,8 +45,8 @@ class ConnectedRouter extends React.Component<RouterProps, {}> {
   }
 
   render() {
-    console.log("location", this.props.location);
-    
+    console.log('location', this.props.location);
+
     return (
       <BrowserRouter>
         <Layout>
