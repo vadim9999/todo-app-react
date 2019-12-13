@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing ButtonSave after authorization snapshot ButtonSave checks snapshot 1`] = `
+<button
+  className="ant-btn ant-btn-primary"
+  onClick={[Function]}
+  type="button"
+>
+  <span>
+    Save
+  </span>
+</button>
+`;
+
+exports[`Testing ButtonSave snapshot ButtonSave checks snapshot 1`] = `
+<button
+  className="ant-btn ant-btn-primary"
+  onClick={[Function]}
+  type="button"
+>
+  <span>
+    Save
+  </span>
+</button>
+`;

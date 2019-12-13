@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Layout } from 'antd';
+import { Layout, Col, Row } from 'antd';
 // import InputItem from '../InputItem/InputItem';
 import List from '../List/List';
 // import ConnectedLogin from './Login/Login';
@@ -30,7 +30,7 @@ interface TodoListProps {
   selectedRowKeys: any;
 
   getTasks: any;
-  addSelectedRowKeys: any;
+  // addSelectedRowKeys: any;
 }
 
 interface TodoListState {}
@@ -55,7 +55,12 @@ class ConnectedTodoList extends Component<TodoListProps, TodoListState> {
     return (
       <Content>
         {/* <div className="todoListMain"> */}
-        <List />
+        <Row type="flex" justify="center">
+          <Col style={{ width: '50%' }}>
+            <List />
+          </Col>
+        </Row>
+
         {/* <InputItem /> */}
         {/* <ConnectedLogin /> */}
         {/* </div> */}

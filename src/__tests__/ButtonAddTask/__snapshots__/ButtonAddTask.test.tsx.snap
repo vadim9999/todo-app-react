@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing ButtonAddTask check snapshot snapshot 1`] = `
+<button
+  className="ant-btn ant-btn-primary"
+  onClick={[Function]}
+  type="button"
+>
+  <span>
+    Add a row
+  </span>
+</button>
+`;
