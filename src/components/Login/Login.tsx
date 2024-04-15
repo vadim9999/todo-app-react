@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Input, Tooltip, Icon, Button, Form, Row, Col } from 'antd';
 import { authorizate } from '../../actions/user';
 // import "./Login.css"
+// import Example from './Example'
+
 
 const mapStateToProps = (state: any) => ({
   user_id: state.user._id
@@ -23,7 +25,8 @@ interface LoginState {
   password?: string;
 }
 
-class ConnectedLogin extends Component<LoginProps, LoginState> {
+
+export class ConnectedLogin extends Component<LoginProps, LoginState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -34,14 +37,21 @@ class ConnectedLogin extends Component<LoginProps, LoginState> {
     this.login = this.login.bind(this);
   }
 
+  componentDidMount =() =>{
+    console.log("call did mount");
+    console.log("hii");
+    
+  }
   login(e: any) {
     e.preventDefault();
     console.log('Authenticate');
     const { email, password } = this.state;
-    this.props.authorizate({
+    this.props.authorizate(
+      {
       email,
       password
-    });
+    }
+    );
     this.setState({
       email: '',
       password: ''
@@ -49,6 +59,8 @@ class ConnectedLogin extends Component<LoginProps, LoginState> {
   }
 
   onHandleChange(e: any) {
+    console.log("On change input*****",e.target.value);
+    
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -60,13 +72,13 @@ class ConnectedLogin extends Component<LoginProps, LoginState> {
     if (this.props.user_id) return <Redirect to="/todolist" />;
 
     return (
-      <div>
+      <div >
         <Row type="flex" justify="center">
           <Col>
             <Form onSubmit={this.login}>
               <Form.Item>
                 <Input
-                  placeholder="Enter your username"
+                  placeholder="Enter your email"
                   className="input-email"
                   onChange={this.onHandleChange}
                   value={this.state.email}

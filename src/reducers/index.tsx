@@ -1,11 +1,12 @@
-const initialState = {
+export const initialState = {
   user: {},
   tasks: [],
-  currentPage: 0,
-  selectedRowKeys: []
+  currentPage: 1,
+  selectedRowKeys: [],
+  currentSelectedRowKeys: []
 };
 
-function rootReducer(state = initialState, action: any) {
+function rootReducer(state = initialState, action: any) :any {
   // console.error("Reducer");
   // console.log(action);
   // console.log("State");
@@ -64,6 +65,12 @@ function rootReducer(state = initialState, action: any) {
         ...state,
         currentPage: action.payload
       };
+    case 'ADD_CURRENT_SELECTED_ROW_KEYS':
+      return {
+        ...state,
+        currentSelectedRowKeys: [...action.payload]
+      };
+
     case 'ADD_SELECTED_ROW_KEYS':
       return {
         ...state,
