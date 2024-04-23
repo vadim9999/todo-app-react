@@ -8,7 +8,7 @@ import renderer from 'react-test-renderer'
 import {createStore} from 'redux'
 import {Button} from 'antd'
 
-import rootReducer from '../../reducers'
+import rootReducer from '../../redux/reducers'
 
 Enzyme.configure({adapter: new Adapter()})
 

@@ -5,7 +5,7 @@ import Enzyme,{mount} from 'enzyme'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import {Table, Popconfirm} from 'antd'
-import rootReducer from '../../reducers'
+import rootReducer from '../../redux/reducers'
 import {addCurrentPage} from '../../actions/index'
 import renderer from 'react-test-renderer'
 

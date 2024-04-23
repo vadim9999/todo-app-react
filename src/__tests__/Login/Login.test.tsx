@@ -9,7 +9,7 @@ import { BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { createStore } from 'redux'
 import renderer from 'react-test-renderer'
 
-import rootReducer from '../../reducers/index'
+import rootReducer from '../../redux/reducers/index'
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('testing component Login', () => {

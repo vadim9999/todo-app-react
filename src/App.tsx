@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 // import * as serviceWorker from './serviceWorker';
-import store from './redux/store/index';
 
 import Router from './Router';
+import { store } from './redux/store';
 
 const App = () => (
   <div className="main-block">
-    {/* <Provider store={store}> */}
-    <Router />
-    {/* </Provider> */}
+    <Provider store={store}>
+      <Router />
+    </Provider>
   </div>
 );
 

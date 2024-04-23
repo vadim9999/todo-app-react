@@ -1,25 +1,18 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import rootReducer from '../../reducers/index';
-import { forbiddenWordsMiddleware } from '../../middleware';
-import apiSaga from '../../sagas/api-saga';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
+import mySaga from "../sagas/api-saga";
+import tasksReducer from "../tasks/tasksSlice";
 
-const initialiseSagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware();
 
-// const store = createStore(rootReducer,
-//     storeEnhancers(
-//         applyMiddleware(forbiddenWordsMiddleware, thunk)
-//         )
-//         );
+export const store = configureStore({
+  reducer: { tasks: tasksReducer },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(sagaMiddleware),
+});
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(
-    applyMiddleware(forbiddenWordsMiddleware, initialiseSagaMiddleware)
-  )
-);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
-initialiseSagaMiddleware.run(apiSaga);
+sagaMiddleware.run(mySaga);
 
-export default store;

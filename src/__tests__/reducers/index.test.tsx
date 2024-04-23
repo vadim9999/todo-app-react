@@ -1,4 +1,4 @@
-import rootReducer from '../../reducers'
+import rootReducer from '../../redux/reducers'
 import {updateTaskById} from '../../actions'
 
 describe('testing Reducers', ()=>{
