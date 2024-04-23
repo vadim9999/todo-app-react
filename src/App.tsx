@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 // import * as serviceWorker from './serviceWorker';
-import store from './store/index';
+import store from './redux/store/index';
 
 import Router from './Router';
 

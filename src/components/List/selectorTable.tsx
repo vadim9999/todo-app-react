@@ -76,7 +76,7 @@ const getColumns = ({
     else
       return {
         ...col,
-        onCell: (record:any) => cell(record,col)
+        onCell: (record: any) => cell(record, col)
       };
   });
 
@@ -104,36 +104,36 @@ const getColumns = ({
 // };
 
 const getRowSelection = (props: any): any => {
-  let rowSelection:any = [];
+  let rowSelection: any = [];
 
-  if(props !== undefined){
+  if (props !== undefined) {
     const {
       tasks,
       currentSelectedRowKeys,
       addCurrentSelectedRowKeys
     } = props;
-  
+
     // console.log("props", props);
-    
+
     const onSelectChange = (selectedRowKeys: number[]): void => {
       addCurrentSelectedRowKeys([...selectedRowKeys]);
     };
-  
+
     const selectAllData = () => {
       addCurrentSelectedRowKeys([...Array(tasks.length).keys()]);
     }
-  
+
     const undoAllSelection = () => {
       const counter = 0;
       const selectedRows: any = [];
-      tasks.forEach((task:TasksTypes, index:number) => {
+      tasks.forEach((task: TasksTypes, index: number) => {
         if (task.completed) {
           selectedRows.push(index);
         }
       });
       addCurrentSelectedRowKeys([...selectedRows]);
     }
-  
+
     rowSelection = {
       selectedRowKeys: currentSelectedRowKeys,
       onChange: onSelectChange,
@@ -142,7 +142,7 @@ const getRowSelection = (props: any): any => {
         {
           key: 'all-data',
           text: 'Select All Data',
-          onSelect: selectAllData 
+          onSelect: selectAllData
         },
         {
           key: 'undo-all-selections',
@@ -153,7 +153,7 @@ const getRowSelection = (props: any): any => {
     };
   }
 
-  
+
 
   return rowSelection;
 };

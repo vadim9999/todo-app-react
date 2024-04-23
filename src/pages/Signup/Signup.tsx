@@ -97,7 +97,7 @@ const Signup = () => {
                 name="password"
                 onChange={onHandleChange}
                 value={state.password}
-                placeholder="Input password"
+                placeholder="Enter your password"
               />
             </Form.Item>
             <Form.Item>

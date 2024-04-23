@@ -6,8 +6,8 @@ import Cookies from 'universal-cookie';
 import { Layout } from 'antd';
 // import { authenticate } from './actions/user';
 import Login from './pages/Login/Login';
-import Signup from './components/Signup/Signup';
-import TodoList from './components/TodoList/TodoList';
+import Signup from './pages/Signup/Signup';
+import TodoList from './pages/TodoList/TodoList';
 
 import './Router.css';
 import moment from 'moment';
@@ -85,8 +85,7 @@ const Router = () => {
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
 
-            {/* <Route path="/todolist" element={<TodoList />} /> */}
-            {/* <Route path="sign" */}
+            <Route path="/todolist" element={<TodoList />} />
           </Routes>
         </Content>
         <Footer style={{ display: 'flex', justifyContent: 'center' }}>
