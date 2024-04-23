@@ -1,17 +1,16 @@
 import React from 'react';
 
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Routes } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
-import { Layout, Button } from 'antd';
-import { authenticate } from './actions/user';
+import { Layout } from 'antd';
+// import { authenticate } from './actions/user';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import TodoList from './components/TodoList/TodoList';
-import { withRouter } from 'react-router';
-// import {withRouter} from 'react-router'
 
 import './Router.css';
+import moment from 'moment';
 // const mapDispatchToProps = (dispatch) =>{
 //     return {
 //         a
@@ -19,87 +18,83 @@ import './Router.css';
 // }
 const { Header, Footer, Content } = Layout;
 
-const mapStateToProps = (state: any) => ({
-  user_id: state.user._id
-});
+// const mapStateToProps = (state: any) => ({
+//   user_id: state.user._id
+// });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  authenticate: (cookie: any) => dispatch(authenticate(cookie))
-});
+// const mapDispatchToProps = (dispatch: any) => ({
+//   authenticate: (cookie: any) => dispatch(authenticate(cookie))
+// });
 
-interface RouterProps {
-  authenticate: any;
-  user_id: string;
-  location?: any;
-}
+// interface RouterProps {
+//   authenticate: any;
+//   user_id: string;
+//   location?: any;
+// }
 
-class ConnectedRouter extends React.Component<RouterProps, {}> {
-  componentDidMount() {
-    console.log(window.location.origin);
+const Router = () => {
+  // componentDidMount() {
+  //   console.log(window.location.origin);
 
-    const cookies = new Cookies();
-    const cookie = cookies.get('user');
-    if (cookie !== undefined && cookie !== 'undefined') {
-      this.props.authenticate(cookie);
-    }
-  }
+  //   const cookies = new Cookies();
+  //   const cookie = cookies.get('user');
+  //   if (cookie !== undefined && cookie !== 'undefined') {
+  //     this.props.authenticate(cookie);
+  //   }
+  // }
 
-  render() {
-    console.log('location', this.props.location);
+  return (
+    <BrowserRouter>
+      <Layout>
+        <Header>
+          {/* <div class="header-block"> */}
 
-    return (
-      <BrowserRouter>
-        <Layout>
-          <Header>
-            {/* <div class="header-block"> */}
+          {/* <AuthButton /> */}
 
-            {/* <AuthButton /> */}
+          {/* {this.props.user_id != undefined ? (
+            <div className="header-block-btns">
+              <Link to="/todolist">
+                <Button type="primary">Todolist</Button>
+              </Link>
+              <Link to="/signout">
+                <Button type="primary">SignOut</Button>
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <Link to="/">
+                <Button type="primary">Login</Button>
+              </Link>
+              <a> or</a>
+              <Link to="/signup">
+                <Button type="primary">Signup</Button>
+              </Link>
+            </div>
+          )} */}
 
-            {this.props.user_id != undefined ? (
-              <div className="header-block-btns">
-                <Link to="/todolist">
-                  <Button type="primary">Todolist</Button>
-                </Link>
-                <Link to="/signout">
-                  <Button type="primary">SignOut</Button>
-                </Link>
-              </div>
-            ) : (
-              <div>
-                <Link to="/">
-                  <Button type="primary">Login</Button>
-                </Link>
-                <a> or</a>
-                <Link to="/signup">
-                  <Button type="primary">Signup</Button>
-                </Link>
-              </div>
-            )}
+          {/* </div> */}
+        </Header>
+        <Content
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Routes>
+            <Route path="/" element={<Login />} />
+            {/* <Route path="/signup" element={<Signup />} /> */}
 
-            {/* </div> */}
-          </Header>
-          <Content
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Switch>
-              <Route path="/" exact component={Login} />
-              <Route path="/signup" exact component={Signup} />
-
-              <Route path="/todolist" component={TodoList} />
-              {/* <Route path="sign" */}
-            </Switch>
-          </Content>
-          <Footer style={{ display: 'flex', justifyContent: 'center' }}>
-            <p>2019</p>
-          </Footer>
-        </Layout>
-      </BrowserRouter>
-    );
-  }
+            {/* <Route path="/todolist" element={<TodoList />} /> */}
+            {/* <Route path="sign" */}
+          </Routes>
+        </Content>
+        <Footer style={{ display: 'flex', justifyContent: 'center' }}>
+          <p>{moment().format('YYYY')}</p>
+        </Footer>
+      </Layout>
+    </BrowserRouter >
+  );
 }
 
 // const fakeAuth = {
@@ -155,6 +150,6 @@ class ConnectedRouter extends React.Component<RouterProps, {}> {
 //     )
 // }
 // const MyRouter = withRouter(ConnectedRouter)
-const Router = connect(mapStateToProps, mapDispatchToProps)(ConnectedRouter);
+// const Router = connect(mapStateToProps, mapDispatchToProps)(ConnectedRouter);
 // const Router = withRouter(MyRouter)
 export default Router;
