@@ -65,14 +65,13 @@ const Login = () => {
   // if (this.props.user_id) return <Redirect to="/todolist" />;
 
   return (
-    <div >
+    <div>
       <Row justify="center">
         <Col>
           <Form>
             <Form.Item>
               <Input
                 placeholder="Enter your email"
-                className="input-email"
                 onChange={onHandleChange}
                 value={state.email}
                 name="email"
@@ -84,7 +83,6 @@ const Login = () => {
             <Form.Item>
               <Input.Password
                 name="password"
-                className="input-pass"
                 onChange={onHandleChange}
                 value={state.password}
                 placeholder="Input password"
@@ -95,7 +93,6 @@ const Login = () => {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="login-form-button"
                 block
               >
                 Log in

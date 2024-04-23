@@ -1,66 +1,55 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { addUser } from '../../actions/user';
 import { getTasks } from '../../actions/index';
 
-import './Signup.css';
+import { Button, Col, Form, Input, InputProps, Row } from 'antd';
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addUser: data => dispatch(addUser(data)),
-    getTasks: login_id => dispatch(getTasks(login_id))
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     addUser: data => dispatch(addUser(data)),
+//     getTasks: login_id => dispatch(getTasks(login_id))
+//   };
+// }
 
-const mapStateToProps = state => ({
-  user_id: state.user._id
-});
-class ConnectedLogin extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: '',
-      email: '',
-      password: '',
-      redirect: false
-    };
-    // this.onHandleChangePassword = this.onHandleChangePassword.bind(this)
-    // this.onHandleChangeName = this.onHandleChangeName.bind(this)
-    this.onHandleChange = this.onHandleChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+// const mapStateToProps = state => ({
+//   user_id: state.user._id
+// });
 
-  onSubmit(e) {
-    e.preventDefault();
-    const { name, email, password } = this.state;
-    console.log('ddd');
-    // this.props.getTasks("5d7e4f0d4048013bee00a823")
-    this.props.addUser({
-      name,
-      email,
-      password
-    });
+const Signup = () => {
+  const [state, setState] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
-    if (this.props.user_id != undefined) {
-      this.setState({
-        redirect: true
-      });
-    }
-    // console.log(cookies.get('myCat'));
-  }
+  // onSubmit(e) {
+  //   e.preventDefault();
+  //   const { name, email, password } = this.state;
+  //   console.log('ddd');
+  //   // this.props.getTasks("5d7e4f0d4048013bee00a823")
+  //   this.props.addUser({
+  //     name,
+  //     email,
+  //     password
+  //   });
 
-  componentDidMount() {
-    console.log('This is componentDidMount');
-  }
+  //   if (this.props.user_id != undefined) {
+  //     this.setState({
+  //       redirect: true
+  //     });
+  //   }
+  //   // console.log(cookies.get('myCat'));
+  // }
 
-  onHandleChange(e) {
-    console.log(e.target.name);
+  // onHandleChange(e) {
+  //   console.log(e.target.name);
 
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
+  //   this.setState({
+  //     [e.target.name]: e.target.value
+  //   });
+  // }
   // onHandleChangeEmail(e) {
   //     this.setState({
   //         email: e.target.value
@@ -69,43 +58,62 @@ class ConnectedLogin extends Component {
   //     // this.onSubmit()
   // }
 
-  render() {
-    console.log('This is SignUp');
+  // const { name, email, password, redirect } = this.state;
 
-    console.log(this.state.email);
-    const { name, email, password, redirect } = this.state;
-    if (redirect || this.props.user_id != undefined)
-      return <Redirect to="/todolist" />;
-    return (
-      <div className="signup-block">
-        <form className="signup-form" onSubmit={this.onSubmit}>
-          <label>Name:</label>
-          <input
-            onChange={this.onHandleChange}
-            value={name}
-            type="text"
-            name="name"
-          />
-          <label>Email:</label>
-          <input
-            onChange={this.onHandleChange}
-            value={email}
-            type="email"
-            name="email"
-          />
-          <label>Password:</label>
-          <input
-            onChange={this.onHandleChange}
-            value={password}
-            type="password"
-            name="password"
-          />
-          <button type="submit">Save</button>
-        </form>
-      </div>
-    );
+  // if (redirect || this.props.user_id != undefined)
+  //   return <Redirect to="/todolist" />;
+
+
+  const onHandleChange: InputProps['onChange'] = (e) => {
+    setState((values) => ({
+      ...values,
+      [e.target.name]: e.target.value
+    }));
   }
+
+  return (
+    <div>
+      <Row justify="center">
+        <Col>
+          <Form>
+            <Form.Item>
+              <Input
+                placeholder="Enter your name"
+                onChange={onHandleChange}
+                value={state.email}
+                name="name"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Input
+                placeholder="Enter your email"
+                onChange={onHandleChange}
+                value={state.email}
+                name="email"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Input.Password
+                name="password"
+                onChange={onHandleChange}
+                value={state.password}
+                placeholder="Input password"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                block
+              >
+                Sign up
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
+    </div>
+  );
 }
 
-const Login = connect(mapStateToProps, mapDispatchToProps)(ConnectedLogin);
-export default Login;
+export default Signup;

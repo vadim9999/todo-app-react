@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { Layout } from 'antd';
 // import { authenticate } from './actions/user';
-import Login from './components/Login/Login';
+import Login from './pages/Login/Login';
 import Signup from './components/Signup/Signup';
 import TodoList from './components/TodoList/TodoList';
 
@@ -83,7 +83,7 @@ const Router = () => {
         >
           <Routes>
             <Route path="/" element={<Login />} />
-            {/* <Route path="/signup" element={<Signup />} /> */}
+            <Route path="/signup" element={<Signup />} />
 
             {/* <Route path="/todolist" element={<TodoList />} /> */}
             {/* <Route path="sign" */}

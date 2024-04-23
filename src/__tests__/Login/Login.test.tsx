@@ -1,6 +1,6 @@
 import React from 'react'
 import Enzyme, { mount } from 'enzyme';
-import Login, { ConnectedLogin } from '../../components/Login/Login'
+import Login, { ConnectedLogin } from '../../pages/Login/Login'
 
 import Adapter from 'enzyme-adapter-react-16'
 import { Provider } from 'react-redux'
