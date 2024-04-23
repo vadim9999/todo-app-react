@@ -2,7 +2,6 @@ import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import { Input, Tooltip, Button, Form, Row, Col, InputProps } from 'antd';
 import { authorizate } from '../../actions/user';
-// import "./Login.css"
 // import Example from './Example'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
