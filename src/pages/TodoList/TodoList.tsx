@@ -56,6 +56,7 @@ const TodoList = () => {
     <Content>
       <Row justify="center">
         <Col style={{ width: '50%' }}>
+          TODO list
           <List />
         </Col>
       </Row>

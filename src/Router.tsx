@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { BrowserRouter, Route, Link, Routes } from 'react-router-dom';
-import { connect } from 'react-redux';
-import Cookies from 'universal-cookie';
-import { Layout } from 'antd';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { Layout, Spin } from 'antd';
 // import { authenticate } from './actions/user';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
@@ -11,6 +9,9 @@ import TodoList from './pages/TodoList/TodoList';
 
 import './Router.css';
 import moment from 'moment';
+import { useAppDispatch, useAppSelector } from './redux/hooks/hooks';
+import PublicRoute from './components/PublicRoute/PublicRoute';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 // const mapDispatchToProps = (dispatch) =>{
 //     return {
 //         a
@@ -33,6 +34,9 @@ const { Header, Footer, Content } = Layout;
 // }
 
 const Router = () => {
+  const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state) => state.main.userInfo);
+  // const { isLoading, userInfo } = useAuth();
   // componentDidMount() {
   //   console.log(window.location.origin);
 
@@ -43,15 +47,22 @@ const Router = () => {
   //   }
   // }
 
+  useEffect(() => {
+    dispatch({ type: "INIT" })
+  }, []);
+
+  if (isLoading) {
+    return <Spin fullscreen />
+  }
+
   return (
-    <BrowserRouter>
-      <Layout>
-        <Header>
-          {/* <div class="header-block"> */}
+    <Layout>
+      <Header>
+        {/* <div class="header-block"> */}
 
-          {/* <AuthButton /> */}
+        {/* <AuthButton /> */}
 
-          {/* {this.props.user_id != undefined ? (
+        {/* {this.props.user_id != undefined ? (
             <div className="header-block-btns">
               <Link to="/todolist">
                 <Button type="primary">Todolist</Button>
@@ -72,27 +83,30 @@ const Router = () => {
             </div>
           )} */}
 
-          {/* </div> */}
-        </Header>
-        <Content
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+        {/* </div> */}
+      </Header>
+      <Content
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+          <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+          <Route path="/todolist" element={<ProtectedRoute>
+            <TodoList />
+          </ProtectedRoute>} />
+          <Route path='*' element={<div>Not found</div>} />
+        </Routes>
 
-            <Route path="/todolist" element={<TodoList />} />
-          </Routes>
-        </Content>
-        <Footer style={{ display: 'flex', justifyContent: 'center' }}>
-          <p>{moment().format('YYYY')}</p>
-        </Footer>
-      </Layout>
-    </BrowserRouter >
+      </Content>
+      <Footer style={{ display: 'flex', justifyContent: 'center' }}>
+        <p>{moment().format('YYYY')}</p>
+      </Footer>
+    </Layout>
   );
 }
 

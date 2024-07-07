@@ -2,31 +2,65 @@ import { takeLatest, takeEvery, call, put } from 'redux-saga/effects';
 import {
   addUser,
   authenticate,
-  authorizate
-} from '../user-requests/user-requests';
+  login
+} from '../api/app';
+import axios from 'axios';
+import { setUserInfo } from '../../main/mainSlice';
 
 export default function* allUserWorkers(action: any) {
   switch (action.type) {
+    case 'INIT':
+      yield initWorker(() => undefined, action)
+      break;
+
     case 'ADD_USER':
       yield userWorker(addUser, action);
       break;
 
-    case 'AUTHENTICATE':
-      yield authenticateUserWorker(authenticate, action);
+    case 'LOGIN':
+      yield loginWorker(login, action);
       break;
 
     case 'AUTHORIZATE':
-      yield userWorker(authorizate, action);
+      // yield userWorker(authorizate, action);
       break;
   }
 }
 
-function* authenticateUserWorker(requestFunction: any, { type, payload }: any) {
+function* initWorker(requestFunction: any, { type, payload }: any) {
   try {
-    const { data } = yield call(requestFunction, payload);
-    yield put({ type: `${type}_SUCCESS`, payload: data });
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      yield put(setUserInfo({
+        isLoading: false,
+        user: null,
+      }));
+      return;
+    }
+
+    const res = yield call(requestFunction, payload);
+
+
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    // console.log("data123", );
+    localStorage.setItem("token", token);
+
+    // yield put({ type: `${type}_SUCCESS`, payload: data });
   } catch (e) {
-    yield put({ type: `${type}_FAILED`, e });
+    // yield put({ type: `${type}_FAILED`, e });
+  }
+}
+
+function* loginWorker(requestFunction: any, { type, payload }: any) {
+  try {
+    const { token } = yield call(requestFunction, payload);
+    // console.log("data123", );
+    localStorage.setItem("token", token);
+
+    // yield put({ type: `${type}_SUCCESS`, payload: data });
+  } catch (e) {
+    // yield put({ type: `${type}_FAILED`, e });
   }
 }
 

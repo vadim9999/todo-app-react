@@ -5,11 +5,14 @@ import { Provider } from 'react-redux';
 
 import Router from './Router';
 import { store } from './redux/store';
+import { BrowserRouter } from 'react-router-dom';
 
 const App = () => (
   <div className="main-block">
     <Provider store={store}>
-      <Router />
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
     </Provider>
   </div>
 );

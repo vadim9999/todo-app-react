@@ -1,9 +1,9 @@
-import React, { Component, useState } from 'react';
-import { connect } from 'react-redux';
-import { Input, Tooltip, Button, Form, Row, Col, InputProps } from 'antd';
-import { authorizate } from '../../actions/user';
+import React, { useState } from 'react';
+import { Input, Button, Form, Row, Col, InputProps, FormProps } from 'antd';
 // import Example from './Example'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { useAppDispatch } from '../../redux/hooks/hooks';
+import { LOGIN } from '../../redux/constants/action-types';
 
 // const mapStateToProps = (state: any) => ({
 //   user_id: state.user._id
@@ -13,18 +13,15 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 //   authorizate: (data: any) => dispatch(authorizate(data))
 // });
 
-interface LoginProps {
-  user_id: string;
-  authorizate: any;
-}
 
-interface LoginState {
+type FieldType = {
   email?: string;
   password?: string;
-}
-
+};
 
 const Login = () => {
+  const dispatch = useAppDispatch();
+
   const [state, setState] = useState({
     email: "",
     password: ""
@@ -64,11 +61,18 @@ const Login = () => {
 
   // if (this.props.user_id) return <Redirect to="/todolist" />;
 
+
+
+  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+    console.log('Success:', state);
+    dispatch({ type: LOGIN, payload: { ...state } })
+  };
+
   return (
     <div>
       <Row justify="center">
         <Col>
-          <Form>
+          <Form onFinish={onFinish}>
             <Form.Item>
               <Input
                 placeholder="Enter your email"

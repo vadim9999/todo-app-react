@@ -1,4 +1,4 @@
-import { ADD_TASK, FOUND_WORD } from '../constants/action-types';
+import { ADD_TASK, FOUND_WORD } from '../redux/constants/action-types';
 
 // export function addArticle(payload){
 //     return { type: ADD_ARTICLE, payload}
