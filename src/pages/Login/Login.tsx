@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Input, Button, Form, Row, Col, InputProps, FormProps } from 'antd';
 // import Example from './Example'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useAppDispatch } from '../../redux/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { LOGIN } from '../../redux/constants/action-types';
 
 // const mapStateToProps = (state: any) => ({
@@ -20,6 +20,7 @@ type FieldType = {
 };
 
 const Login = () => {
+  const { isLoading } = useAppSelector((state) => state.main.userInfo);
   const dispatch = useAppDispatch();
 
   const [state, setState] = useState({
@@ -79,6 +80,7 @@ const Login = () => {
                 onChange={onHandleChange}
                 value={state.email}
                 name="email"
+                disabled={isLoading}
                 prefix={
                   <UserOutlined />
                 }
@@ -91,6 +93,7 @@ const Login = () => {
                 value={state.password}
                 placeholder="Input password"
                 prefix={<LockOutlined />}
+                disabled={isLoading}
               />
             </Form.Item>
             <Form.Item>
@@ -98,6 +101,7 @@ const Login = () => {
                 type="primary"
                 htmlType="submit"
                 block
+                loading={isLoading}
               >
                 Log in
               </Button>

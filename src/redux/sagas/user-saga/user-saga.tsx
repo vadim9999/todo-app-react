@@ -46,6 +46,10 @@ function* initWorker(requestFunction: any, { type, payload }: any) {
     // console.log("data123", );
     localStorage.setItem("token", token);
 
+    yield put(setUserInfo({
+      isLoading: false,
+      user: null,
+    }));
     // yield put({ type: `${type}_SUCCESS`, payload: data });
   } catch (e) {
     // yield put({ type: `${type}_FAILED`, e });
